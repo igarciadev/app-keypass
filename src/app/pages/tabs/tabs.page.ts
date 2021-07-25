@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UrlService } from 'src/app/services/url.service';
@@ -8,7 +8,7 @@ import text from 'src/assets/text/tabs.text.json';
     selector: 'app-tabs',
     templateUrl: 'tabs.page.html'
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
 
     currentUrl: string;
     text: any;
@@ -16,12 +16,11 @@ export class TabsPage {
     constructor(
         private router: Router,
         private urlService: UrlService
-    ) {
-        this.currentUrl = null;
-        this.text = text;
-    }
+    ) { }
 
     ngOnInit() {
+        this.currentUrl = null;
+        this.text = text;
     }
 
     ionViewWillEnter() {
