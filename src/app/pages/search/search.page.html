@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button color="light" defaultHref="tabs/safe-tab"></ion-back-button>
+        </ion-buttons>
+        <ion-searchbar placeholder="{{ text.searchText }}" #searchField (ionInput)="search(searchField.value)" animated>
+        </ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-list>
+        <ion-item *ngFor="let item of passConfigSearchService.list" lines="full" (click)="mainActionSheet(item)">
+            <ion-img class="w-26" slot="start" [src]="item.image"></ion-img>
+            <ion-label>{{ item.name }}</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>
