@@ -1,0 +1,43 @@
+{
+	"name": "APPKEYPASS - Ionic 5",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"settings": {
+		"terminal.integrated.defaultProfile.linux": "/bin/ash",
+		"files.watcherExclude": {
+			"**/node_modules/**": true,
+			"**/platforms/**": true,
+			"**/plugins/**": true,
+			"**/www/**": true,
+			"**/resources/**": true
+		}
+	},
+	"extensions": [
+		"2gua.rainbow-brackets",
+		"hediet.vscode-drawio",
+		"mhutchie.git-graph",
+		"jinsihou.diff-tool",
+		"wayou.vscode-todo-highlight",
+		"mikestead.dotenv",
+		"eamodio.gitlens",
+		"pkief.material-icon-theme",
+		"formulahendry.terminal",
+		"TabNine.tabnine-vscode",
+		"editorconfig.editorconfig",
+        "jebbs.plantuml",
+        "msjsdiag.cordova-tools"
+	],
+	"forwardPorts": [
+		8100, 8100,
+        9876, 9876,
+		35729, 35729,
+		53703, 53703,
+        5037, 5037,
+		9200, 9200,
+		8000, 8000,
+		9222, 9222,
+
+	],
+	"postCreateCommand": "npm i @ionic-native/core && npm i --save-dev karma-verbose-reporter && npm i -g native-run && npm i -g cordova-res"
+}
