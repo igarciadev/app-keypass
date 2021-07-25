@@ -1,0 +1,14 @@
+/.scannerwork
+/.vscode
+/coverage
+/diagrams
+/dist
+/e2e
+/node_modules
+/out
+/platforms
+/plugins
+/resources/android
+/resources/ios
+/typings
+/www
