@@ -1,0 +1,23 @@
+<ion-card-header>
+    <ion-card-title>{{ text.titleText }}</ion-card-title>
+    <ion-card-subtitle class="subtitle">{{ text.subtitleText }}</ion-card-subtitle>
+</ion-card-header>
+
+<ion-card-content>
+    <ion-item lines="full">
+        <ion-input type="{{type}}" #secret placeholder="{{ text.secretText }}"></ion-input>
+        <ion-buttons slot="end">
+            <ion-button class="icon-size" (click)="toggleEyeIcon()">
+                <ion-icon [name]="eyeIconName" color="primary"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-item>
+    <ion-item lines="none" class="first-button">
+        <ion-button class="button" slot="end" fill="clear" (click)="dismissClick()">{{ text.cancelText }}</ion-button>
+    </ion-item>
+    <ion-item lines="none">
+        <ion-button class="button" slot="end" fill="clear" (click)="regeneratePassword(secret.value)">
+            {{ text.regenerateText }}
+        </ion-button>
+    </ion-item>
+</ion-card-content>

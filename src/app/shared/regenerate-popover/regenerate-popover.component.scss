@@ -1,0 +1,29 @@
+.subtitle {
+    font-size: 16px;
+    line-height: 1.2;
+    color: black;
+}
+
+.icon-size {
+    font-size: 13px;
+}
+
+.first-button {
+    margin-top: 20px;
+}
+
+.button {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: block;
+    border: 0;
+    font-size: 14px;
+    line-height: 20px;
+    z-index: 0;
+}
+
+.keyboard-is-open {
+    top: 5em !important;
+}

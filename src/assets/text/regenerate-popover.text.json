@@ -1,0 +1,7 @@
+{
+    "titleText": "Regenerar contraseña",
+    "subtitleText": "Para regenerar tu contraseña, introduce tu secreto y pulsa el botón REGENERAR.",
+    "secretText": "Secreto",
+    "cancelText": "Cancelar",
+    "regenerateText": "Regenerar"
+}
