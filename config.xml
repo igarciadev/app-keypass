@@ -3,7 +3,7 @@
     <name>KeyPass</name>
     <description>An awesome App to manage your passwords that doesn't stored any password</description>
     <author href="https://isaacgarciasanchez.es/">IGarciaDev</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8101" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -108,4 +108,5 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <allow-navigation href="http://localhost:8100" sessionid="251f0cc5" />
+    <allow-navigation href="http://localhost:8101" sessionid="cc2c40ef" />
 </widget>
