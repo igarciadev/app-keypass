@@ -1,0 +1,23 @@
+.rotate-90-minus {
+    transform: scaleX(-1) rotate(-90deg);
+}
+
+.rotate-90-plus {
+    transform: scaleX(1) rotate(90deg);
+}
+
+.mr-16 {
+    margin-right: 16px;
+}
+
+.w-26 {
+    width: 26px;
+}
+
+.header-background {
+    background-color: rgb(231, 231, 231);
+}
+
+.header-min-height {
+    min-height: 35px !important;
+}

@@ -1,0 +1,50 @@
+<section *ngIf='processIfAvailable()'></section>
+<ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+        <ion-title>{{ text.titleText }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="navigateTo(navigateToSearch)">
+                <ion-icon name="search-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="sortToggler()">
+                <ion-icon [ngClass]="searchIconClass" name="cellular-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-header [translucent]="false">
+    <ion-list *ngIf="showFavoriteList">
+        <ion-list-header class="header-background header-min-height">
+            <ion-icon class="mr-16" name="heart"></ion-icon>
+            <ion-label>{{ text.favoriteText }}</ion-label>
+            <ion-icon *ngIf="toggleFavorite" class="mr-16" name="chevron-up-outline" (click)="favoriteToggler()">
+            </ion-icon>
+            <ion-icon *ngIf="!toggleFavorite" class="mr-16" name="chevron-down-outline" (click)="favoriteToggler()">
+            </ion-icon>
+        </ion-list-header>
+        <ion-item *ngFor="let item of passConfigFavoriteService.list" lines="full"
+            (click)="callMainActionSheet(item)" [ngClass]="{'block-none' : !toggleFavorite}">
+            <ion-img class="w-26" slot="start" [src]="item.image"></ion-img>
+            <ion-label>{{ item.name }}</ion-label>
+        </ion-item>
+    </ion-list>
+    <ion-list-header class="header-background header-min-height">
+        <ion-icon class="mr-16" name="list-outline"></ion-icon>
+        <ion-label>{{ text.listText }}</ion-label>
+    </ion-list-header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-list>
+        <ion-item *ngFor="let item of passConfigListService.list" lines="full" (click)="callMainActionSheet(item)">
+            <ion-img class="w-26" slot="start" [src]="item.image"></ion-img>
+            <ion-label>{{ item.name }}</ion-label>
+        </ion-item>
+    </ion-list>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="navigateTo(navigateToCreate)">
+        <ion-fab-button color="primary">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
