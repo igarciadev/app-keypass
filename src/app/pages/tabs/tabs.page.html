@@ -1,0 +1,12 @@
+<ion-tabs>
+    <ion-tab-bar *ngIf="show" slot="bottom">
+        <ion-tab-button tab="safe-tab" (click)="navigateToListTab()">
+            <ion-icon name="albums-outline"></ion-icon>
+            <ion-label>{{ text.safeBoxText }}</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="password-tab" (click)="navigateToPasswordTab()">
+            <ion-icon name="sync-outline"></ion-icon>
+            <ion-label>{{ text.generatorText }}</ion-label>
+        </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>
