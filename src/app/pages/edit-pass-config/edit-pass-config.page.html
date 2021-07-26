@@ -1,0 +1,65 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button color="light" (click)="navigateToListTab()"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ text.titleText }}</ion-title>
+        <ion-buttons slot="primary">
+            <ion-button color="light" (click)="saveEditForm()">{{ text.saveButtonText }}</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-list>
+        <form [formGroup]="editForm">
+            <ion-item lines="full">
+                <ion-label class="label" position="stacked">{{ text.nameText }} *</ion-label>
+                <ion-input type="text" formControlName="name"></ion-input>
+            </ion-item>
+            <div class="ion-label-invalid">
+                <small *ngIf="nameRequired">{{ text.requiredText }}</small>
+            </div>
+            <ion-item lines="full">
+                <ion-label class="label" position="stacked">{{ text.usernameText }}</ion-label>
+                <ion-input type="text" formControlName="username"></ion-input>
+                <ion-buttons class="field-buttons" slot="end">
+                    <ion-button (click)="copyUsername()">
+                        <ion-icon name="copy-outline" color="primary"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+            <ion-item lines="full">
+                <ion-label class="label" position="stacked">{{ text.passwordText }} *</ion-label>
+                <ion-input [type]="passwordType" [class]="passwordClass" formControlName="password" [attr.disabled]="disablePassword"></ion-input>
+                <ion-buttons class="field-buttons" slot="end">
+                    <ion-button (click)="regeneratePopover(false)">
+                        <ion-icon [name]="eyeIconName" color="primary"></ion-icon>
+                    </ion-button>
+                    <ion-button *ngIf="enableSettingsIcon" (click)="changePopover()">
+                        <ion-icon name="settings-outline" color="primary"></ion-icon>
+                    </ion-button>
+                    <ion-button (click)="copyPassword()">
+                        <ion-icon name="copy-outline" color="primary"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+            <div class="ion-label-invalid">
+                <small *ngIf="passwordRequired">{{ text.requiredText }}</small>
+            </div>
+            <ion-item lines="full">
+                <ion-label class="label" position="stacked">{{ text.uriText }}</ion-label>
+                <ion-input type="text" formControlName="uri"></ion-input>
+                <ion-buttons class="field-buttons" slot="end">
+                    <ion-button (click)="copyUri()">
+                        <ion-icon name="copy-outline" color="primary"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+            <ion-item lines="full">
+                <ion-label class="label" position="stacked">{{ text.notesText }}</ion-label>
+                <ion-textarea formControlName="notes" auto-grow="true"></ion-textarea>
+            </ion-item>
+        </form>
+    </ion-list>
+</ion-content>
