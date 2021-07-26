@@ -16,7 +16,7 @@ import text from 'src/assets/text/edit-pass-config.text.json';
 @Component({
     selector: 'app-edit-pass-config',
     templateUrl: './edit-pass-config.page.html',
-    styleUrls: ['./edit-pass-config.page.scss'],
+    styleUrls: ['./edit-pass-config.page.scss']
 })
 export class EditPassConfigPage implements OnInit {
 
@@ -152,13 +152,13 @@ export class EditPassConfigPage implements OnInit {
 
     copyUsername() {
         this.clipboard.copy(this.getFormControl('username').value);
-        this.presentToast('Nombre de usuario copiado');
+        this.presentToast(this.text.copyNameText);
     }
 
     copyPassword() {
         if (this.secret !== null) {
             this.clipboard.copy(this.getFormControl('password').value);
-            this.presentToast('Contraseña copiada');
+            this.presentToast(this.text.copyPasswordText);
         } else {
             this.regeneratePopover(true);
         }
@@ -166,7 +166,7 @@ export class EditPassConfigPage implements OnInit {
 
     copyUri() {
         this.clipboard.copy(this.getFormControl('uri').value);
-        this.presentToast('URI copiada');
+        this.presentToast(this.text.copyUriText);
     }
 
     navigateToListTab(): void {
@@ -237,7 +237,6 @@ export class EditPassConfigPage implements OnInit {
     }
 
     async presentToast(message: string) {
-        console.log('RegeneratePassPage -> presentToast');
         const toast = await this.toastController.create({
             message: message,
             duration: 2000
