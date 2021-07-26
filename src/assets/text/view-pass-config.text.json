@@ -11,5 +11,8 @@
     "areYorSureText": "¿Estás seguro de que quieres sobreescribir la contraseña actual?",
     "updatedOnText": "Última actualización",
     "noText": "No",
-    "yesText": "Sí"
+    "yesText": "Sí",
+    "copyNameText": "Nombre de usuario copiado",
+    "copyPasswordText": "Contraseña copiada",
+    "copyUriText": "URI copiada"
 }

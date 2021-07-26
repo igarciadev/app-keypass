@@ -127,13 +127,13 @@ export class ViewPassConfigPage implements OnInit {
 
     copyUsername() {
         this.clipboard.copy(this.getFormControl('username').value);
-        this.presentToast('Nombre de usuario copiado');
+        this.presentToast(this.text.copyNameText);
     }
 
     copyPassword() {
         if (this.secret !== undefined) {
             this.clipboard.copy(this.getFormControl('password').value);
-            this.presentToast('Contraseña copiada');
+            this.presentToast(this.text.copyPasswordText);
         } else {
             this.regeneratePopover(true);
         }
@@ -141,7 +141,7 @@ export class ViewPassConfigPage implements OnInit {
 
     copyUri() {
         this.clipboard.copy(this.getFormControl('uri').value);
-        this.presentToast('URI copiada');
+        this.presentToast(this.text.copyUriText);
     }
 
     navigateToListTab(): void {
@@ -190,7 +190,6 @@ export class ViewPassConfigPage implements OnInit {
     }
 
     async presentToast(message: string) {
-        console.log('RegeneratePassPage -> presentToast');
         const toast = await this.toastController.create({
             message: message,
             duration: 2000
