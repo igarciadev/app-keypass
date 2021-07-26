@@ -1,0 +1,261 @@
+[
+    {
+        "id": 1623521075053,
+        "name": "Gmail",
+        "username": "fake@gmail.com",
+        "uri": "gmail.com",
+        "notes": "",
+        "image": "https://www.google.com/s2/favicons?sz=32&domain_url=gmail.com",
+        "favorite": false,
+        "createdOn": "09/07/202107:45:47",
+        "updatedOn": "10/07/202107:39:00",
+        "keyConfig": {
+            "passConfigId": null,
+            "salt": "2qozlrz2s258m175i0j402k112owqik1",
+            "iv": "pi2150kj3763z7l0jt3o00l23uis7ljh",
+            "time": 1625809572635,
+            "keyword": "1212",
+            "upper": false,
+            "lower": true,
+            "number": true,
+            "symbol": false,
+            "length": 10,
+            "minLength": 4,
+            "maxLength": 64,
+            "minNumbers": 1,
+            "minSymbols": 1,
+            "cipher": {
+                "name": "CipherStrategy"
+            },
+            "strategy": {
+                "name": "UkeleleStrategy",
+                "symbols": "!@#$%^&*",
+                "numbers": "0123456789",
+                "letters": "abcdefghijklmnopqrstuvwxyz",
+                "excludedSymbols": "+=/"
+            }
+        }
+    },
+    {
+        "id": 1623521075052,
+        "name": "FotoCasa",
+        "username": "fake@gmail.com",
+        "uri": "fotocasa.com",
+        "notes": "",
+        "image": "https://www.google.com/s2/favicons?sz=32&domain_url=fotocasa.com",
+        "favorite": true,
+        "createdOn": "09/07/202107:45:47",
+        "updatedOn": "10/07/202107:39:00",
+        "keyConfig": {
+            "passConfigId": null,
+            "salt": "2qozlrz2s258m175i0j402k112owqik1",
+            "iv": "pi2150kj3763z7l0jt3o00l23uis7ljh",
+            "time": 1625809572635,
+            "keyword": "1212",
+            "upper": false,
+            "lower": true,
+            "number": true,
+            "symbol": false,
+            "length": 10,
+            "minLength": 4,
+            "maxLength": 64,
+            "minNumbers": 1,
+            "minSymbols": 1,
+            "cipher": {
+                "name": "CipherStrategy"
+            },
+            "strategy": {
+                "name": "UkeleleStrategy",
+                "symbols": "!@#$%^&*",
+                "numbers": "0123456789",
+                "letters": "abcdefghijklmnopqrstuvwxyz",
+                "excludedSymbols": "+=/"
+            }
+        }
+    },
+    {
+        "id": 1623521075054,
+        "name": "Notion",
+        "username": "fake@gmail.com",
+        "uri": "notion.com",
+        "notes": "",
+        "image": "https://www.google.com/s2/favicons?sz=32&domain_url=notion.com",
+        "favorite": true,
+        "createdOn": "09/07/202107:45:47",
+        "updatedOn": "10/07/202107:39:00",
+        "keyConfig": {
+            "passConfigId": null,
+            "salt": "2qozlrz2s258m175i0j402k112owqik1",
+            "iv": "pi2150kj3763z7l0jt3o00l23uis7ljh",
+            "time": 1625809572635,
+            "keyword": "1212",
+            "upper": false,
+            "lower": true,
+            "number": true,
+            "symbol": false,
+            "length": 10,
+            "minLength": 4,
+            "maxLength": 64,
+            "minNumbers": 1,
+            "minSymbols": 1,
+            "cipher": {
+                "name": "CipherStrategy"
+            },
+            "strategy": {
+                "name": "UkeleleStrategy",
+                "symbols": "!@#$%^&*",
+                "numbers": "0123456789",
+                "letters": "abcdefghijklmnopqrstuvwxyz",
+                "excludedSymbols": "+=/"
+            }
+        }
+    },
+    {
+        "id": 1623733090766,
+        "name": "Trello",
+        "username": "fake@gmail.com",
+        "uri": "trello.com",
+        "notes": "",
+        "image": "https://www.google.com/s2/favicons?sz=32&domain_url=trello.com",
+        "favorite": false,
+        "createdOn": "09/07/202107:45:47",
+        "updatedOn": "10/07/202107:39:00",
+        "keyConfig": {
+            "passConfigId": null,
+            "salt": "2qozlrz2s258m175i0j402k112owqik1",
+            "iv": "pi2150kj3763z7l0jt3o00l23uis7ljh",
+            "time": 1625809572635,
+            "keyword": "1212",
+            "upper": false,
+            "lower": true,
+            "number": true,
+            "symbol": false,
+            "length": 10,
+            "minLength": 4,
+            "maxLength": 64,
+            "minNumbers": 1,
+            "minSymbols": 1,
+            "cipher": {
+                "name": "CipherStrategy"
+            },
+            "strategy": {
+                "name": "UkeleleStrategy",
+                "symbols": "!@#$%^&*",
+                "numbers": "0123456789",
+                "letters": "abcdefghijklmnopqrstuvwxyz",
+                "excludedSymbols": "+=/"
+            }
+        }
+    },
+    {
+        "id": 1623733111271,
+        "name": "StackOverflow",
+        "username": "fake@gmail.com",
+        "uri": "stackoverflow.com",
+        "notes": "",
+        "image": "https://www.google.com/s2/favicons?sz=32&domain_url=stackoverflow.com",
+        "favorite": false,
+        "createdOn": "09/07/202107:45:47",
+        "updatedOn": "10/07/202107:39:00",
+        "keyConfig": {
+            "passConfigId": null,
+            "salt": "2qozlrz2s258m175i0j402k112owqik1",
+            "iv": "pi2150kj3763z7l0jt3o00l23uis7ljh",
+            "time": 1625809572635,
+            "keyword": "1212",
+            "upper": false,
+            "lower": true,
+            "number": true,
+            "symbol": false,
+            "length": 10,
+            "minLength": 4,
+            "maxLength": 64,
+            "minNumbers": 1,
+            "minSymbols": 1,
+            "cipher": {
+                "name": "CipherStrategy"
+            },
+            "strategy": {
+                "name": "UkeleleStrategy",
+                "symbols": "!@#$%^&*",
+                "numbers": "0123456789",
+                "letters": "abcdefghijklmnopqrstuvwxyz",
+                "excludedSymbols": "+=/"
+            }
+        }
+    },
+    {
+        "id": 1625809592052,
+        "name": "Strava",
+        "username": "fake@gmail.com",
+        "uri": "strava.com",
+        "notes": "",
+        "image": "https://www.google.com/s2/favicons?sz=32&domain_url=strava.com",
+        "favorite": true,
+        "createdOn": "09/07/202107:46:32",
+        "updatedOn": "09/07/202107:46:59",
+        "keyConfig": {
+            "passConfigId": null,
+            "salt": "2qozlrz2s258m175i0j402k112owqik1",
+            "iv": "pi2150kj3763z7l0jt3o00l23uis7ljh",
+            "time": 1625809572635,
+            "keyword": "1212",
+            "upper": false,
+            "lower": true,
+            "number": true,
+            "symbol": false,
+            "length": 10,
+            "minLength": 4,
+            "maxLength": 64,
+            "minNumbers": 1,
+            "minSymbols": 1,
+            "cipher": {
+                "name": "CipherStrategy"
+            },
+            "strategy": {
+                "name": "UkeleleStrategy",
+                "symbols": "!@#$%^&*",
+                "numbers": "0123456789",
+                "letters": "abcdefghijklmnopqrstuvwxyz",
+                "excludedSymbols": "+=/"
+            }
+        }
+    },
+    {
+        "id": 1625809547506,
+        "name": "Facebook",
+        "username": "fake@gmail.com",
+        "uri": "facebook.com",
+        "notes": "",
+        "image": "https://www.google.com/s2/favicons?sz=32&domain_url=facebook.com",
+        "favorite": false,
+        "createdOn": "09/07/202107:45:47",
+        "updatedOn": "11/07/202108:58:12",
+        "keyConfig": {
+            "passConfigId": null,
+            "salt": "2qozlrz2s258m175i0j402k112owqik1",
+            "iv": "pi2150kj3763z7l0jt3o00l23uis7ljh",
+            "time": 1625809572635,
+            "keyword": "1212",
+            "upper": false,
+            "lower": true,
+            "number": true,
+            "symbol": false,
+            "length": 10,
+            "minLength": 4,
+            "maxLength": 64,
+            "minNumbers": 1,
+            "minSymbols": 1,
+            "cipher": {
+                "name": "CipherStrategy"
+            },
+            "strategy": {
+                "name": "UkeleleStrategy",
+                "symbols": "!@#$%^&*",
+                "numbers": "0123456789",
+                "letters": "abcdefghijklmnopqrstuvwxyz",
+                "excludedSymbols": "+=/"
+            }
+        }
+    }
+]

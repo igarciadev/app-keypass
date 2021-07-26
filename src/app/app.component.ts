@@ -5,7 +5,10 @@ import { filter } from 'rxjs/operators';
 
 import { AlertController, Platform } from '@ionic/angular';
 
+import { InitializerService } from './services/initializer.service';
+import { StorageService } from './services/storage.service';
 import { UrlService } from './services/url.service';
+import { environment } from './../environments/environment';
 import text from '../assets/text/app.text.json';
 
 @Component({
@@ -20,17 +23,23 @@ export class AppComponent implements OnInit {
 
     constructor(
         private alertController: AlertController,
+        private initializerService: InitializerService,
         private location: Location,
         private platform: Platform,
         private router: Router,
+        private storageService: StorageService,
         private urlService: UrlService,
     ) {
         this.currentUrl = null;
         this.previousUrl = null;
         this.text = text;
+
+        if (!environment.production && storageService.getData().length === 0) {
+            initializerService.addSampleData();
+        }
     }
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.initializeApp();
         this.router.events.pipe(
             filter((event) => event instanceof NavigationEnd)
@@ -42,7 +51,7 @@ export class AppComponent implements OnInit {
         });
     }
 
-    initializeApp() {
+    initializeApp(): void {
         this.platform.backButton.subscribeWithPriority(10, (processNextHandler) => {
             if (this.location.isCurrentPathEqualTo('/tabs/safe-tab')) {
                 this.showExitConfirm();
