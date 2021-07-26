@@ -61,7 +61,6 @@ export class ListTabPage {
     async processIfAvailable() {
         let itemsListLength = this.passConfigFavoriteService.listLength() + this.passConfigListService.listLength();
         if (itemsListLength !== this.passConfigListService.storageListLength()) {
-            console.log('showIfAvailable');
             this.passConfigListService.reload();
         }
     }
