@@ -1,0 +1,15 @@
+{
+    "titleText": "Nuevo elemento",
+    "nameText": "Nombre",
+    "usernameText": "Usuario",
+    "passwordText": "Contraseña",
+    "uriText": "URI",
+    "notesText": "Notas",
+    "requiredText": "Campo requerido",
+    "minlengthText": "Debe tener al menos 4 caracteres",
+    "overwriteText": "Sobreescribir contraseña",
+    "areYorSureText": "¿Estás seguro de que quieres sobreescribir la contraseña actual?",
+    "updatedOnText": "Última actualización",
+    "noText": "No",
+    "yesText": "Sí"
+}
