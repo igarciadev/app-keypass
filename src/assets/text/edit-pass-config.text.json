@@ -1,0 +1,16 @@
+{
+    "titleText": "Nuevo elemento",
+    "saveButtonText": "Guardar",
+    "nameText": "Nombre",
+    "usernameText": "Usuario",
+    "passwordText": "Contraseña",
+    "uriText": "URI",
+    "notesText": "Notas",
+    "generateText": "Generar",
+    "requiredText": "Campo requerido",
+    "minlengthText": "Debe tener al menos 4 caracteres",
+    "overwriteText": "Sobreescribir contraseña",
+    "areYorSureText": "¿Estás seguro de que quieres sobreescribir la contraseña actual?",
+    "noText": "No",
+    "yesText": "Sí"
+}
