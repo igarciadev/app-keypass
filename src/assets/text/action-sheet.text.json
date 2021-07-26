@@ -1,0 +1,15 @@
+{
+    "warningText": "Advertencia!",
+    "fullFavoriteText": "No se pueden añadir más configuraciones a favoitos.",
+    "acceptText": "Aceptar",
+    "sureText": "¿Estás seguro?",
+    "undoneText": "No se puede deshacer",
+    "cancelText": "Cancelar",
+    "viewText": "Ver",
+    "editText": "Editar",
+    "favoriteText": "Favorito",
+    "shareText": "Compartir",
+    "deleteText": "Eliminar",
+    "optionsText": "Opciones",
+    "fileText": "Fichero"
+}
