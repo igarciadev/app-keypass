@@ -1,0 +1,12 @@
+<form [formGroup]="form">
+    <ion-item lines="full" *ngIf="disableItem">
+        <ion-button size="small" (click)="onDecrementButtonClick()" [disabled]="disableDecrement">
+            <ion-icon name="remove-outline"></ion-icon>
+        </ion-button>
+        <ion-input type="text" class="input text-center" formControlName="control"></ion-input>
+        <ion-button size="small" (click)="onIncrementButtonClick()" [disabled]="disableIncrement">
+            <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+        <ion-label class="label-text">{{ labelText }}</ion-label>
+    </ion-item>
+</form>
