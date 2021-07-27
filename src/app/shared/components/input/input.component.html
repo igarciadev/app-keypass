@@ -1,0 +1,15 @@
+<form [formGroup]="form">
+    <ion-item lines="full">
+        <ion-label class="label" position="stacked">{{ labelText }}</ion-label>
+        <ion-input type="text" [class]="inputClass" formControlName="control" [attr.disabled]="disabled"></ion-input>
+        <ion-buttons class="field-buttons" slot="end">
+            <ion-button *ngIf="enableCopyIcon" (click)="onCopyIconClick()">
+                <ion-icon name="copy-outline" color="primary"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-item>
+    <div class="ion-label-invalid">
+        <small *ngIf="required">{{ text.requiredText }}</small>
+        <small *ngIf="minlength">{{ text.minlengthText }}</small>
+    </div>
+</form>
