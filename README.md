@@ -19,7 +19,7 @@ With this app you can generate secure password settings, the generated password 
 ## Getting Started
 
 To begin using this app, choose one of the following options to get started:
-* [Download the latest release here](https://github.com/igarciadev/app-keypass/archive/refs/heads/master.zip)
+* [Download the latest release here](https://github.com/igarciadev/app-keypass/releases)
 * Clone the repo: `git clone https://github.com/igarciadev/app-keypass.git`
 
 
