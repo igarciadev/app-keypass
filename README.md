@@ -4,11 +4,24 @@ This application has been created with the Ionic framework v5.
 
 With this app you can generate secure password settings, the generated password is never stored, only the password settings are stored. Using a secret word, the password can be retrieved when required.
 
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [App Preview](#app-preview)
+- [Deploying](#deploying)
+- [Bugs and Issues](#bugs-and-issues)
+- [Creator](#creator)
+- [Copyright and License](#copyright-and-license)
+
+
 ## Getting Started
 
 To begin using this app, choose one of the following options to get started:
 * [Download the latest release here](https://github.com/igarciadev/app-keypass/archive/refs/heads/master.zip)
 * Clone the repo: `git clone https://github.com/igarciadev/app-keypass.git`
+
 
 ## Project Structure
 
@@ -32,6 +45,7 @@ To begin using this app, choose one of the following options to get started:
 ```
 
 ### src directory
+
 ```
 .
    ├── ...
@@ -49,7 +63,24 @@ To begin using this app, choose one of the following options to get started:
    └── ...
 ```
 
-## Start the project
+
+## App Preview
+
+All app preview screenshots were taken by running `ionic serve` on a browser.
+
+[List Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/list-tab) | [Password Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/password-tab)
+ :-: | :-:
+ <img src="resources/screenshots/screenshot list-tab.jpeg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot password-tab.jpeg" alt="Schedule" width="250"/>
+
+
+[Search Page](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/search) | [View Page](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/view-pass-config) | [Edit Page](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/edit-pass-config)
+ :-: | :-: | :-:
+ <img src="resources/screenshots/screenshot search-page.jpeg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot view-page.jpeg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot edit-page.jpeg" alt="Schedule" width="250"/>
+
+- To see more images of the app, check out the [screenshots directory](https://github.com/igarciadev/app-keypass/tree/master/resources/screenshots)!
+
+
+## Deploying
 
 The project is started with the regular ionic commands.
 
@@ -59,13 +90,16 @@ The project is started with the regular ionic commands.
 4. To build the android apk run `ionic cordova build android` or `ionic cordova build android --prod`.
 5. To start the app on an android device run `ionic cordova run android --consolelogs --livereload`.
 
+
 ## Bugs and Issues
 
 Have a bug or an issue with this app? [Open a new issue](https://github.com/igarciadev/app-keypass/issues) here on Github.
 
+
 ## Creator
 
 This app was created by and is maintained by **[Isaac García Sánchez](https://isaacgarciasanchez.es)**
+
 
 ## Copyright and License
 
