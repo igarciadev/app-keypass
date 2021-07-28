@@ -7,10 +7,15 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ActionPopoverComponent } from './shared/action-popover/action-popover.component';
+import { RegeneratePopoverComponent } from './shared/regenerate-popover/regenerate-popover.component';
+import { PasswordTabPageModule } from './pages/password-tab/password-tab.module';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        ActionPopoverComponent,
+        RegeneratePopoverComponent
     ],
     entryComponents: [],
     imports: [
@@ -18,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
         IonicModule.forRoot(),
         AppRoutingModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        PasswordTabPageModule
     ],
     providers: [
         {
@@ -27,6 +33,8 @@ import { AppRoutingModule } from './app-routing.module';
         }
 
     ],
-    bootstrap: [AppComponent],
+    bootstrap: [
+        AppComponent
+    ],
 })
 export class AppModule { }
