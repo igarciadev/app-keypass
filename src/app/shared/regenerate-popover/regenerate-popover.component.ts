@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 
 import { Platform, PopoverController } from '@ionic/angular';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
@@ -19,6 +19,7 @@ export class RegeneratePopoverComponent implements OnInit {
     text: any;
 
     constructor(
+        private elementRef: ElementRef,
         private keyboard: Keyboard,
         private platform: Platform,
         private popoverController: PopoverController
@@ -32,7 +33,7 @@ export class RegeneratePopoverComponent implements OnInit {
         this.text = text;
 
         this.platform.ready().then(() => {
-            let element = document.getElementsByClassName('popover-content sc-ion-popover-md')[0];
+            let element = this.elementRef.nativeElement.getElementsByClassName('popover-content sc-ion-popover-md')[0];
             this.keyboard.onKeyboardShow().subscribe(() => {
                 element['style'].top = '10%';
                 element['style'].transition = 'top 0.25s';
@@ -56,7 +57,7 @@ export class RegeneratePopoverComponent implements OnInit {
 
     }
 
-    regeneratePassword(secret: string) {
+    regeneratePassword(secret: string | number) {
         this.popoverController.dismiss({
             item: { secret: secret }
         });
