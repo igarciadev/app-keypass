@@ -1,6 +1,6 @@
 <ion-item lines="full">
     <ion-label class="label" position="stacked">{{ labelText }}</ion-label>
-    <ion-textarea [(ngModel)]="text" rows="1" [ngClass]="class" [autoGrow]="!!control" [attr.disabled]="disabled"></ion-textarea>
+    <ion-textarea [(ngModel)]="text" rows="1" [ngClass]="class" [autoGrow]="!!text" [attr.disabled]="disabled"></ion-textarea>
     <ion-buttons slot="end">
         <ion-button *ngIf="enableCopyIcon" (click)="onCopyIconClick()">
             <ion-icon name="copy-outline" color="primary"></ion-icon>
