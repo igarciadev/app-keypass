@@ -1,6 +1,6 @@
 <form [formGroup]="form">
     <ion-item lines="full">
         <ion-label>{{ labelText }}</ion-label>
-        <ion-toggle slot="start" formControlName="control" (change)="onToggleChange()"></ion-toggle>
+        <ion-toggle slot="start" formControlName="control" (ionChange)="onToggleChange()"></ion-toggle>
     </ion-item>
 </form>
