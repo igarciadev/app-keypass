@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
@@ -11,6 +11,7 @@ import { PassConfigService } from 'src/app/services/pass-config.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { RegeneratePopoverComponent } from 'src/app/shared/regenerate-popover/regenerate-popover.component';
 import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
+import { ToastService } from 'src/app/services/toast.service';
 import text from 'src/assets/text/edit-pass-config.text.json';
 
 @Component({
@@ -42,7 +43,7 @@ export class EditPassConfigPage implements OnInit {
         private popoverController: PopoverController,
         private router: Router,
         private storageService: StorageService,
-        private toastController: ToastController
+        private toastService: ToastService
     ) {
         this.passConfig = new PassConfig();
         this.initEditForm();
@@ -152,13 +153,13 @@ export class EditPassConfigPage implements OnInit {
 
     copyUsername() {
         this.clipboard.copy(this.getFormControl('username').value);
-        this.presentToast(this.text.copyNameText);
+        this.toastService.presentToast(this.text.copyNameText);
     }
 
     copyPassword() {
         if (this.secret !== null) {
             this.clipboard.copy(this.getFormControl('password').value);
-            this.presentToast(this.text.copyPasswordText);
+            this.toastService.presentToast(this.text.copyPasswordText);
         } else {
             this.regeneratePopover(true);
         }
@@ -166,7 +167,7 @@ export class EditPassConfigPage implements OnInit {
 
     copyUri() {
         this.clipboard.copy(this.getFormControl('uri').value);
-        this.presentToast(this.text.copyUriText);
+        this.toastService.presentToast(this.text.copyUriText);
     }
 
     navigateToListTab(): void {
@@ -234,15 +235,6 @@ export class EditPassConfigPage implements OnInit {
         });
 
         await alert.present();
-    }
-
-    async presentToast(message: string) {
-        const toast = await this.toastController.create({
-            message: message,
-            duration: 2000
-        });
-
-        await toast.present();
     }
 
     invalidName(formControlname: string): boolean {
