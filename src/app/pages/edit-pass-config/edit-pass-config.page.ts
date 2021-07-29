@@ -98,6 +98,8 @@ export class EditPassConfigPage implements OnInit {
     ionViewDidLeave() {
         this.editForm.reset();
         this.passConfigService.setPassConfig(undefined);
+        this.popoverController.dismiss();
+        this.alertController.dismiss();
     }
 
     initEditForm(): void {
