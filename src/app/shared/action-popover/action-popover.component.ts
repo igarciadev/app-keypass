@@ -40,10 +40,6 @@ export class ActionPopoverComponent implements OnInit {
         this.dismissPopover('favorite', this.passConfig);
     }
 
-    exportConfigPassAction() {
-        this.dismissPopover('export', this.passConfig);
-    }
-
     deleteConfigPassAction() {
         this.dismissPopover('delete', this.passConfig);
     }

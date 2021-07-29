@@ -126,7 +126,6 @@ export class ActionSheetService {
             { text: this.text.viewText, icon: 'eye', handler: () => { this.navigateTo(this.navigateToView); } },
             { text: this.text.editText, icon: 'create', handler: () => { this.navigateTo(this.navigateToEdit); } },
             { text: this.text.favoriteText, icon: 'heart', handler: () => { this.favoriteConfigAction(); }, cssClass: this.passConfig.favorite ? 'success' : '' },
-            { text: this.text.exportText, icon: 'document', handler: () => { this.fileService.exportToJsonFile(); } },
             { text: this.text.deleteText, icon: 'trash', handler: () => { this.deleteConfigAlert(); }, role: 'destructive', cssClass: 'danger' },
             { text: this.text.cancelText, icon: 'close', role: 'cancel' }
         ];
