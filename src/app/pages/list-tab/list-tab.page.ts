@@ -20,7 +20,6 @@ export class ListTabPage {
 
     toggleSort: boolean;
     toggleFavorite: boolean;
-    searchIconClass: string;
     navigateToSearch: string;
     navigateToCreate: string;
     text: any;
@@ -35,7 +34,6 @@ export class ListTabPage {
     ) {
         this.toggleSort = true;
         this.toggleFavorite = true;
-        this.searchIconClass = 'rotate-90-plus';
         this.navigateToSearch = '/tabs/safe-tab/search';
         this.navigateToCreate = '/tabs/safe-tab/create';
         this.text = text;
@@ -56,7 +54,6 @@ export class ListTabPage {
 
     sortToggler(ascending: boolean): void {
         this.toggleSort = ascending;
-        this.searchIconClass = this.toggleSort ? 'rotate-90-plus' : 'rotate-90-minus';
         this.passConfigListService.sort(this.toggleSort);
     }
 
