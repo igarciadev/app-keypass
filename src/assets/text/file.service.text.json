@@ -1,0 +1,6 @@
+{
+    "acceptText": "Aceptar",
+    "errorText": "Error",
+    "errorCreatingFileText": "Se ha producido un error al crear el fichero de exportación",
+    "errorReadingJsonText": "Se ha producido un error al importar la información"
+}

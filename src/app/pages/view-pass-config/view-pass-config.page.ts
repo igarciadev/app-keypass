@@ -8,6 +8,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { PassConfig } from 'src/app/models/pass-config.model';
 import { ActionSheetService } from 'src/app/services/action-sheet.service';
+import { FileService } from 'src/app/services/file.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { ActionPopoverComponent } from 'src/app/shared/action-popover/action-popover.component';
@@ -37,6 +38,7 @@ export class ViewPassConfigPage implements OnInit {
     constructor(
         private actionSheetService: ActionSheetService,
         private clipboard: Clipboard,
+        private fileService: FileService,
         private navController: NavController,
         private passConfigService: PassConfigService,
         private passwordValidator: PasswordValidatorService,
@@ -217,11 +219,8 @@ export class ViewPassConfigPage implements OnInit {
             case 'favorite':
                 this.actionSheetService.favoriteConfigAction(data.item.passConfig);
                 break;
-            case 'share':
-                this.actionSheetService.shareActionSheet();
-                break;
             case 'export':
-                this.actionSheetService.exportActionSheet(data.item.passConfig);
+                this.fileService.exportToJsonFile();
                 break;
             case 'delete':
                 this.actionSheetService.deleteConfigAlert(data.item.passConfig);
