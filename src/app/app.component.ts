@@ -5,7 +5,6 @@ import { filter } from 'rxjs/operators';
 
 import { AlertController, Platform } from '@ionic/angular';
 
-import { FileService } from './services/file.service';
 import { InitializerService } from './services/initializer.service';
 import { StorageService } from './services/storage.service';
 import { UrlService } from './services/url.service';
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit {
 
     constructor(
         private alertController: AlertController,
-        private fileService: FileService,
         private initializerService: InitializerService,
         private location: Location,
         private platform: Platform,
@@ -72,14 +70,6 @@ export class AppComponent implements OnInit {
                 console.log(e);
             })
         });
-    }
-
-    exportData() {
-        this.fileService.exportToJsonFile();
-    }
-
-    importData() {
-        this.fileService.importFormJsonFile();
     }
 
     async showExitConfirm() {

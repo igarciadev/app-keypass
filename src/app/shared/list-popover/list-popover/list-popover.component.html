@@ -1,0 +1,12 @@
+<ion-item *ngIf="!isAscending" (click)="ascendingAction()">
+    <ion-label>{{ text.ascendingText }}</ion-label>
+</ion-item>
+<ion-item *ngIf="isAscending" (click)="descendingAction()">
+    <ion-label>{{ text.descendingText }}</ion-label>
+</ion-item>
+<ion-item (click)="exportAction()">
+    <ion-label>{{ text.exportText }}</ion-label>
+</ion-item>
+<ion-item (click)="importAction()">
+    <ion-label>{{ text.importText }}</ion-label>
+</ion-item>

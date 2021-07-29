@@ -219,9 +219,6 @@ export class ViewPassConfigPage implements OnInit {
             case 'favorite':
                 this.actionSheetService.favoriteConfigAction(data.item.passConfig);
                 break;
-            case 'export':
-                this.fileService.exportToJsonFile();
-                break;
             case 'delete':
                 this.actionSheetService.deleteConfigAlert(data.item.passConfig);
                 break;

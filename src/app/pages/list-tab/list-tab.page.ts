@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { PopoverController } from '@ionic/angular';
+
 import { PassConfig } from 'src/app/models/pass-config.model';
 import { ActionSheetService } from 'src/app/services/action-sheet.service';
+import { FileService } from 'src/app/services/file.service';
 import { PassConfigFavoriteService } from 'src/app/services/pass-config-favorite.service';
 import { PassConfigListService } from 'src/app/services/pass-config-list.service';
+import { ListPopoverComponent } from 'src/app/shared/list-popover/list-popover/list-popover.component';
 import text from 'src/assets/text/list-tab.text.json';
 
 @Component({
@@ -23,8 +27,10 @@ export class ListTabPage {
 
     constructor(
         private actionSheetService: ActionSheetService,
+        private fileService: FileService,
         public passConfigListService: PassConfigListService,
         public passConfigFavoriteService: PassConfigFavoriteService,
+        private popoverController: PopoverController,
         private router: Router
     ) {
         this.toggleSort = true;
@@ -48,8 +54,8 @@ export class ListTabPage {
         this.toggleFavorite = !this.toggleFavorite;
     }
 
-    sortToggler(): void {
-        this.toggleSort = !this.toggleSort;
+    sortToggler(ascending: boolean): void {
+        this.toggleSort = ascending;
         this.searchIconClass = this.toggleSort ? 'rotate-90-plus' : 'rotate-90-minus';
         this.passConfigListService.sort(this.toggleSort);
     }
@@ -62,6 +68,36 @@ export class ListTabPage {
         let itemsListLength = this.passConfigFavoriteService.listLength() + this.passConfigListService.listLength();
         if (itemsListLength !== this.passConfigListService.storageListLength()) {
             this.passConfigListService.reload();
+        }
+    }
+
+    async listPopover(event: any) {
+        const popover = await this.popoverController.create({
+            component: ListPopoverComponent,
+            event: event,
+            translucent: true,
+            componentProps: { ascending: this.toggleSort }
+        });
+
+        await popover.present();
+
+        const { data } = await popover.onDidDismiss();
+
+        switch (data !== undefined && data.item.action) {
+            case 'ascending':
+                this.sortToggler(true);
+                break;
+            case 'descending':
+                this.sortToggler(false);
+                break;
+            case 'export':
+                this.fileService.exportToJsonFile();
+                break;
+            case 'import':
+                this.fileService.importFormJsonFile();
+                break;
+            default:
+                break;
         }
     }
 

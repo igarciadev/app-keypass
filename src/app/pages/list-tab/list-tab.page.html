@@ -6,8 +6,8 @@
             <ion-button (click)="navigateTo(navigateToSearch)">
                 <ion-icon name="search-outline"></ion-icon>
             </ion-button>
-            <ion-button (click)="sortToggler()">
-                <ion-icon [ngClass]="searchIconClass" name="cellular-outline"></ion-icon>
+            <ion-button color="light" (click)="listPopover($event)">
+                <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>

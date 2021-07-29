@@ -45,7 +45,7 @@ export class FileService {
 
     exportToJsonFile(): void {
         this.createFile('data').then(value => {
-            console.log(value);
+            this.successCreatingFile();
         }).catch(() => {
             this.errorCreatingFile();
         });
@@ -55,6 +55,7 @@ export class FileService {
 
     importFormJsonFile(): void {
         this.readFile('data').then(value => {
+            this.successReadingFile();
             this.passConfigListService.init();
             this.passConfigFavoriteService.init();
         }).catch(() => {
@@ -62,10 +63,30 @@ export class FileService {
         });
     }
 
+    async successCreatingFile() {
+        const alert = await this.alertController.create({
+            header: 'Información',
+            message: 'Configuraciones de contraseñas exportadas con éxito',
+            buttons: [this.text.acceptText]
+        });
+
+        await alert.present();
+    }
+
     async errorCreatingFile() {
         const alert = await this.alertController.create({
             header: this.text.errorText,
             message: this.text.errorCreatingFileText,
+            buttons: [this.text.acceptText]
+        });
+
+        await alert.present();
+    }
+
+    async successReadingFile() {
+        const alert = await this.alertController.create({
+            header: 'Información',
+            message: 'Configuraciones de contraseñas importadas con éxito',
             buttons: [this.text.acceptText]
         });
 

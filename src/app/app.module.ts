@@ -9,6 +9,7 @@ import { File } from '@ionic-native/file/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ActionPopoverComponent } from './shared/action-popover/action-popover.component';
+import { ListPopoverComponent } from './shared/list-popover/list-popover/list-popover.component';
 import { RegeneratePopoverComponent } from './shared/regenerate-popover/regenerate-popover.component';
 import { PasswordTabPageModule } from './pages/password-tab/password-tab.module';
 
@@ -16,6 +17,7 @@ import { PasswordTabPageModule } from './pages/password-tab/password-tab.module'
     declarations: [
         AppComponent,
         ActionPopoverComponent,
+        ListPopoverComponent,
         RegeneratePopoverComponent
     ],
     entryComponents: [],
