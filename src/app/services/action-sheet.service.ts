@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { PassConfig } from '../models/pass-config.model';
+import { FileService } from './file.service';
 import { PassConfigFavoriteService } from './pass-config-favorite.service';
 import { PassConfigListService } from './pass-config-list.service';
 import { PassConfigService } from './pass-config.service';
 import text from 'src/assets/text/action-sheet.text.json';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -27,22 +28,18 @@ export class ActionSheetService {
     text: any;
 
     constructor(
-        public actionSheetController: ActionSheetController,
+        private actionSheetController: ActionSheetController,
         private alertController: AlertController,
-        private router: Router,
-        private passConfigListService: PassConfigListService,
+        private fileService: FileService,
+        private passConfigService: PassConfigService,
         private passConfigFavoriteService: PassConfigFavoriteService,
-        private domSanitizer: DomSanitizer,
-        private passConfigService: PassConfigService
+        private passConfigListService: PassConfigListService,
+        private router: Router,
+        private storageService: StorageService
     ) {
         this.googleDriveIcon = "/assets/icon/google-drive.svg";
         this.dropboxIcon = "/assets/icon/dropbox.svg";
         this.whatsappIcon = "/assets/icon/whatsapp.svg";
-        this.sharedButtons = [
-            { text: 'Google Drive', icon: this.googleDriveIcon, handler: () => { this.shareToGoogleDrive(); } },
-            { text: 'Dropbox', icon: this.dropboxIcon, handler: () => { this.shareToDropbox(); } },
-            { text: 'Whatsapp', icon: this.whatsappIcon, handler: () => { this.shareToWhatsapp(); } }
-        ]
         this.navigateToView = '/tabs/safe-tab/view';
         this.navigateToEdit = '/tabs/safe-tab/edit';
         this.text = text;
@@ -75,15 +72,23 @@ export class ActionSheetService {
         this.passConfigListService.deletePassConfig(this.passConfig)
     }
 
-    shareToGoogleDrive(): void { }
+    exportToJsonFile(): void {
+        this.fileService.createFile('data').then(value => {
+            console.log(value);
+        }).catch(() => {
+            this.errorCreatingFile();
+        });
 
-    shareToDropbox(): void { }
+        this.fileService.writeFile('data', JSON.stringify(this.storageService.getData()));
+    }
 
-    shareToWhatsapp(): void { }
-
-    exportToJsonFile(passConfig: PassConfig): void {
-        var theJSON = JSON.stringify(this.passConfig);
-        var uri = this.domSanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(theJSON));
+    importFormJsonFile(): void {
+        this.fileService.readFile('data').then(value => {
+            this.passConfigListService.init();
+            this.passConfigFavoriteService.init();
+        }).catch(() => {
+            this.errorReadingJson();
+        });
     }
 
     createButtons(buttons: any[]): any[] {
@@ -110,8 +115,6 @@ export class ActionSheetService {
         });
 
         await alert.present();
-
-        const { role } = await alert.onDidDismiss();
     }
 
     async deleteConfigAlert(passConfig?: PassConfig) {
@@ -150,7 +153,7 @@ export class ActionSheetService {
             { text: this.text.viewText, icon: 'eye', handler: () => { this.navigateTo(this.navigateToView); } },
             { text: this.text.editText, icon: 'create', handler: () => { this.navigateTo(this.navigateToEdit); } },
             { text: this.text.favoriteText, icon: 'heart', handler: () => { this.favoriteConfigAction(); }, cssClass: this.passConfig.favorite ? 'success' : '' },
-            { text: this.text.shareText, icon: 'share', handler: () => { this.shareActionSheet(); } },
+            { text: this.text.exportText, icon: 'document', handler: () => { this.exportToJsonFile(); } },
             { text: this.text.deleteText, icon: 'trash', handler: () => { this.deleteConfigAlert(); }, role: 'destructive', cssClass: 'danger' },
             { text: this.text.cancelText, icon: 'close', role: 'cancel' }
         ];
@@ -164,29 +167,23 @@ export class ActionSheetService {
         await actionSheet.onDidDismiss();
     }
 
-    async shareActionSheet() {
-        const actionSheet = await this.actionSheetController.create({
-            header: this.text.shareText,
-            buttons: this.createButtons(this.sharedButtons)
+    async errorCreatingFile() {
+        const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'Se ha producido un error al crear el fichero de exportación',
+            buttons: [this.text.acceptText]
         });
 
-        await actionSheet.present();
-        await actionSheet.onDidDismiss();
+        await alert.present();
     }
 
-    async exportActionSheet(passConfig: PassConfig) {
-        const actionSheet = await this.actionSheetController.create({
-            header: this.text.shareText,
-            buttons: [
-                {
-                    text: this.text.fileText,
-                    icon: this.googleDriveIcon,
-                    handler: () => { this.exportToJsonFile(passConfig); }
-                }
-            ]
+    async errorReadingJson() {
+        const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'Se ha producido un error al importar la información',
+            buttons: [this.text.acceptText]
         });
 
-        await actionSheet.present();
-        await actionSheet.onDidDismiss();
+        await alert.present();
     }
 }
