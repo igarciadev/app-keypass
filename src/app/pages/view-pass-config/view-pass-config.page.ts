@@ -98,7 +98,6 @@ export class ViewPassConfigPage implements OnInit {
     ionViewDidLeave() {
         this.editForm.reset();
         this.passConfigService.setPassConfig(undefined);
-        this.popoverController.dismiss();
     }
 
     initEditForm(): void {
@@ -183,6 +182,8 @@ export class ViewPassConfigPage implements OnInit {
                     this.togglePassword();
                 }
             }
+
+            this.popoverController.dismiss();
         } else {
             this.togglePassword();
         }
@@ -225,6 +226,8 @@ export class ViewPassConfigPage implements OnInit {
             default:
                 break;
         }
+
+        this.popoverController.dismiss();
     }
 
     invalidName(formControlname: string): boolean {

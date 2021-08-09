@@ -42,6 +42,14 @@ export class ListTabPage {
     ionViewWillEnter() {
         this.passConfigListService.init(this.toggleSort);
         this.passConfigFavoriteService.init();
+        this.reloadLists();
+    }
+
+    reloadLists() {
+        let itemsListLength = this.passConfigFavoriteService.listLength() + this.passConfigListService.listLength();
+        if (itemsListLength !== this.passConfigListService.storageListLength()) {
+            this.passConfigListService.reload();
+        }
     }
 
     navigateTo(url: string): void {
@@ -59,13 +67,6 @@ export class ListTabPage {
 
     callMainActionSheet(passConfig: PassConfig): Promise<void> {
         return this.actionSheetService.mainActionSheet(passConfig);
-    }
-
-    async processIfAvailable() {
-        let itemsListLength = this.passConfigFavoriteService.listLength() + this.passConfigListService.listLength();
-        if (itemsListLength !== this.passConfigListService.storageListLength()) {
-            this.passConfigListService.reload();
-        }
     }
 
     async listPopover(event: any) {
