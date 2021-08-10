@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
                 this.showExitConfirm();
                 processNextHandler();
             } else {
-                this.location.back();
+                this.router.navigateByUrl('tabs/safe-tab', { replaceUrl: true });
             }
         });
 
