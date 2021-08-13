@@ -66,8 +66,11 @@ export class ViewPassConfigPage implements OnInit {
         this.passwordType = 'password';
         this.passwordClass = 'field-input';
         this.eyeIconName = 'eye-off-outline'
+
         if (this.passConfigService.getPassConfig() !== undefined) {
             this.passConfig = this.passConfigService.getPassConfig();
+        } else {
+            this.passConfig = this.storageService.getPassConfig(this.passConfig.id);
         }
 
         this.getFormControl('name').setValue(this.passConfig.name);
