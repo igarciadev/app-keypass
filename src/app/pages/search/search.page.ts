@@ -30,7 +30,7 @@ export class SearchPage implements OnInit {
         this.passConfigSearchService.search(searchTerm);
     }
 
-    mainActionSheet(passConfig: PassConfig): Promise<void> {
-        return this.actionSheetService.mainActionSheet(passConfig);
+    mainActionSheet(passConfig: PassConfig): void {
+        this.actionSheetService.mainActionSheet(passConfig);
     }
 }

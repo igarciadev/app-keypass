@@ -42,22 +42,31 @@ export class ActionSheetService {
         this.router.navigateByUrl(url);
     }
 
-    favoriteConfigAction(passConfig?: PassConfig): void {
+    favoriteConfigAction(passConfig?: PassConfig): Promise<string> {
         if (passConfig !== undefined) {
             this.passConfig = passConfig;
         }
+
+        let resolveFunction: (confirm: string) => void;
+        const promise = new Promise<string>(resolve => {
+            resolveFunction = resolve;
+        });
 
         if (this.passConfigFavoriteService.listLength() < 3 && !this.passConfig.favorite) {
             this.passConfig.favorite = true;
             this.passConfigListService.removeItemFromList(this.passConfig);
             this.passConfigFavoriteService.addItemToList(this.passConfig);
+            resolveFunction('favoriteItem');
         } else if (this.passConfig.favorite) {
             this.passConfig.favorite = false;
             this.passConfigListService.addItemToList(this.passConfig);
             this.passConfigFavoriteService.removeItemFromList(this.passConfig);
+            resolveFunction('favoriteItem');
         } else if (!this.passConfig.favorite) {
             this.favoriteAlert();
         }
+
+        return promise;
     }
 
     deletePassConfigAction(): void {
@@ -90,10 +99,15 @@ export class ActionSheetService {
         await alert.present();
     }
 
-    async deleteConfigAlert(passConfig?: PassConfig) {
+    async deleteConfigAlert(passConfig?: PassConfig): Promise<string> {
         if (passConfig !== undefined) {
             this.passConfig = passConfig;
         }
+
+        let resolveFunction: (confirm: string) => void;
+        const promise = new Promise<string>(resolve => {
+            resolveFunction = resolve;
+        });
 
         const alert = await this.alertController.create({
             header: this.text.warningText,
@@ -111,22 +125,30 @@ export class ActionSheetService {
                         }
 
                         this.deletePassConfigAction();
+                        resolveFunction('deleteItem');
                     }
                 }
             ]
         });
 
         await alert.present();
+        return promise;
     }
 
-    async mainActionSheet(passConfig: PassConfig) {
+    async mainActionSheet(passConfig: PassConfig): Promise<Promise<string>> {
+
+        let resolveFunction: (confirm: Promise<string>) => void;
+        const promise = new Promise<Promise<string>>(resolve => {
+            resolveFunction = resolve;
+        });
+
         this.passConfig = passConfig;
 
         this.optionButtons = [
             { text: this.text.viewText, icon: 'eye', handler: () => { this.navigateTo(this.navigateToView); } },
             { text: this.text.editText, icon: 'create', handler: () => { this.navigateTo(this.navigateToEdit); } },
-            { text: this.text.favoriteText, icon: 'heart', handler: () => { this.favoriteConfigAction(); }, cssClass: this.passConfig.favorite ? 'success' : '' },
-            { text: this.text.deleteText, icon: 'trash', handler: () => { this.deleteConfigAlert(); }, role: 'destructive', cssClass: 'danger' },
+            { text: this.text.favoriteText, icon: 'heart', handler: () => { resolveFunction(this.favoriteConfigAction()); }, cssClass: this.passConfig.favorite ? 'success' : '' },
+            { text: this.text.deleteText, icon: 'trash', handler: () => { resolveFunction(this.deleteConfigAlert()); }, role: 'destructive', cssClass: 'danger' },
             { text: this.text.cancelText, icon: 'close', role: 'cancel' }
         ];
 
@@ -136,6 +158,6 @@ export class ActionSheetService {
         });
 
         await actionSheet.present();
-        await actionSheet.onDidDismiss();
+        return promise;
     }
 }

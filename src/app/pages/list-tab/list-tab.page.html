@@ -22,7 +22,7 @@
             <ion-icon *ngIf="!toggleFavorite" class="mr-16" name="chevron-down-outline" (click)="favoriteToggler()">
             </ion-icon>
         </ion-list-header>
-        <ion-item *ngFor="let item of passConfigFavoriteService.list" lines="full"
+        <ion-item *ngFor="let item of passConfigFavoriteList" lines="full"
             (click)="callMainActionSheet(item)" [ngClass]="{'block-none' : !toggleFavorite}">
             <ion-img class="w-26" slot="start" [src]="item.image"></ion-img>
             <ion-label>{{ item.name }}</ion-label>
@@ -36,7 +36,7 @@
 
 <ion-content [fullscreen]="true">
     <ion-list>
-        <ion-item *ngFor="let item of passConfigListService.list" lines="full" (click)="callMainActionSheet(item)">
+        <ion-item *ngFor="let item of passConfigList" lines="full" (click)="callMainActionSheet(item)">
             <ion-img class="w-26" slot="start" [src]="item.image"></ion-img>
             <ion-label>{{ item.name }}</ion-label>
         </ion-item>

@@ -7,6 +7,7 @@ import { PassConfigListService } from './pass-config-list.service';
 
 import { StorageService } from './storage.service';
 import text from 'src/assets/text/file.service.text.json'
+import { PassConfig } from '../models/pass-config.model';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,14 @@ export class FileService {
     async readFile(fileName: string) {
         this.promise = this.file.readAsText(this.file.dataDirectory, fileName);
         await this.promise.then(value => {
-            this.storageService.saveData(JSON.parse(value));
+            const passConfigs = JSON.parse(value);
+
+            passConfigs.forEach((passConfig: PassConfig) => {
+                this.storageService.removePassConfig(passConfig);
+            })
+
+            this.storageService.saveData(passConfigs);
+            this.storageService.loadData();
         });
     }
 
@@ -50,17 +58,17 @@ export class FileService {
             this.errorCreatingFile();
         });
 
-        this.writeFile('data', JSON.stringify(this.storageService.getData()));
+        const stringToWrite = JSON.stringify(this.storageService.getData(), null, 0);
+        this.writeFile('data', stringToWrite);
     }
 
-    importFormJsonFile(): void {
-        this.readFile('data').then(value => {
-            this.successReadingFile();
-            this.passConfigListService.init();
-            this.passConfigFavoriteService.init();
-        }).catch(() => {
-            this.errorReadingJson();
-        });
+    importFormJsonFile(): Promise<void> {
+        return this.readFile('data')
+            .then(() => {
+                this.successReadingFile();
+            }).catch(() => {
+                this.errorReadingJson();
+            });
     }
 
     async successCreatingFile() {

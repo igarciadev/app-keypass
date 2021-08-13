@@ -18,6 +18,8 @@ import text from 'src/assets/text/list-tab.text.json';
 })
 export class ListTabPage {
 
+    passConfigList: PassConfig[];
+    passConfigFavoriteList: PassConfig[];
     toggleSort: boolean;
     toggleFavorite: boolean;
     navigateToSearch: string;
@@ -42,14 +44,17 @@ export class ListTabPage {
     ionViewWillEnter() {
         this.passConfigListService.init(this.toggleSort);
         this.passConfigFavoriteService.init();
-        this.reloadLists();
+        this.loadLists();
     }
 
-    reloadLists() {
+    loadLists() {
         let itemsListLength = this.passConfigFavoriteService.listLength() + this.passConfigListService.listLength();
         if (itemsListLength !== this.passConfigListService.storageListLength()) {
-            this.passConfigListService.reload();
+            this.passConfigListService.init(this.toggleSort);
+            this.passConfigFavoriteService.init();
         }
+        this.passConfigList = this.passConfigListService.list;
+        this.passConfigFavoriteList = this.passConfigFavoriteService.list;
     }
 
     navigateTo(url: string): void {
@@ -65,8 +70,11 @@ export class ListTabPage {
         this.passConfigListService.sort(this.toggleSort);
     }
 
-    callMainActionSheet(passConfig: PassConfig): Promise<void> {
-        return this.actionSheetService.mainActionSheet(passConfig);
+    async callMainActionSheet(passConfig: PassConfig): Promise<void> {
+        let result = await this.actionSheetService.mainActionSheet(passConfig);
+        if (result === 'deleteItem' || result === 'favoriteItem') {
+          this.loadLists();
+        }
     }
 
     async listPopover(event: any) {
@@ -92,7 +100,10 @@ export class ListTabPage {
                 this.fileService.exportToJsonFile();
                 break;
             case 'import':
-                this.fileService.importFormJsonFile();
+                this.fileService.importFormJsonFile()
+                    .then(() => {
+                        this.loadLists();
+                    });
                 break;
             default:
                 break;
