@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { PassConfig } from 'src/app/models/pass-config.model';
 import { ActionSheetService } from 'src/app/services/action-sheet.service';
 import { PassConfigSearchService } from 'src/app/services/pass-config-search.service';
 import text from 'src/assets/text/search.text.json';
-
 
 @Component({
     selector: 'app-search',
@@ -17,13 +17,18 @@ export class SearchPage implements OnInit {
 
     constructor(
         private actionSheetService: ActionSheetService,
-        public passConfigSearchService: PassConfigSearchService
+        public passConfigSearchService: PassConfigSearchService,
+        private titleService: Title
     ) {
         passConfigSearchService.init();
     }
 
     ngOnInit() {
         this.text = text;
+    }
+
+    ionViewWillEnter() {
+        this.titleService.setTitle('Search Page');
     }
 
     search(searchTerm): void {

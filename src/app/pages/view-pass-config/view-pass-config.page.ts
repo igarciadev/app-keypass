@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { NavController, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
@@ -45,6 +46,7 @@ export class ViewPassConfigPage implements OnInit {
         private popoverController: PopoverController,
         private router: Router,
         private storageService: StorageService,
+        private titleService: Title,
         private toastService: ToastService
     ) {
         this.passConfig = new PassConfig();
@@ -62,6 +64,7 @@ export class ViewPassConfigPage implements OnInit {
     }
 
     ionViewWillEnter() {
+        this.titleService.setTitle('View Page');
         this.showPassword = false;
         this.passwordType = 'password';
         this.passwordClass = 'field-input';

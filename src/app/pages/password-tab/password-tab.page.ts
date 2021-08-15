@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { AlertController, NavController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
@@ -48,6 +49,7 @@ export class PasswordTabPage implements OnInit {
         private navController: NavController,
         private passConfigService: PassConfigService,
         private storageService: StorageService,
+        private titleService: Title,
         private toastService: ToastService,
         private urlService: UrlService
     ) {
@@ -90,6 +92,10 @@ export class PasswordTabPage implements OnInit {
             .subscribe((previousUrl: string) => {
                 this.previousUrl = previousUrl;
             });
+    }
+
+    ionViewWillEnter() {
+        this.titleService.setTitle('Password Page');
     }
 
     initPasswordForm(): void {

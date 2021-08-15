@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { PopoverController } from '@ionic/angular';
 
@@ -32,7 +33,8 @@ export class ListTabPage {
         public passConfigListService: PassConfigListService,
         public passConfigFavoriteService: PassConfigFavoriteService,
         private popoverController: PopoverController,
-        private router: Router
+        private router: Router,
+        private titleService: Title
     ) {
         this.toggleSort = true;
         this.toggleFavorite = true;
@@ -42,6 +44,7 @@ export class ListTabPage {
     }
 
     ionViewWillEnter() {
+        this.titleService.setTitle('List Page');
         this.passConfigListService.init(this.toggleSort);
         this.passConfigFavoriteService.init();
         this.loadLists();
@@ -73,7 +76,7 @@ export class ListTabPage {
     async callMainActionSheet(passConfig: PassConfig): Promise<void> {
         let result = await this.actionSheetService.mainActionSheet(passConfig);
         if (result === 'deleteItem' || result === 'favoriteItem') {
-          this.loadLists();
+            this.loadLists();
         }
     }
 

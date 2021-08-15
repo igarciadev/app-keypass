@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { AlertController, NavController, PopoverController } from '@ionic/angular';
 
@@ -42,7 +43,8 @@ export class CreatePassConfigPage implements OnInit {
         private passwordValidator: PasswordValidatorService,
         private popoverController: PopoverController,
         private router: Router,
-        private storageService: StorageService
+        private storageService: StorageService,
+        private titleService: Title
     ) {
         this.passConfig = new PassConfig();
         this.initCreateForm();
@@ -61,6 +63,7 @@ export class CreatePassConfigPage implements OnInit {
     }
 
     ionViewWillEnter() {
+        this.titleService.setTitle('Create Page');
         if (this.passConfigService.getPassConfig() !== undefined) {
             this.passwordType = 'password';
             this.secret = undefined;
