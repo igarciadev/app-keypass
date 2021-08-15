@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { File, FileEntry } from '@ionic-native/file/ngx';
 import { AlertController } from '@ionic/angular';
-import { PassConfigFavoriteService } from './pass-config-favorite.service';
-import { PassConfigListService } from './pass-config-list.service';
 
 import { StorageService } from './storage.service';
-import text from 'src/assets/text/file.service.text.json'
 import { PassConfig } from '../models/pass-config.model';
+
+import text from 'src/assets/text/file.service.text.json'
 
 @Injectable({
     providedIn: 'root'
@@ -21,8 +20,6 @@ export class FileService {
     constructor(
         private alertController: AlertController,
         private file: File,
-        private passConfigListService: PassConfigListService,
-        private passConfigFavoriteService: PassConfigFavoriteService,
         private storageService: StorageService
     ) {
         this.text = text;
@@ -52,11 +49,12 @@ export class FileService {
     }
 
     exportToJsonFile(): void {
-        this.createFile('data').then(value => {
-            this.successCreatingFile();
-        }).catch(() => {
-            this.errorCreatingFile();
-        });
+        this.createFile('data')
+            .then(() => {
+                this.successFile(this.text.successExportText);
+            }).catch(() => {
+                this.errorCreatingFile();
+            });
 
         const stringToWrite = JSON.stringify(this.storageService.getData(), null, 0);
         this.writeFile('data', stringToWrite);
@@ -65,16 +63,16 @@ export class FileService {
     importFormJsonFile(): Promise<void> {
         return this.readFile('data')
             .then(() => {
-                this.successReadingFile();
+                this.successFile(this.text.successImportText);
             }).catch(() => {
                 this.errorReadingJson();
             });
     }
 
-    async successCreatingFile() {
+    async successFile(message: string) {
         const alert = await this.alertController.create({
-            header: 'Información',
-            message: 'Configuraciones de contraseñas exportadas con éxito',
+            header: this.text.infoText,
+            message: message,
             buttons: [this.text.acceptText]
         });
 
@@ -85,16 +83,6 @@ export class FileService {
         const alert = await this.alertController.create({
             header: this.text.errorText,
             message: this.text.errorCreatingFileText,
-            buttons: [this.text.acceptText]
-        });
-
-        await alert.present();
-    }
-
-    async successReadingFile() {
-        const alert = await this.alertController.create({
-            header: 'Información',
-            message: 'Configuraciones de contraseñas importadas con éxito',
             buttons: [this.text.acceptText]
         });
 

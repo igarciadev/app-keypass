@@ -2,5 +2,8 @@
     "acceptText": "Aceptar",
     "errorText": "Error",
     "errorCreatingFileText": "Se ha producido un error al crear el fichero de exportación",
-    "errorReadingJsonText": "Se ha producido un error al importar la información"
+    "errorReadingJsonText": "Se ha producido un error al importar la información",
+    "infoText": "Información",
+    "successExportText": "Configuraciones de contraseñas exportadas con éxito",
+    "successImportText": "Configuraciones de contraseñas importadas con éxito"
 }
