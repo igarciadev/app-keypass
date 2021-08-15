@@ -116,4 +116,12 @@ export class ListTabPage {
     get showFavoriteList(): boolean {
         return this.passConfigFavoriteService.listLength() > 0;
     }
+
+    firstLetter(name: string): string {
+        return name.substr(0, 1);
+    }
+
+    firstLetterClass(name: string): string {
+        return `letter-${name.substr(0, 1).toLowerCase()}`;
+    }
 }

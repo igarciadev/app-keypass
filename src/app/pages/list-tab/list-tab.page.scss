@@ -21,3 +21,408 @@
 .header-min-height {
     min-height: 35px !important;
 }
+
+.letter-a:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(215, 95, 85);
+}
+
+.letter-b:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(225, 90, 75);
+}
+
+.letter-c:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(235, 85, 65);
+}
+
+.letter-d:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(243, 80, 55);
+}
+
+.letter-e:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(130, 105, 170);
+}
+
+.letter-f:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(135, 95, 180);
+}
+
+.letter-g:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(140, 85, 190);
+}
+
+.letter-h:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(145, 75, 200);
+}
+
+.letter-i:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(84, 153, 199);
+}
+
+.letter-j:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(93, 173, 226);
+}
+
+.letter-k:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(41, 128, 185);
+}
+
+.letter-l:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(52, 152, 219);
+}
+
+.letter-m:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(100, 220, 140);
+}
+
+.letter-n:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(90, 210, 138);
+}
+
+.letter-ñ:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(80, 200, 136);
+}
+
+.letter-o:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(60, 190, 134);
+}
+
+.letter-p:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(50, 180, 132);
+}
+
+.letter-q:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(40, 170, 130);
+}
+
+.letter-r:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(30, 160, 128);
+}
+
+.letter-s:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(20, 150, 126);
+}
+
+.letter-t:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(244, 208, 63);
+}
+
+.letter-u:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(241, 196, 15);
+}
+
+.letter-v:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(245, 176, 65);
+}
+
+.letter-w:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(243, 156, 18);
+}
+
+.letter-x:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(235, 152, 78);
+}
+
+.letter-y:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(230, 126, 34);
+}
+
+.letter-z:before {
+    content: attr(title);
+    display:inline-block;
+    font-size:1em;
+    width:2em;
+    height:2em;
+    line-height:2.3em;
+    text-align:center;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:1em;
+    color:white;
+    background: rgb(230, 119, 23);
+}
