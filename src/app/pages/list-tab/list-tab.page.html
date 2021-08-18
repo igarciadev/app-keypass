@@ -24,7 +24,8 @@
         </ion-list-header>
         <ion-item *ngFor="let item of passConfigFavoriteList" lines="full"
             (click)="callMainActionSheet(item)" [ngClass]="{'block-none' : !toggleFavorite}">
-            <ion-img class="w-26" slot="start" [src]="item.image"></ion-img>
+            <!--ion-img class="w-26" slot="start" [src]="item.image"></ion-img-->
+            <div [class]="firstLetterClass(item.name)" title="{{ firstLetter(item.name) }}"></div>
             <ion-label>{{ item.name }}</ion-label>
         </ion-item>
     </ion-list>
@@ -37,7 +38,8 @@
 <ion-content [fullscreen]="true">
     <ion-list>
         <ion-item *ngFor="let item of passConfigList" lines="full" (click)="callMainActionSheet(item)">
-            <ion-img class="w-26" slot="start" [src]="item.image"></ion-img>
+            <!--ion-img class="w-26" slot="start" [src]="item.image"></ion-img-->
+            <div [class]="firstLetterClass(item.name)" title="{{ firstLetter(item.name) }}"></div>
             <ion-label>{{ item.name }}</ion-label>
         </ion-item>
     </ion-list>
