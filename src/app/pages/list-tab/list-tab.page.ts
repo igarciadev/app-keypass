@@ -73,6 +73,14 @@ export class ListTabPage {
         this.passConfigListService.sort(this.toggleSort);
     }
 
+    firstLetter(name: string): string {
+        return name.substr(0, 1);
+    }
+
+    firstLetterClass(name: string): string {
+        return `circle-${name.substr(0, 1).toLowerCase()}`;
+    }
+
     async callMainActionSheet(passConfig: PassConfig): Promise<void> {
         let result = await this.actionSheetService.mainActionSheet(passConfig);
         if (result === 'deleteItem' || result === 'favoriteItem') {
@@ -117,11 +125,7 @@ export class ListTabPage {
         return this.passConfigFavoriteService.listLength() > 0;
     }
 
-    firstLetter(name: string): string {
-        return name.substr(0, 1);
-    }
-
-    firstLetterClass(name: string): string {
-        return `letter-${name.substr(0, 1).toLowerCase()}`;
+    hasImage(passConfig: PassConfig): boolean {
+        return passConfig.image !== undefined && passConfig.image !== null && !passConfig.image.includes('domain_url=null');
     }
 }

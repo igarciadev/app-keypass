@@ -38,4 +38,16 @@ export class SearchPage implements OnInit {
     mainActionSheet(passConfig: PassConfig): void {
         this.actionSheetService.mainActionSheet(passConfig);
     }
+
+    firstLetter(name: string): string {
+        return name.substr(0, 1);
+    }
+
+    firstLetterClass(name: string): string {
+        return `circle-${name.substr(0, 1).toLowerCase()}`;
+    }
+
+    hasImage(passConfig: PassConfig): boolean {
+        return passConfig.image !== undefined && passConfig.image !== null && !passConfig.image.includes('domain_url=null');
+    }
 }

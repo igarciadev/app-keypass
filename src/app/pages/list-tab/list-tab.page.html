@@ -22,10 +22,12 @@
             <ion-icon *ngIf="!toggleFavorite" class="mr-16" name="chevron-down-outline" (click)="favoriteToggler()">
             </ion-icon>
         </ion-list-header>
-        <ion-item *ngFor="let item of passConfigFavoriteList" lines="full"
-            (click)="callMainActionSheet(item)" [ngClass]="{'block-none' : !toggleFavorite}">
-            <!--ion-img class="w-26" slot="start" [src]="item.image"></ion-img-->
-            <div [class]="firstLetterClass(item.name)" title="{{ firstLetter(item.name) }}"></div>
+        <ion-item *ngFor="let item of passConfigFavoriteList" lines="full" (click)="callMainActionSheet(item)"
+            [ngClass]="{'block-none' : !toggleFavorite}">
+            <ion-img *ngIf="hasImage(item)" class="w-28" slot="start" [src]="item.image"></ion-img>
+            <div *ngIf="!hasImage(item)" [class]="firstLetterClass(item.name)">
+                <span class="initials">{{ firstLetter(item.name) }}</span>
+            </div>
             <ion-label>{{ item.name }}</ion-label>
         </ion-item>
     </ion-list>
@@ -38,8 +40,10 @@
 <ion-content [fullscreen]="true">
     <ion-list>
         <ion-item *ngFor="let item of passConfigList" lines="full" (click)="callMainActionSheet(item)">
-            <!--ion-img class="w-26" slot="start" [src]="item.image"></ion-img-->
-            <div [class]="firstLetterClass(item.name)" title="{{ firstLetter(item.name) }}"></div>
+            <ion-img *ngIf="hasImage(item)" class="w-28" slot="start" [src]="item.image"></ion-img>
+            <div *ngIf="!hasImage(item)" [class]="firstLetterClass(item.name)">
+                <span class="initials">{{ firstLetter(item.name) }}</span>
+            </div>
             <ion-label>{{ item.name }}</ion-label>
         </ion-item>
     </ion-list>
