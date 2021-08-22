@@ -34,7 +34,7 @@ export class StorageService {
     }
 
     addPassConfig(passConfig: PassConfig): void {
-        passConfig.updatedOn = this.timeCore.getNow();
+        passConfig.updatedOn = this.timeCore.forModel();
         this.passConfigs.push(passConfig);
         this.saveData(this.passConfigs);
     }

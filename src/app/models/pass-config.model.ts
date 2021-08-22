@@ -22,8 +22,8 @@ export class PassConfig extends BaseConfig {
         this.notes = this.notEmpty(init, 'notes') ? init.notes : '';
         this.image = this.notEmpty(init, 'image') ? this.buildImage(init.uri) : '';
         this.favorite = this.notEmpty(init, 'favorite') ? init.favorite : false;
-        this.createdOn = this.notEmpty(init, 'createdOn') ? init.createdOn : this.timeCore.getNow();
-        this.updatedOn = this.notEmpty(init, 'updatedOn') ? init.updatedOn : this.timeCore.getNow();
+        this.createdOn = this.notEmpty(init, 'createdOn') ? init.createdOn : this.timeCore.forModel();
+        this.updatedOn = this.notEmpty(init, 'updatedOn') ? init.updatedOn : this.timeCore.forModel();
         this.keyConfig = this.notEmpty(init, 'keyConfig') ? new KeyConfig(init.keyConfig) : new KeyConfig();
     }
 
