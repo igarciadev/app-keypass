@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { PassConfigFavoriteService } from './pass-config-favorite.service';
 import { PassConfigSearchService } from './pass-config-search.service';
 import { PassConfig } from '../models/pass-config.model';
-import { PassConfigLists } from '../models/pass-config-lists.model';
 import { SortListService } from './sort-list.service';
 import { StorageService } from './storage.service';
 
@@ -14,7 +13,6 @@ export class PassConfigListService {
 
     ascending: boolean;
     list: PassConfig[];
-    passConfigLists: PassConfigLists;
 
     constructor(
         private passConfigFavoritesService: PassConfigFavoriteService,
@@ -57,10 +55,6 @@ export class PassConfigListService {
         this.sortListService.sort(this.list, ascending);
     }
 
-    findPassConfigPosition(passConfigId: number): number {
-        return this.passConfigLists.passConfigStored.findIndex(item => item.id === passConfigId);
-    }
-
     addItemToList(passConfig: PassConfig): void {
         this.list.push(passConfig);
         this.storageService.updatePassConfig(passConfig);
@@ -86,9 +80,5 @@ export class PassConfigListService {
 
     storageListLength(): number {
         return this.storageService.getData().length;
-    }
-
-    get sortDirection(): boolean {
-        return this.passConfigLists.sort;
     }
 }
