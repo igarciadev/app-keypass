@@ -2,14 +2,17 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { PopoverController } from '@ionic/angular';
+import { AlertController, PopoverController } from '@ionic/angular';
+import { FilePath } from '@ionic-native/file-path/ngx';
 
+import { TimeCore } from 'src/app/core/time.core';
 import { PassConfig } from 'src/app/models/pass-config.model';
 import { ActionSheetService } from 'src/app/services/action-sheet.service';
 import { FileService } from 'src/app/services/file.service';
 import { PassConfigFavoriteService } from 'src/app/services/pass-config-favorite.service';
 import { PassConfigListService } from 'src/app/services/pass-config-list.service';
 import { ListPopoverComponent } from 'src/app/shared/list-popover/list-popover/list-popover.component';
+import { environment } from 'src/environments/environment';
 import text from 'src/assets/text/list-tab.text.json';
 
 @Component({
@@ -29,6 +32,8 @@ export class ListTabPage {
 
     constructor(
         private actionSheetService: ActionSheetService,
+        private alertController: AlertController,
+        public filePath: FilePath,
         private fileService: FileService,
         public passConfigListService: PassConfigListService,
         public passConfigFavoriteService: PassConfigFavoriteService,
@@ -51,11 +56,8 @@ export class ListTabPage {
     }
 
     loadLists() {
-        let itemsListLength = this.passConfigFavoriteService.listLength() + this.passConfigListService.listLength();
-        if (itemsListLength !== this.passConfigListService.storageListLength()) {
-            this.passConfigListService.init(this.toggleSort);
-            this.passConfigFavoriteService.init();
-        }
+        this.passConfigListService.init(this.toggleSort);
+        this.passConfigFavoriteService.init();
         this.passConfigList = this.passConfigListService.list;
         this.passConfigFavoriteList = this.passConfigFavoriteService.list;
     }
@@ -73,12 +75,38 @@ export class ListTabPage {
         this.passConfigListService.sort(this.toggleSort);
     }
 
+    createBackup(): void {
+        const fileName = `${environment.fileName}-${new TimeCore().forFile()}`;
+        this.fileService.exportToJsonFile(fileName);
+    }
+
+    restoreBackup(): void {
+        this.fileService.pickFile()
+            .then(selectedPath => {
+                return this.filePath.resolveNativePath(selectedPath)
+                    .then(resolvedNativePath => {
+                        this.fileService.importFormJsonFile(resolvedNativePath)
+                            .then(() => {
+                                this.loadLists();
+                            })
+                    });
+            });
+    }
+
     firstLetter(name: string): string {
         return name.substr(0, 1);
     }
 
     firstLetterClass(name: string): string {
         return `circle-${name.substr(0, 1).toLowerCase()}`;
+    }
+
+    hasImage(passConfig: PassConfig): boolean {
+        return passConfig.image !== undefined && passConfig.image !== null && !passConfig.image.includes('domain_url=null');
+    }
+
+    get showFavoriteList(): boolean {
+        return this.passConfigFavoriteService.listLength() > 0;
     }
 
     async callMainActionSheet(passConfig: PassConfig): Promise<void> {
@@ -108,24 +136,53 @@ export class ListTabPage {
                 this.sortToggler(false);
                 break;
             case 'export':
-                this.fileService.exportToJsonFile();
+                this.createBackupAlert();
                 break;
             case 'import':
-                this.fileService.importFormJsonFile()
-                    .then(() => {
-                        this.loadLists();
-                    });
+                this.restoreBackupAlert();
                 break;
             default:
                 break;
         }
     }
 
-    get showFavoriteList(): boolean {
-        return this.passConfigFavoriteService.listLength() > 0;
+    async createBackupAlert() {
+        const alert = await this.alertController.create({
+            header: this.text.backupText,
+            message: this.text.createBackupTex,
+            buttons: [
+                {
+                    text: this.text.cancelText,
+                    role: 'cancel'
+                }, {
+                    text: this.text.acceptText,
+                    handler: () => {
+                        this.createBackup();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
-    hasImage(passConfig: PassConfig): boolean {
-        return passConfig.image !== undefined && passConfig.image !== null && !passConfig.image.includes('domain_url=null');
+    async restoreBackupAlert() {
+        const alert = await this.alertController.create({
+            header: this.text.backupText,
+            message: `${this.text.restoreBackupTex}<br><br><br><strong>${this.text.warningText}</strong><br><br>${this.text.overwrittenText}<br><br>${this.text.notUndoneText}`,
+            buttons: [
+                {
+                    text: this.text.cancelText,
+                    role: 'cancel'
+                }, {
+                    text: this.text.acceptText,
+                    handler: () => {
+                        this.restoreBackup();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }

@@ -1,5 +1,13 @@
 {
     "titleText": "Caja fuerte",
     "favoriteText": "Favoritos",
-    "listText": "Listado"
+    "listText": "Listado",
+    "backupText": "Copia de seguridad",
+    "createBackupTex": "Estás a punto de crear una copia de seguridad de todas tus configuraciones de contraseñas.",
+    "restoreBackupTex": "Estás a punto de restaurar una copia de seguridad de todas tus configuraciones de contraseñas.",
+    "warningText": "ADVERTENCIA",
+    "overwrittenText": "Se sobreescribirán las configuraciones de contraseñas actuales por las de la copia de seguridad.",
+    "notUndoneText": "¡Esta acción no se puede deshacer!",
+    "cancelText": "Cancelar",
+    "acceptText": "Aceptar"
 }

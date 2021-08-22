@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { PassConfig } from '../models/pass-config.model';
-import { FileService } from './file.service';
 import { PassConfigFavoriteService } from './pass-config-favorite.service';
 import { PassConfigListService } from './pass-config-list.service';
 import { PassConfigService } from './pass-config.service';
@@ -26,7 +25,6 @@ export class ActionSheetService {
     constructor(
         private actionSheetController: ActionSheetController,
         private alertController: AlertController,
-        private fileService: FileService,
         private passConfigService: PassConfigService,
         private passConfigFavoriteService: PassConfigFavoriteService,
         private passConfigListService: PassConfigListService,
