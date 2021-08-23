@@ -74,6 +74,7 @@ export class AppComponent implements OnInit {
 
     async showExitConfirm() {
         const alert = await this.alertController.create({
+            header: this.text.exitText,
             message: this.text.confirmText,
             backdropDismiss: false,
             buttons: [

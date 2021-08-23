@@ -1,5 +1,6 @@
 {
     "confirmText": "Estás a punto de cerrar la aplicación. ¿Deseas salir?",
     "cancelText": "Cancelar",
-    "acceptText": "Aceptar"
+    "acceptText": "Aceptar",
+    "exitText": "Salir"
 }
