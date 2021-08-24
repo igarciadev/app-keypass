@@ -23,7 +23,9 @@ import text from 'src/assets/text/list-tab.text.json';
 export class ListTabPage {
 
     passConfigList: PassConfig[];
+    listLength: number;
     passConfigFavoriteList: PassConfig[];
+    favoriteLength: number;
     toggleSort: boolean;
     toggleFavorite: boolean;
     navigateToSearch: string;
@@ -59,7 +61,9 @@ export class ListTabPage {
         this.passConfigListService.init(this.toggleSort);
         this.passConfigFavoriteService.init();
         this.passConfigList = this.passConfigListService.list;
+        this.listLength = this.passConfigList.length;
         this.passConfigFavoriteList = this.passConfigFavoriteService.list;
+        this.favoriteLength = this.passConfigFavoriteList.length;
     }
 
     navigateTo(url: string): void {

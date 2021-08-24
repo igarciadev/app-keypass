@@ -15,11 +15,12 @@
 <ion-header [translucent]="false">
     <ion-list *ngIf="showFavoriteList">
         <ion-list-header class="header-background header-min-height">
-            <ion-icon class="mr-16" name="heart"></ion-icon>
+            <ion-icon class="ion-margin-end" name="heart"></ion-icon>
             <ion-label>{{ text.favoriteText }}</ion-label>
-            <ion-icon *ngIf="toggleFavorite" class="mr-16" name="chevron-up-outline" (click)="favoriteToggler()">
+            <ion-label class="ion-text-end ion-margin-end">{{ favoriteLength }}</ion-label>
+            <ion-icon *ngIf="toggleFavorite" class="ion-margin-end" name="chevron-up-outline" (click)="favoriteToggler()">
             </ion-icon>
-            <ion-icon *ngIf="!toggleFavorite" class="mr-16" name="chevron-down-outline" (click)="favoriteToggler()">
+            <ion-icon *ngIf="!toggleFavorite" class="ion-margin-end" name="chevron-down-outline" (click)="favoriteToggler()">
             </ion-icon>
         </ion-list-header>
         <ion-item *ngFor="let item of passConfigFavoriteList" lines="full" (click)="callMainActionSheet(item)"
@@ -32,8 +33,9 @@
         </ion-item>
     </ion-list>
     <ion-list-header class="header-background header-min-height">
-        <ion-icon class="mr-16" name="list-outline"></ion-icon>
+        <ion-icon class="ion-margin-end" name="list-outline"></ion-icon>
         <ion-label>{{ text.listText }}</ion-label>
+        <ion-label class="ion-text-end ion-margin-end">{{ listLength }}</ion-label>
     </ion-list-header>
 </ion-header>
 
