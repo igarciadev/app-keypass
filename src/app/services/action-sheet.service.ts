@@ -50,18 +50,16 @@ export class ActionSheetService {
             resolveFunction = resolve;
         });
 
-        if (this.passConfigFavoriteService.listLength() < 3 && !this.passConfig.favorite) {
+        if (!this.passConfig.favorite) {
             this.passConfig.favorite = true;
             this.passConfigListService.removeItemFromList(this.passConfig);
             this.passConfigFavoriteService.addItemToList(this.passConfig);
             resolveFunction('favoriteItem');
-        } else if (this.passConfig.favorite) {
+        } else {
             this.passConfig.favorite = false;
             this.passConfigListService.addItemToList(this.passConfig);
             this.passConfigFavoriteService.removeItemFromList(this.passConfig);
             resolveFunction('favoriteItem');
-        } else if (!this.passConfig.favorite) {
-            this.favoriteAlert();
         }
 
         return promise;
