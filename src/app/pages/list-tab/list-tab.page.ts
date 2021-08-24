@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { AlertController, PopoverController } from '@ionic/angular';
+import { AlertController, NavController, PopoverController } from '@ionic/angular';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
 import { TimeCore } from 'src/app/core/time.core';
@@ -28,8 +28,6 @@ export class ListTabPage {
     favoriteLength: number;
     toggleSort: boolean;
     toggleFavorite: boolean;
-    navigateToSearch: string;
-    navigateToCreate: string;
     text: any;
 
     constructor(
@@ -37,6 +35,7 @@ export class ListTabPage {
         private alertController: AlertController,
         public filePath: FilePath,
         private fileService: FileService,
+        private navController: NavController,
         public passConfigListService: PassConfigListService,
         public passConfigFavoriteService: PassConfigFavoriteService,
         private popoverController: PopoverController,
@@ -45,8 +44,6 @@ export class ListTabPage {
     ) {
         this.toggleSort = true;
         this.toggleFavorite = true;
-        this.navigateToSearch = '/tabs/safe-tab/search';
-        this.navigateToCreate = '/tabs/safe-tab/create';
         this.text = text;
     }
 
@@ -66,8 +63,13 @@ export class ListTabPage {
         this.favoriteLength = this.passConfigFavoriteList.length;
     }
 
-    navigateTo(url: string): void {
-        this.router.navigateByUrl(url);
+    navigateToListTab(): void {
+        this.navController.back();
+    }
+
+    navigateToCreateView(): void {
+        this.router.navigateByUrl('/tabs/safe-tab/create');
+    }
     }
 
     favoriteToggler(): void {
