@@ -100,7 +100,7 @@ export class ListTabPage {
     }
 
     firstLetter(name: string): string {
-        return name.substr(0, 1);
+        return name.substr(0, 1).toUpperCase();
     }
 
     firstLetterClass(name: string): string {
