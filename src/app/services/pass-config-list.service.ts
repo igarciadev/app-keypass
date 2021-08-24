@@ -73,12 +73,4 @@ export class PassConfigListService {
         this.passConfigFavoritesService.init();
         this.passConfigSearchService.removeItemFromList(passConfig);
     }
-
-    listLength(): number {
-        return this.list.length;
-    }
-
-    storageListLength(): number {
-        return this.storageService.getData().length;
-    }
 }

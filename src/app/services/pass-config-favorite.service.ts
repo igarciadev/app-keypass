@@ -44,8 +44,4 @@ export class PassConfigFavoriteService {
         this.list = this.list.filter(f => f.id !== passConfig.id);
         this.sortListService.sortAscending(this.list);
     }
-
-    listLength(): number {
-        return this.list.length;
-    }
 }
