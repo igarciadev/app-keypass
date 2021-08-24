@@ -12,7 +12,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-header [translucent]="false">
+<ion-content [fullscreen]="true">
     <ion-list *ngIf="showFavoriteList">
         <ion-list-header class="header-background header-min-height">
             <ion-icon class="ion-margin-end" name="heart"></ion-icon>
@@ -32,16 +32,18 @@
             <ion-label>{{ item.name }}</ion-label>
         </ion-item>
     </ion-list>
-    <ion-list-header class="header-background header-min-height">
-        <ion-icon class="ion-margin-end" name="list-outline"></ion-icon>
-        <ion-label>{{ text.listText }}</ion-label>
-        <ion-label class="ion-text-end ion-margin-end">{{ listLength }}</ion-label>
-    </ion-list-header>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-    <ion-list>
-        <ion-item *ngFor="let item of passConfigList" lines="full" (click)="callMainActionSheet(item)">
+    <ion-list *ngIf="showList">
+        <ion-list-header class="header-background header-min-height">
+            <ion-icon class="ion-margin-end" name="list-outline"></ion-icon>
+            <ion-label>{{ text.listText }}</ion-label>
+            <ion-label class="ion-text-end ion-margin-end">{{ listLength }}</ion-label>
+            <ion-icon *ngIf="toggleList" class="ion-margin-end" name="chevron-up-outline" (click)="listToggler()">
+            </ion-icon>
+            <ion-icon *ngIf="!toggleList" class="ion-margin-end" name="chevron-down-outline" (click)="listToggler()">
+            </ion-icon>
+        </ion-list-header>
+        <ion-item *ngFor="let item of passConfigList" lines="full" (click)="callMainActionSheet(item)"
+        [ngClass]="{'block-none' : !toggleList}">
             <ion-img *ngIf="hasImage(item)" class="w-28" slot="start" [src]="item.image"></ion-img>
             <div *ngIf="!hasImage(item)" [class]="firstLetterClass(item.name)">
                 <span class="initials">{{ firstLetter(item.name) }}</span>

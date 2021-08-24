@@ -27,6 +27,7 @@ export class ListTabPage {
     passConfigFavoriteList: PassConfig[];
     favoriteLength: number;
     toggleSort: boolean;
+    toggleList: boolean;
     toggleFavorite: boolean;
     text: any;
 
@@ -43,6 +44,7 @@ export class ListTabPage {
         private titleService: Title
     ) {
         this.toggleSort = true;
+        this.toggleList = true;
         this.toggleFavorite = true;
         this.text = text;
     }
@@ -70,6 +72,9 @@ export class ListTabPage {
     navigateToCreateView(): void {
         this.router.navigateByUrl('/tabs/safe-tab/create');
     }
+
+    listToggler(): void {
+        this.toggleList = !this.toggleList;
     }
 
     favoriteToggler(): void {
@@ -112,8 +117,12 @@ export class ListTabPage {
         return passConfig.image !== undefined && passConfig.image !== null && !passConfig.image.includes('domain_url=null');
     }
 
+    get showList(): boolean {
+        return this.listLength > 0;
+    }
+
     get showFavoriteList(): boolean {
-        return this.passConfigFavoriteService.listLength() > 0;
+        return this.favoriteLength > 0;
     }
 
     async callMainActionSheet(passConfig: PassConfig): Promise<void> {
