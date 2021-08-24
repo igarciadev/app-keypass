@@ -106,6 +106,7 @@ export class ListTabPage {
     }
 
     hasImage(passConfig: PassConfig): boolean {
+        passConfig.image = passConfig.buildImage(passConfig.uri);
         return passConfig.image !== undefined && passConfig.image !== null && !passConfig.image.includes('domain_url=null');
     }
 
