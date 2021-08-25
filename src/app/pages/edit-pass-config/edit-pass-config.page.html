@@ -60,6 +60,13 @@
                 <ion-label class="label" position="stacked">{{ text.notesText }}</ion-label>
                 <ion-textarea formControlName="notes" auto-grow="true"></ion-textarea>
             </ion-item>
+            <ion-list-header lines="none">
+                <ion-label color="primary">{{ text.someText }}</ion-label>
+            </ion-list-header>
+            <ion-item lines="none">
+                <ion-label class="label">{{ text.favoriteText }}</ion-label>
+                <ion-toggle formControlName="favorite"></ion-toggle>
+            </ion-item>
         </form>
     </ion-list>
 </ion-content>

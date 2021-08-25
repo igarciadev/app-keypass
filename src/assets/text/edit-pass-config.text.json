@@ -6,6 +6,7 @@
     "passwordText": "Contraseña",
     "uriText": "URI",
     "notesText": "Notas",
+    "favoriteText": "Favorito",
     "generateText": "Generar",
     "requiredText": "Campo requerido",
     "minlengthText": "Debe tener al menos 4 caracteres",
@@ -15,5 +16,6 @@
     "yesText": "Sí",
     "copyNameText": "Nombre de usuario copiado",
     "copyPasswordText": "Contraseña copiada",
-    "copyUriText": "URI copiada"
+    "copyUriText": "URI copiada",
+    "someText": "Varios"
 }

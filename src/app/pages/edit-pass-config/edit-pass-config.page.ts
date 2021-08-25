@@ -78,6 +78,7 @@ export class EditPassConfigPage implements OnInit {
         this.getFormControl('username').setValue(this.passConfig.username);
         this.getFormControl('uri').setValue(this.passConfig.uri);
         this.getFormControl('notes').setValue(this.passConfig.notes);
+        this.getFormControl('favorite').setValue(this.passConfig.favorite);
 
         let password;
         if (this.secret !== null) {
@@ -113,7 +114,8 @@ export class EditPassConfigPage implements OnInit {
                 this.passwordValidator.emptyPassword
             ),
             uri: new FormControl(this.passConfig.uri),
-            notes: new FormControl(this.passConfig.notes)
+            notes: new FormControl(this.passConfig.notes),
+            favorite: new FormControl(this.passConfig.favorite)
         });
     }
 

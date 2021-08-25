@@ -37,6 +37,7 @@ export class PassConfig extends BaseConfig {
         this.username = passConfig.username;
         this.uri = passConfig.uri;
         this.notes = passConfig.notes;
+        this.favorite = passConfig.favorite;
     }
 
     equals(passConfig: PassConfig): boolean {
