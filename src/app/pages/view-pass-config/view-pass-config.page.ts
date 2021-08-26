@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { NavController, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { PassConfig } from 'src/app/models/pass-config.model';
@@ -38,6 +39,7 @@ export class ViewPassConfigPage implements OnInit {
     constructor(
         private actionSheetService: ActionSheetService,
         private clipboard: Clipboard,
+        private inAppBrowser: InAppBrowser,
         private navController: NavController,
         private passConfigService: PassConfigService,
         private passwordValidator: PasswordValidatorService,
@@ -150,6 +152,14 @@ export class ViewPassConfigPage implements OnInit {
     copyUri() {
         this.clipboard.copy(this.getFormControl('uri').value);
         this.toastService.presentToast(this.text.copyUriText);
+    }
+
+    openInBrowser() {
+        let uri = this.passConfig.uri;
+        if (!/^(http|https):\/\//.test(uri)) {
+            uri = `https://${uri}`;
+        }
+        this.inAppBrowser.create(uri, '_system', { zoom: 'no' });
     }
 
     navigateToListTab(): void {

@@ -50,6 +50,9 @@
                 <ion-label class="label" position="stacked">{{ text.uriText }}</ion-label>
                 <ion-input type="text" formControlName="uri" [attr.disabled]="disableComponent"></ion-input>
                 <ion-buttons class="field-buttons" slot="end">
+                    <ion-button (click)="openInBrowser()">
+                        <ion-icon name="open-outline"color="primary"></ion-icon>
+                    </ion-button>
                     <ion-button (click)="copyUri()">
                         <ion-icon name="copy-outline" color="primary"></ion-icon>
                     </ion-button>
