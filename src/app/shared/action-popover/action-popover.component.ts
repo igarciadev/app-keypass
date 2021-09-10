@@ -36,10 +36,6 @@ export class ActionPopoverComponent implements OnInit {
         this.dismissPopover('edit', this.passConfig);
     }
 
-    favoriteConfigAction() {
-        this.dismissPopover('favorite', this.passConfig);
-    }
-
     deleteConfigPassAction() {
         this.dismissPopover('delete', this.passConfig);
     }

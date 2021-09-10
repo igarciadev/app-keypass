@@ -246,9 +246,6 @@ export class ViewPassConfigPage implements OnInit {
                 this.passConfigService.setPassConfig(this.passConfig);
                 this.navigateToEditPage();
                 break;
-            case 'favorite':
-                this.actionSheetService.favoriteAction(data.item.passConfig);
-                break;
             case 'delete':
                 this.actionSheetService.deleteAction(data.item.passConfig);
                 break;
