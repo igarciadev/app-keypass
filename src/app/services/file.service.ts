@@ -6,6 +6,8 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { File, FileEntry } from '@ionic-native/file/ngx';
 
 import { StorageService } from './storage.service';
+
+import { Group } from '../models/group.model';
 import { PassConfig } from '../models/pass-config.model';
 
 import text from 'src/assets/text/file.service.text.json'
@@ -69,6 +71,10 @@ export class FileService {
             this.successFile(this.text.successImportText);
             const passConfigs = JSON.parse(value);
             passConfigs.forEach((passConfig: PassConfig) => {
+                const group: Group = this.storageService.findGroupById(passConfig.group.id);
+                if (group === undefined && passConfig.group.id !== undefined) {
+                    this.storageService.addGroup(passConfig.group);
+                }
                 this.storageService.removePassConfig(passConfig);
             });
             this.storageService.saveData(passConfigs);
