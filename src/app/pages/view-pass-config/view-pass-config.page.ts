@@ -93,6 +93,7 @@ export class ViewPassConfigPage implements OnInit {
         this.getFormControl('username').setValue(this.passConfig.username);
         this.getFormControl('uri').setValue(this.passConfig.uri);
         this.getFormControl('notes').setValue(this.passConfig.notes);
+        this.getFormControl('favorite').setValue(this.passConfig.favorite);
         this.getFormControl('groupName').setValue(groupName);
         this.getFormControl('updatedOn').setValue(this.passConfig.updatedOn);
 
@@ -131,6 +132,7 @@ export class ViewPassConfigPage implements OnInit {
             ),
             uri: new FormControl(this.passConfig.uri),
             notes: new FormControl(this.passConfig.notes),
+            favorite: new FormControl(this.passConfig.favorite),
             groupName: new FormControl(''),
             updatedOn: new FormControl(this.passConfig.updatedOn)
         });

@@ -5,6 +5,7 @@
     "passwordText": "Contraseña",
     "uriText": "URI",
     "notesText": "Notas",
+    "favoriteText": "Favorito",
     "requiredText": "Campo requerido",
     "minlengthText": "Debe tener al menos 4 caracteres",
     "overwriteText": "Sobreescribir contraseña",
@@ -15,5 +16,6 @@
     "copyNameText": "Nombre de usuario copiado",
     "copyPasswordText": "Contraseña copiada",
     "copyUriText": "URI copiada",
-    "groupText": "Grupo"
+    "groupText": "Grupo",
+    "someText": "Varios"
 }

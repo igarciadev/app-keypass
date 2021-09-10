@@ -63,6 +63,13 @@
                 <ion-textarea formControlName="notes" auto-grow="true" [attr.disabled]="disableComponent">
                 </ion-textarea>
             </ion-item>
+            <ion-list-header lines="none">
+                <ion-label color="primary">{{ text.someText }}</ion-label>
+            </ion-list-header>
+            <ion-item lines="full">
+                <ion-label class="label">{{ text.favoriteText }}</ion-label>
+                <ion-toggle formControlName="favorite" [attr.disabled]="disableComponent"></ion-toggle>
+            </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.groupText }}</ion-label>
                 <ion-input type="text" formControlName="groupName" [attr.disabled]="disableComponent"></ion-input>
