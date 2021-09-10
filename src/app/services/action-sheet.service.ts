@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { PassConfig } from '../models/pass-config.model';
-import { PassConfigFavoriteService } from './pass-config-favorite.service';
-import { PassConfigListService } from './pass-config-list.service';
+
 import { PassConfigService } from './pass-config.service';
+import { StorageService } from './storage.service';
+
 import text from 'src/assets/text/action-sheet.text.json';
 
 @Injectable({
@@ -26,47 +27,12 @@ export class ActionSheetService {
         private actionSheetController: ActionSheetController,
         private alertController: AlertController,
         private passConfigService: PassConfigService,
-        private passConfigFavoriteService: PassConfigFavoriteService,
-        private passConfigListService: PassConfigListService,
-        private router: Router
+        private router: Router,
+        private storageService: StorageService
     ) {
         this.navigateToView = '/tabs/safe-tab/view';
         this.navigateToEdit = '/tabs/safe-tab/edit';
         this.text = text;
-    }
-
-    navigateTo(url: string): void {
-        this.passConfigService.setPassConfig(this.passConfig);
-        this.router.navigateByUrl(url);
-    }
-
-    favoriteConfigAction(passConfig?: PassConfig): Promise<string> {
-        if (passConfig !== undefined) {
-            this.passConfig = passConfig;
-        }
-
-        let resolveFunction: (confirm: string) => void;
-        const promise = new Promise<string>(resolve => {
-            resolveFunction = resolve;
-        });
-
-        if (!this.passConfig.favorite) {
-            this.passConfig.favorite = true;
-            this.passConfigListService.removeItemFromList(this.passConfig);
-            this.passConfigFavoriteService.addItemToList(this.passConfig);
-            resolveFunction('favoriteItem');
-        } else {
-            this.passConfig.favorite = false;
-            this.passConfigListService.addItemToList(this.passConfig);
-            this.passConfigFavoriteService.removeItemFromList(this.passConfig);
-            resolveFunction('favoriteItem');
-        }
-
-        return promise;
-    }
-
-    deletePassConfigAction(): void {
-        this.passConfigListService.deletePassConfig(this.passConfig)
     }
 
     createButtons(buttons: any[]): any[] {
@@ -85,17 +51,39 @@ export class ActionSheetService {
         return result;
     }
 
-    async favoriteAlert() {
-        const alert = await this.alertController.create({
-            header: this.text.warningText,
-            message: this.text.fullFavoriteText,
-            buttons: [this.text.acceptText]
-        });
-
-        await alert.present();
+    navigateTo(url: string): void {
+        this.passConfigService.setPassConfig(this.passConfig);
+        this.router.navigateByUrl(url);
     }
 
-    async deleteConfigAlert(passConfig?: PassConfig): Promise<string> {
+    viewAction(): void {
+        this.navigateTo(this.navigateToView);
+    }
+
+    editAction(): void {
+        this.navigateTo(this.navigateToEdit)
+    }
+
+    favoriteAction(passConfig?: PassConfig): Promise<string> {
+        if (passConfig !== undefined) {
+            this.passConfig = passConfig;
+        }
+
+        this.passConfig.favorite = !this.passConfig.favorite;
+
+        this.storageService.updatePassConfig(this.passConfig);
+
+        let resolveFunction: (confirm: string) => void;
+        const promise = new Promise<string>(resolve => {
+            resolveFunction = resolve;
+        });
+
+        resolveFunction('favoriteItem');
+
+        return promise;
+    }
+
+    async deleteAction(passConfig?: PassConfig): Promise<string> {
         if (passConfig !== undefined) {
             this.passConfig = passConfig;
         }
@@ -107,7 +95,7 @@ export class ActionSheetService {
 
         const alert = await this.alertController.create({
             header: this.text.warningText,
-            message: `${this.text.sureText}<br><strong>${this.text.undoneText}</strong>`,
+            message: `${this.text.sureText}<br><br>${this.text.undoneText}`,
             buttons: [
                 {
                     text: this.text.cancelText,
@@ -120,7 +108,7 @@ export class ActionSheetService {
                             this.router.navigateByUrl(`/tabs/safe-tab`);
                         }
 
-                        this.deletePassConfigAction();
+                        this.storageService.removePassConfig(this.passConfig);
                         resolveFunction('deleteItem');
                     }
                 }
@@ -141,10 +129,10 @@ export class ActionSheetService {
         this.passConfig = passConfig;
 
         this.optionButtons = [
-            { text: this.text.viewText, icon: 'eye', handler: () => { this.navigateTo(this.navigateToView); } },
-            { text: this.text.editText, icon: 'create', handler: () => { this.navigateTo(this.navigateToEdit); } },
-            { text: this.text.favoriteText, icon: 'heart', handler: () => { resolveFunction(this.favoriteConfigAction()); }, cssClass: this.passConfig.favorite ? 'success' : '' },
-            { text: this.text.deleteText, icon: 'trash', handler: () => { resolveFunction(this.deleteConfigAlert()); }, role: 'destructive', cssClass: 'danger' },
+            { text: this.text.viewText, icon: 'eye', handler: () => { this.viewAction(); } },
+            { text: this.text.editText, icon: 'create', handler: () => { this.editAction(); } },
+            { text: this.text.favoriteText, icon: 'heart', handler: () => { resolveFunction(this.favoriteAction()); }, cssClass: this.passConfig.favorite ? 'success' : '' },
+            { text: this.text.deleteText, icon: 'trash', handler: () => { resolveFunction(this.deleteAction()); }, role: 'destructive', cssClass: 'danger' },
             { text: this.text.cancelText, icon: 'close', role: 'cancel' }
         ];
 

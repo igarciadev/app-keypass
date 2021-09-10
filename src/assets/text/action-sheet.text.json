@@ -1,9 +1,9 @@
 {
-    "warningText": "Advertencia!",
+    "warningText": "Eliminar",
     "fullFavoriteText": "No se pueden añadir más configuraciones a favoitos.",
     "acceptText": "Aceptar",
-    "sureText": "¿Estás seguro?",
-    "undoneText": "No se puede deshacer",
+    "sureText": "Vas a eliminar la configuración de contraseña ¿Estás seguro?",
+    "undoneText": "¡No se puede deshacer!",
     "cancelText": "Cancelar",
     "viewText": "Ver",
     "editText": "Editar",
