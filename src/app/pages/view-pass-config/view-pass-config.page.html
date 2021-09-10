@@ -63,6 +63,10 @@
                 <ion-textarea formControlName="notes" auto-grow="true" [attr.disabled]="disableComponent">
                 </ion-textarea>
             </ion-item>
+            <ion-item lines="full">
+                <ion-label class="label" position="stacked">{{ text.groupText }}</ion-label>
+                <ion-input type="text" formControlName="groupName" [attr.disabled]="disableComponent"></ion-input>
+            </ion-item>
             <ion-item lines="none">
                 <ion-label class="label" position="stacked">{{ text.updatedOnText }}</ion-label>
                 <ion-input type="text" formControlName="updatedOn" [attr.disabled]="disableComponent"></ion-input>

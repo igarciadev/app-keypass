@@ -77,10 +77,23 @@ export class ViewPassConfigPage implements OnInit {
             this.passConfig = this.storageService.getPassConfig(this.passConfig.id);
         }
 
+        let groupName: string;
+        if (this.passConfig.group.id === undefined) {
+            groupName = this.storageService.getGroups()[0].name;
+        } else {
+            const group = this.storageService.findGroupById(this.passConfig.group.id);
+            if (group !== undefined) {
+                groupName = this.storageService.findGroupById(this.passConfig.group.id).name;
+            } else {
+                groupName = this.storageService.getGroups()[0].name;
+            }
+        }
+
         this.getFormControl('name').setValue(this.passConfig.name);
         this.getFormControl('username').setValue(this.passConfig.username);
         this.getFormControl('uri').setValue(this.passConfig.uri);
         this.getFormControl('notes').setValue(this.passConfig.notes);
+        this.getFormControl('groupName').setValue(groupName);
         this.getFormControl('updatedOn').setValue(this.passConfig.updatedOn);
 
         let password;
@@ -118,6 +131,7 @@ export class ViewPassConfigPage implements OnInit {
             ),
             uri: new FormControl(this.passConfig.uri),
             notes: new FormControl(this.passConfig.notes),
+            groupName: new FormControl(''),
             updatedOn: new FormControl(this.passConfig.updatedOn)
         });
     }
@@ -233,10 +247,10 @@ export class ViewPassConfigPage implements OnInit {
                 this.navigateToEditPage();
                 break;
             case 'favorite':
-                this.actionSheetService.favoriteConfigAction(data.item.passConfig);
+                this.actionSheetService.favoriteAction(data.item.passConfig);
                 break;
             case 'delete':
-                this.actionSheetService.deleteConfigAlert(data.item.passConfig);
+                this.actionSheetService.deleteAction(data.item.passConfig);
                 break;
             default:
                 break;
