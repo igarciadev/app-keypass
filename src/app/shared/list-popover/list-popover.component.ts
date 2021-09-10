@@ -11,6 +11,7 @@ import text from 'src/assets/text/list-popover.component.text.json'
 export class ListPopoverComponent implements OnInit {
 
     ascending: boolean;
+    page: string;
     text: any;
 
     constructor(
@@ -20,6 +21,7 @@ export class ListPopoverComponent implements OnInit {
 
     ngOnInit() {
         this.ascending = this.navParams.data.ascending;
+        this.page = this.navParams.data.page;
         this.text = text;
     }
 
@@ -47,5 +49,13 @@ export class ListPopoverComponent implements OnInit {
 
     get isAscending(): boolean {
         return this.ascending;
+    }
+
+    get showExportAction(): boolean {
+        return this.page !== undefined && this.page === 'list-tab';
+    }
+
+    get showImportAction(): boolean {
+        return this.page !== undefined && this.page === 'list-tab';
     }
 }

@@ -4,9 +4,9 @@
 <ion-item *ngIf="isAscending" (click)="descendingAction()">
     <ion-label>{{ text.descendingText }}</ion-label>
 </ion-item>
-<ion-item (click)="exportAction()">
+<ion-item *ngIf="showExportAction" (click)="exportAction()">
     <ion-label>{{ text.exportText }}</ion-label>
 </ion-item>
-<ion-item (click)="importAction()">
+<ion-item *ngIf="showImportAction" (click)="importAction()">
     <ion-label>{{ text.importText }}</ion-label>
 </ion-item>
