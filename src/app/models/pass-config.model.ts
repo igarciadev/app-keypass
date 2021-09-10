@@ -1,5 +1,6 @@
 import { BaseConfig } from 'src/app/models/base-config.model';
 import { KeyConfig } from 'src/app/models/key-config.model';
+import { Group } from './group.model';
 
 export class PassConfig extends BaseConfig {
     public id: number;
@@ -12,6 +13,7 @@ export class PassConfig extends BaseConfig {
     public createdOn: string;
     public updatedOn: string;
     public keyConfig: KeyConfig;
+    public group: Group;
 
     constructor(init?: Partial<PassConfig>) {
         super();
@@ -25,6 +27,7 @@ export class PassConfig extends BaseConfig {
         this.createdOn = this.notEmpty(init, 'createdOn') ? init.createdOn : this.timeCore.forModel();
         this.updatedOn = this.notEmpty(init, 'updatedOn') ? init.updatedOn : this.timeCore.forModel();
         this.keyConfig = this.notEmpty(init, 'keyConfig') ? new KeyConfig(init.keyConfig) : new KeyConfig();
+        this.group = this.notEmpty(init, 'group') ? new Group(init.group) : new Group();
     }
 
     buildImage(uri: string): string {
