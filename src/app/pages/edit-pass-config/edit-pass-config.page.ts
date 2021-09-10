@@ -7,12 +7,16 @@ import { AlertController, NavController, PopoverController } from '@ionic/angula
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
-import { PassConfig } from 'src/app/models/pass-config.model';
 import { PassConfigService } from 'src/app/services/pass-config.service';
+import { SortListService } from 'src/app/services/sort-list.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { RegeneratePopoverComponent } from 'src/app/shared/regenerate-popover/regenerate-popover.component';
 import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
 import { ToastService } from 'src/app/services/toast.service';
+
+import { Group } from 'src/app/models/group.model';
+import { PassConfig } from 'src/app/models/pass-config.model';
+
 import text from 'src/assets/text/edit-pass-config.text.json';
 
 @Component({
@@ -32,6 +36,7 @@ export class EditPassConfigPage implements OnInit {
     passwordClass: string;
     eyeIconName: string;
     secret: string;
+    groups: Group[];
     text: any;
 
     constructor(
@@ -43,6 +48,7 @@ export class EditPassConfigPage implements OnInit {
         private passwordValidator: PasswordValidatorService,
         private popoverController: PopoverController,
         private router: Router,
+        private sortListService: SortListService,
         private storageService: StorageService,
         private titleService: Title,
         private toastService: ToastService
@@ -55,7 +61,8 @@ export class EditPassConfigPage implements OnInit {
         this.submitForm = false;
         this.enableSettingsIcon = false;
         this.disablePassword = true;
-        this.eyeIconName = 'eye-off-outline'
+        this.eyeIconName = 'eye-off-outline';
+        this.groups = this.storageService.getGroups();
         this.text = text;
     }
 
@@ -74,11 +81,23 @@ export class EditPassConfigPage implements OnInit {
             }
         }
 
+        if (this.passConfig.group !== undefined && this.passConfig.group === undefined) {
+            this.passConfig.group = this.storageService.getGroups()[0];
+        } else {
+            const group = this.storageService.findGroupById(this.passConfig.group.id);
+            if (group !== undefined) {
+                this.passConfig.group = this.storageService.findGroupById(this.passConfig.group.id);
+            } else {
+                this.passConfig.group = this.storageService.getGroups()[0];
+            }
+        }
+
         this.getFormControl('name').setValue(this.passConfig.name);
         this.getFormControl('username').setValue(this.passConfig.username);
         this.getFormControl('uri').setValue(this.passConfig.uri);
         this.getFormControl('notes').setValue(this.passConfig.notes);
         this.getFormControl('favorite').setValue(this.passConfig.favorite);
+        this.getFormControl('groupId').setValue(this.passConfig.group.id);
 
         let password;
         if (this.secret !== null) {
@@ -97,6 +116,8 @@ export class EditPassConfigPage implements OnInit {
                 return;
             }
         }
+
+        this.sortAscending();
     }
 
     ionViewDidLeave() {
@@ -115,7 +136,8 @@ export class EditPassConfigPage implements OnInit {
             ),
             uri: new FormControl(this.passConfig.uri),
             notes: new FormControl(this.passConfig.notes),
-            favorite: new FormControl(this.passConfig.favorite)
+            favorite: new FormControl(this.passConfig.favorite),
+            groupId: new FormControl(this.passConfig.group.id)
         });
     }
 
@@ -156,6 +178,13 @@ export class EditPassConfigPage implements OnInit {
         }
     }
 
+    sortAscending() {
+        const firstGroup = this.groups[0];
+        this.groups.shift();
+        this.sortListService.sortAscending(this.groups);
+        this.groups.unshift(firstGroup);
+    }
+
     copyUsername() {
         this.clipboard.copy(this.getFormControl('username').value);
         this.toastService.presentToast(this.text.copyNameText);
@@ -186,6 +215,13 @@ export class EditPassConfigPage implements OnInit {
         }
 
         this.router.navigateByUrl(url);
+    }
+
+    updatePassConfigGroup(): void {
+        const group = this.storageService.findGroupById(this.getFormControl('groupId').value);
+        if (group !== undefined) {
+            this.passConfig.group = group;
+        }
     }
 
     async regeneratePopover(copy: boolean) {

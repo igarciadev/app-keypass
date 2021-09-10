@@ -63,9 +63,16 @@
             <ion-list-header lines="none">
                 <ion-label color="primary">{{ text.someText }}</ion-label>
             </ion-list-header>
-            <ion-item lines="none">
+            <ion-item lines="full">
                 <ion-label class="label">{{ text.favoriteText }}</ion-label>
                 <ion-toggle formControlName="favorite"></ion-toggle>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label class="label">{{ text.groupText }}</ion-label>
+                <ion-select value="0" ok-text="Aceptar" cancel-text="Cancelar" formControlName="groupId" (ionChange)="updatePassConfigGroup()">
+                    <ion-select-option *ngFor="let item of groups" [value]="item.id">{{ item.name }}
+                    </ion-select-option>
+                </ion-select>
             </ion-item>
         </form>
     </ion-list>
