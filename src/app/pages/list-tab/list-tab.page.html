@@ -2,7 +2,7 @@
     <ion-toolbar color="primary">
         <ion-title>{{ text.titleText }}</ion-title>
         <ion-buttons slot="end">
-            <ion-button color="light" (click)="navigateToListTab()">
+            <ion-button color="light" (click)="navigateTo(navigateToSearch)">
                 <ion-icon name="search-outline"></ion-icon>
             </ion-button>
             <ion-button color="light" (click)="listPopover($event)">
@@ -13,45 +13,33 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-list *ngIf="showFavoriteList">
-        <ion-list-header class="header-background header-min-height">
-            <ion-icon class="ion-margin-end" name="heart"></ion-icon>
-            <ion-label>{{ text.favoriteText }}</ion-label>
-            <ion-label class="ion-text-end ion-margin-end">{{ favoriteLength }}</ion-label>
-            <ion-icon *ngIf="toggleFavorite" class="ion-margin-end" name="chevron-up-outline" (click)="favoriteToggler()">
-            </ion-icon>
-            <ion-icon *ngIf="!toggleFavorite" class="ion-margin-end" name="chevron-down-outline" (click)="favoriteToggler()">
-            </ion-icon>
-        </ion-list-header>
-        <ion-item *ngFor="let item of passConfigFavoriteList" lines="full" (click)="callMainActionSheet(item)"
-            [ngClass]="{'block-none' : !toggleFavorite}">
-            <ion-img *ngIf="hasImage(item)" class="w-28" slot="start" [src]="item.image"></ion-img>
-            <div *ngIf="!hasImage(item)" [class]="firstLetterClass(item.name)">
-                <span class="initials">{{ firstLetter(item.name) }}</span>
-            </div>
-            <ion-label>{{ item.name }}</ion-label>
-        </ion-item>
-    </ion-list>
-    <ion-list *ngIf="showList">
-        <ion-list-header class="header-background header-min-height">
-            <ion-icon class="ion-margin-end" name="list-outline"></ion-icon>
-            <ion-label>{{ text.listText }}</ion-label>
-            <ion-label class="ion-text-end ion-margin-end">{{ listLength }}</ion-label>
-            <ion-icon *ngIf="toggleList" class="ion-margin-end" name="chevron-up-outline" (click)="listToggler()">
-            </ion-icon>
-            <ion-icon *ngIf="!toggleList" class="ion-margin-end" name="chevron-down-outline" (click)="listToggler()">
-            </ion-icon>
-        </ion-list-header>
-        <ion-item *ngFor="let item of passConfigList" lines="full" (click)="callMainActionSheet(item)"
-        [ngClass]="{'block-none' : !toggleList}">
-            <ion-img *ngIf="hasImage(item)" class="w-28" slot="start" [src]="item.image"></ion-img>
-            <div *ngIf="!hasImage(item)" [class]="firstLetterClass(item.name)">
-                <span class="initials">{{ firstLetter(item.name) }}</span>
-            </div>
-            <ion-label>{{ item.name }}</ion-label>
-        </ion-item>
-    </ion-list>
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="navigateToCreateView()">
+    <div *ngFor="let groupName of getKeys(); let i = index;">
+        <ion-list *ngIf="showGroup(groupName)">
+            <ion-list-header class="header-background header-min-height">
+                <ion-icon *ngIf="hasFavorites(groupName)" class="ion-margin-end" name="heart-outline"></ion-icon>
+                <ion-icon *ngIf="showList(groupName, i) && !hasFavorites(groupName)" class="ion-margin-end" name="folder-open-outline"></ion-icon>
+                <ion-icon *ngIf="!showList(groupName, i) && !hasFavorites(groupName)" class="ion-margin-end" name="folder-outline"></ion-icon>
+                <ion-label>{{ groupName }}</ion-label>
+                <ion-label class="ion-text-end ion-margin-end">{{ getValues(groupName).length }}</ion-label>
+                <ion-icon *ngIf="showGroups[i]" class="ion-margin-end" name="chevron-up-outline"
+                    (click)="groupToggler(i)">
+                </ion-icon>
+                <ion-icon *ngIf="!showGroups[i]" class="ion-margin-end" name="chevron-down-outline"
+                    (click)="groupToggler(i)">
+                </ion-icon>
+            </ion-list-header>
+            <ion-item *ngFor="let item of getValues(groupName)" lines="full" (click)="callMainActionSheet(item)"
+                [ngClass]="{'block-none' : !showGroups[i]}">
+                <ion-img *ngIf="hasImage(item)" class="w-28" slot="start" [src]="item.image"></ion-img>
+                <div *ngIf="!hasImage(item)" [class]="firstLetterClass(item.name)">
+                    <span class="initials">{{ firstLetter(item.name) }}</span>
+                </div>
+                <ion-label>{{ item.name }}</ion-label>
+                <ion-icon name="ellipsis-horizontal"></ion-icon>
+            </ion-item>
+        </ion-list>
+    </div>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="navigateTo(navigateToCreate)">
         <ion-fab-button color="primary">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
