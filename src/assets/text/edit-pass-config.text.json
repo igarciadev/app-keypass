@@ -17,5 +17,7 @@
     "copyNameText": "Nombre de usuario copiado",
     "copyPasswordText": "Contraseña copiada",
     "copyUriText": "URI copiada",
-    "someText": "Varios"
+    "someText": "Varios",
+    "groupText": "Grupo",
+    "selectText": "Seleccionar"
 }

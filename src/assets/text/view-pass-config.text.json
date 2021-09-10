@@ -14,5 +14,6 @@
     "yesText": "Sí",
     "copyNameText": "Nombre de usuario copiado",
     "copyPasswordText": "Contraseña copiada",
-    "copyUriText": "URI copiada"
+    "copyUriText": "URI copiada",
+    "groupText": "Grupo"
 }

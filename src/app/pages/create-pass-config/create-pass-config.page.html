@@ -29,7 +29,8 @@
                 <ion-input [type]="passwordType" [class]="passwordClass" formControlName="password"
                     [attr.disabled]="disablePassword"></ion-input>
                 <ion-buttons class="field-buttons" slot="end">
-                    <ion-button *ngIf="!enableEyeIcon" color="primary" (click)="generatePassword()">{{ text.generateText }} </ion-button>
+                    <ion-button *ngIf="!enableEyeIcon" color="primary" (click)="generatePassword()">{{ text.generateText
+                        }} </ion-button>
                     <ion-button *ngIf="enableEyeIcon" (click)="regeneratePopover()">
                         <ion-icon [name]="eyeIconName" color="primary"></ion-icon>
                     </ion-button>
@@ -48,6 +49,12 @@
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.notesText }}</ion-label>
                 <ion-textarea formControlName="notes" auto-grow="true"></ion-textarea>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label class="label">{{ text.groupText }}</ion-label>
+                <ion-select value="0" ok-text="Aceptar" cancel-text="Cancelar" formControlName="groupId" (ionChange)="updatePassConfigGroup()">
+                    <ion-select-option *ngFor="let item of groups" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
             </ion-item>
         </form>
     </ion-list>

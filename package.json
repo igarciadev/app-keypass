@@ -24,6 +24,7 @@
         "@ionic-native/file": "^5.34.0",
         "@ionic-native/file-chooser": "^5.35.0",
         "@ionic-native/file-path": "^5.35.0",
+        "@ionic-native/in-app-browser": "^5.36.0",
         "@ionic-native/keyboard": "^5.34.0",
         "@ionic/angular": "^5.5.2",
         "cordova-res": "^0.15.3",
@@ -54,6 +55,7 @@
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-filechooser": "^1.2.0",
         "cordova-plugin-filepath": "^1.6.0",
+        "cordova-plugin-inappbrowser": "^5.0.0",
         "cordova-plugin-ionic-keyboard": "^2.2.0",
         "cordova-plugin-ionic-webview": "^4.2.1",
         "cordova-plugin-splashscreen": "^5.0.2",
@@ -90,7 +92,8 @@
             "cordova-clipboard": {},
             "cordova-plugin-file": {},
             "cordova-plugin-filechooser": {},
-            "cordova-plugin-filepath": {}
+            "cordova-plugin-filepath": {},
+            "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
             "android"

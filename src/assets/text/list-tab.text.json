@@ -1,7 +1,5 @@
 {
     "titleText": "Caja fuerte",
-    "favoriteText": "Favoritos",
-    "listText": "Listado",
     "backupText": "Copia de seguridad",
     "createBackupTex": "Estás a punto de crear una copia de seguridad de todas tus configuraciones de contraseñas.",
     "restoreBackupTex": "Estás a punto de restaurar una copia de seguridad de todas tus configuraciones de contraseñas.",

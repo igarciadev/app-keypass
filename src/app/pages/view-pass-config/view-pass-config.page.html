@@ -50,6 +50,9 @@
                 <ion-label class="label" position="stacked">{{ text.uriText }}</ion-label>
                 <ion-input type="text" formControlName="uri" [attr.disabled]="disableComponent"></ion-input>
                 <ion-buttons class="field-buttons" slot="end">
+                    <ion-button (click)="openInBrowser()">
+                        <ion-icon name="open-outline"color="primary"></ion-icon>
+                    </ion-button>
                     <ion-button (click)="copyUri()">
                         <ion-icon name="copy-outline" color="primary"></ion-icon>
                     </ion-button>
@@ -59,6 +62,10 @@
                 <ion-label class="label" position="stacked">{{ text.notesText }}</ion-label>
                 <ion-textarea formControlName="notes" auto-grow="true" [attr.disabled]="disableComponent">
                 </ion-textarea>
+            </ion-item>
+            <ion-item lines="full">
+                <ion-label class="label" position="stacked">{{ text.groupText }}</ion-label>
+                <ion-input type="text" formControlName="groupName" [attr.disabled]="disableComponent"></ion-input>
             </ion-item>
             <ion-item lines="none">
                 <ion-label class="label" position="stacked">{{ text.updatedOnText }}</ion-label>

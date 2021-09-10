@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { NavController, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { PassConfig } from 'src/app/models/pass-config.model';
@@ -38,6 +39,7 @@ export class ViewPassConfigPage implements OnInit {
     constructor(
         private actionSheetService: ActionSheetService,
         private clipboard: Clipboard,
+        private inAppBrowser: InAppBrowser,
         private navController: NavController,
         private passConfigService: PassConfigService,
         private passwordValidator: PasswordValidatorService,
@@ -75,10 +77,23 @@ export class ViewPassConfigPage implements OnInit {
             this.passConfig = this.storageService.getPassConfig(this.passConfig.id);
         }
 
+        let groupName: string;
+        if (this.passConfig.group.id === undefined) {
+            groupName = this.storageService.getGroups()[0].name;
+        } else {
+            const group = this.storageService.findGroupById(this.passConfig.group.id);
+            if (group !== undefined) {
+                groupName = this.storageService.findGroupById(this.passConfig.group.id).name;
+            } else {
+                groupName = this.storageService.getGroups()[0].name;
+            }
+        }
+
         this.getFormControl('name').setValue(this.passConfig.name);
         this.getFormControl('username').setValue(this.passConfig.username);
         this.getFormControl('uri').setValue(this.passConfig.uri);
         this.getFormControl('notes').setValue(this.passConfig.notes);
+        this.getFormControl('groupName').setValue(groupName);
         this.getFormControl('updatedOn').setValue(this.passConfig.updatedOn);
 
         let password;
@@ -116,6 +131,7 @@ export class ViewPassConfigPage implements OnInit {
             ),
             uri: new FormControl(this.passConfig.uri),
             notes: new FormControl(this.passConfig.notes),
+            groupName: new FormControl(''),
             updatedOn: new FormControl(this.passConfig.updatedOn)
         });
     }
@@ -150,6 +166,14 @@ export class ViewPassConfigPage implements OnInit {
     copyUri() {
         this.clipboard.copy(this.getFormControl('uri').value);
         this.toastService.presentToast(this.text.copyUriText);
+    }
+
+    openInBrowser() {
+        let uri = this.passConfig.uri;
+        if (!/^(http|https):\/\//.test(uri)) {
+            uri = `https://${uri}`;
+        }
+        this.inAppBrowser.create(uri, '_system', { zoom: 'no' });
     }
 
     navigateToListTab(): void {
@@ -223,10 +247,10 @@ export class ViewPassConfigPage implements OnInit {
                 this.navigateToEditPage();
                 break;
             case 'favorite':
-                this.actionSheetService.favoriteConfigAction(data.item.passConfig);
+                this.actionSheetService.favoriteAction(data.item.passConfig);
                 break;
             case 'delete':
-                this.actionSheetService.deleteConfigAlert(data.item.passConfig);
+                this.actionSheetService.deleteAction(data.item.passConfig);
                 break;
             default:
                 break;
