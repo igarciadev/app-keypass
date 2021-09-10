@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+        <ion-title>{{ text.titleText }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button color="light" (click)="listPopover($event)">
+                <ion-icon color="light" slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-list *ngIf="groups.length > 1">
+        <ion-item *ngFor="let item of groups; let i = index;" lines="full" (click)="callMainActionSheet(i, item)">
+            <ion-label>{{ item.name }}</ion-label>
+            <ion-label class="ion-text-right ion-padding-end">{{ groupPassConfigsLength(item) }}</ion-label>
+            <ion-icon *ngIf="i > 0" name="ellipsis-horizontal"></ion-icon>
+            <ion-icon *ngIf="i === 0"></ion-icon>
+        </ion-item>
+    </ion-list>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" (click)="addGroup()">
+        <ion-fab-button color="primary">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

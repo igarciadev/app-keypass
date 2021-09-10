@@ -12,5 +12,7 @@
     "overwriteText": "Sobreescribir contraseña",
     "areYorSureText": "¿Estás seguro de que quieres sobreescribir la contraseña actual?",
     "noText": "No",
-    "yesText": "Sí"
+    "yesText": "Sí",
+    "groupText": "Grupo",
+    "selectText": "Seleccionar"
 }

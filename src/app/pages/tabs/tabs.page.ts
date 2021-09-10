@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { StorageService } from 'src/app/services/storage.service';
 import { UrlService } from 'src/app/services/url.service';
 import text from 'src/assets/text/tabs.text.json';
 
@@ -15,6 +16,7 @@ export class TabsPage implements OnInit {
 
     constructor(
         private router: Router,
+        private storageService: StorageService,
         private urlService: UrlService
     ) { }
 
@@ -38,10 +40,17 @@ export class TabsPage implements OnInit {
         this.router.navigateByUrl('tabs/password-tab', { replaceUrl: true });
     }
 
-    get show() {
+    navigateToGroupTab() {
+        this.router.navigateByUrl('tabs/group-tab', { replaceUrl: true });
+    }
+
+    get show(): boolean {
         return this.currentUrl !== null &&
             (this.currentUrl === '/' ||
-                this.currentUrl === '/tabs/safe-tab' ||
-                this.currentUrl === '/tabs/password-tab');
+                (this.currentUrl.includes('/tabs/safe-tab') &&
+                    this.currentUrl !== '/tabs/safe-tab/view' &&
+                    this.currentUrl !== '/tabs/safe-tab/edit') ||
+                this.currentUrl === '/tabs/password-tab' ||
+                this.currentUrl === '/tabs/group-tab');
     }
 }

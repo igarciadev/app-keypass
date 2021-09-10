@@ -5,10 +5,11 @@ import { filter } from 'rxjs/operators';
 
 import { AlertController, Platform } from '@ionic/angular';
 
-import { InitializerService } from './services/initializer.service';
 import { StorageService } from './services/storage.service';
 import { UrlService } from './services/url.service';
-import { environment } from './../environments/environment';
+
+import { Group } from './models/group.model';
+
 import text from '../assets/text/app.text.json';
 
 @Component({
@@ -23,7 +24,6 @@ export class AppComponent implements OnInit {
 
     constructor(
         private alertController: AlertController,
-        private initializerService: InitializerService,
         private location: Location,
         private platform: Platform,
         private router: Router,
@@ -33,10 +33,6 @@ export class AppComponent implements OnInit {
         this.currentUrl = null;
         this.previousUrl = null;
         this.text = text;
-
-        if (!environment.production && storageService.getData().length === 0) {
-            initializerService.addSampleData();
-        }
     }
 
     ngOnInit() {
@@ -66,10 +62,21 @@ export class AppComponent implements OnInit {
                 if (r) {
                     navigator['app'].exitApp();
                 }
-            }).catch(e => {
-                console.log(e);
-            })
+            });
         });
+
+        this.initializeGroups();
+    }
+
+    initializeGroups(): void {
+        let groups = this.storageService.getGroups();
+        if (groups === null || groups.length === 0) {
+            const group = new Group();
+            group.name = 'Sin agrupar';
+
+            this.storageService.saveGroups([]);
+            this.storageService.addGroup(group);
+        }
     }
 
     async showExitConfirm() {

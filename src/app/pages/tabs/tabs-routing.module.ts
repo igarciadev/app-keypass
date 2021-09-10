@@ -28,6 +28,10 @@ const routes: Routes = [
             {
               path: 'password-tab/create/:secret',
               loadChildren: () => import('../password-tab/password-tab.module').then(m => m.PasswordTabPageModule)
+            },
+            {
+                path: 'group-tab',
+                loadChildren: () => import('../group-tab/group-tab.module').then(m => m.GroupTabPageModule)
             }
         ]
     },

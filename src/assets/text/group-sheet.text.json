@@ -1,0 +1,19 @@
+{
+    "warningText": "Eliminar",
+    "fullFavoriteText": "No se pueden añadir más configuraciones a favoitos.",
+    "acceptText": "Aceptar",
+    "sureText": "Vas a eliminar la carpeta ¿Estás seguro?",
+    "undoneText": "¡No se puede deshacer!",
+    "cancelText": "Cancelar",
+    "viewText": "Ver",
+    "editText": "Editar",
+    "favoriteText": "Favorito",
+    "deleteText": "Eliminar",
+    "optionsText": "Opciones",
+    "fileText": "Fichero",
+    "groupText": "El grupo",
+    "notDeleteText": "no se puede eliminar.",
+    "haveText": "Tiene",
+    "oneText": "configuración de contraseña asociada.",
+    "manyText": "configuraciones de contraseñas asociadas."
+}
