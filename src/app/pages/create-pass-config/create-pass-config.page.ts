@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { AlertController, NavController, PopoverController } from '@ionic/angular';
 
-import { RegeneratePopoverComponent } from 'src/app/shared/regenerate-popover/regenerate-popover.component';
+import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { SortListService } from 'src/app/services/sort-list.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -22,7 +22,7 @@ import text from 'src/assets/text/create-pass-config.text.json';
     templateUrl: './create-pass-config.page.html',
     styleUrls: ['./create-pass-config.page.scss']
 })
-export class CreatePassConfigPage implements OnInit {
+export class CreatePassConfigPage extends BasePage implements OnInit {
 
     createForm: FormGroup;
     passConfig: PassConfig;
@@ -39,17 +39,17 @@ export class CreatePassConfigPage implements OnInit {
     text: any;
 
     constructor(
-        private activatedRoute: ActivatedRoute,
         private alertController: AlertController,
         private navController: NavController,
         private passConfigService: PassConfigService,
-        private passwordValidator: PasswordValidatorService,
-        private popoverController: PopoverController,
+        public passwordValidator: PasswordValidatorService,
+        public popoverController: PopoverController,
         private router: Router,
         private sortListService: SortListService,
         private storageService: StorageService,
         private titleService: Title
     ) {
+        super(passwordValidator, popoverController);
         this.passConfig = new PassConfig();
         this.initCreateForm();
     }
@@ -95,12 +95,12 @@ export class CreatePassConfigPage implements OnInit {
             }
         }
 
-        this.getFormControl('name').setValue(this.passConfig.name);
-        this.getFormControl('username').setValue(this.passConfig.username);
-        this.getFormControl('uri').setValue(this.passConfig.uri);
-        this.getFormControl('notes').setValue(this.passConfig.notes);
-        this.getFormControl('favorite').setValue(this.passConfig.favorite);
-        this.getFormControl('groupId').setValue(this.passConfig.group.id);
+        super.getFormControl(this.createForm, 'name').setValue(this.passConfig.name);
+        super.getFormControl(this.createForm, 'username').setValue(this.passConfig.username);
+        super.getFormControl(this.createForm, 'uri').setValue(this.passConfig.uri);
+        super.getFormControl(this.createForm, 'notes').setValue(this.passConfig.notes);
+        super.getFormControl(this.createForm, 'favorite').setValue(this.passConfig.favorite);
+        super.getFormControl(this.createForm, 'groupId').setValue(this.passConfig.group.id);
 
         if (this.passConfig.keyConfig.keyword !== '') {
             let password;
@@ -110,7 +110,7 @@ export class CreatePassConfigPage implements OnInit {
                 password = Array(this.passConfig.keyConfig.length + 1).join('*');
             }
 
-            this.getFormControl('password').setValue(password);
+            super.getFormControl(this.createForm, 'password').setValue(password);
         }
 
         if (this.submitForm) {
@@ -126,24 +126,13 @@ export class CreatePassConfigPage implements OnInit {
     }
 
     ionViewDidLeave() {
-        this.createForm.reset();
-        this.passConfigService.setPassConfig(undefined);
+        super.onIonViewDidLeave(this.createForm, this.passConfigService);
     }
 
     initCreateForm(): void {
-        this.createForm = new FormGroup({
-            name: new FormControl(this.passConfig.name,
-                Validators.required),
-            username: new FormControl(this.passConfig.username),
-            password: new FormControl(
-                this.passConfig.keyConfig.keyword,
-                this.passwordValidator.emptyPassword
-            ),
-            uri: new FormControl(this.passConfig.uri),
-            notes: new FormControl(this.passConfig.notes),
-            favorite: new FormControl(false),
-            groupId: new FormControl(this.passConfig.group.id)
-        });
+        this.createForm = super.onInitForm(this.passConfig);
+        this.createForm.addControl('favorite', new FormControl(false));
+        this.createForm.addControl('groupId', new FormControl(this.passConfig.group.id));
     }
 
     saveCreateForm(): void {
@@ -163,13 +152,9 @@ export class CreatePassConfigPage implements OnInit {
         this.navigateToListTab();
     }
 
-    getFormControl(formControlName: string): AbstractControl {
-        return this.createForm.get(formControlName);
-    }
-
     generatePassword(): void {
 
-        this.getFormControl('groupId').setValue(this.passConfig.group.id);
+        super.getFormControl(this.createForm, 'groupId').setValue(this.passConfig.group.id);
 
         this.passConfig.update(this.createForm.value);
         this.passConfigService.setPassConfig(this.passConfig);
@@ -212,34 +197,21 @@ export class CreatePassConfigPage implements OnInit {
     }
 
     updatePassConfigGroup(): void {
-        const group = this.storageService.findGroupById(this.getFormControl('groupId').value);
+        const group = this.storageService.findGroupById(super.getFormControl(this.createForm, 'groupId').value);
         if (group !== undefined) {
             this.passConfig.group = group;
         }
     }
 
-    async regeneratePopover() {
-        if (this.secret === undefined) {
-            const popover = await this.popoverController.create({
-                component: RegeneratePopoverComponent,
-                translucent: true,
-                keyboardClose: false
-            });
-            popover.style.cssText = '--width: 78vw;';
+    regenerate(secret: string, copy: boolean) {
+        this.secret = secret;
+        const password = this.regeneratePassword(this.secret);
+        super.getFormControl(this.createForm, 'password').setValue(password);
+        this.togglePassword();
+    }
 
-            await popover.present();
-
-            const { data } = await popover.onDidDismiss();
-            if (data !== undefined && data.item.secret) {
-                this.secret = data.item.secret;
-
-                const password = this.regeneratePassword(this.secret);
-                this.getFormControl('password').setValue(password);
-                this.togglePassword();
-            }
-        } else {
-            this.togglePassword();
-        }
+    async regeneratePopover(copy: boolean) {
+        super.onRegeneratePopover(this.secret, copy);
     }
 
     async changePopover() {
@@ -264,15 +236,15 @@ export class CreatePassConfigPage implements OnInit {
     }
 
     invalidName(formControlname: string): boolean {
-        return this.getFormControl(formControlname).invalid &&
-            this.getFormControl(formControlname).touched && this.submitForm;
+        return super.getFormControl(this.createForm, formControlname).invalid &&
+            super.getFormControl(this.createForm, formControlname).touched && this.submitForm;
     }
 
     get nameRequired(): boolean {
-        return this.invalidName('name') && this.getFormControl('name').errors?.required;
+        return super.onInvalidName(this.createForm, 'name') && this.submitForm;
     }
 
     get passwordRequired(): boolean {
-        return this.invalidName('password') && this.getFormControl('password').errors?.emptyPassword;
+        return super.onPasswordRequired(this.createForm, 'password') && this.submitForm;
     }
 }

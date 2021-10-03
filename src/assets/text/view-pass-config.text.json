@@ -6,7 +6,6 @@
     "uriText": "URI",
     "notesText": "Notas",
     "favoriteText": "Favorito",
-    "requiredText": "Campo requerido",
     "minlengthText": "Debe tener al menos 4 caracteres",
     "overwriteText": "Sobreescribir contraseña",
     "areYorSureText": "¿Estás seguro de que quieres sobreescribir la contraseña actual?",

@@ -9,12 +9,15 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { CipherStrategy } from 'src/app/core/cipher/impl/cipher.strategy';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { UkeleleStrategy } from 'src/app/core/strategy/impl/ukelele-strategy';
-import { PassConfig } from 'src/app/models/pass-config.model';
 import { PassConfigService } from 'src/app/services/pass-config.service';
 import { UrlService } from 'src/app/services/url.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { ToastService } from 'src/app/services/toast.service';
+
+import { PassConfig } from 'src/app/models/pass-config.model';
+
 import { environment } from 'src/environments/environment';
+
 import text from 'src/assets/text/password-tab.text.json';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -7,15 +7,17 @@ import { NavController, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
+import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
-import { PassConfig } from 'src/app/models/pass-config.model';
 import { ActionSheetService } from 'src/app/services/action-sheet.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { ActionPopoverComponent } from 'src/app/shared/action-popover/action-popover.component';
-import { RegeneratePopoverComponent } from 'src/app/shared/regenerate-popover/regenerate-popover.component';
 import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
 import { ToastService } from 'src/app/services/toast.service';
+
+import { PassConfig } from 'src/app/models/pass-config.model';
+
 import text from 'src/assets/text/view-pass-config.text.json';
 
 @Component({
@@ -23,9 +25,9 @@ import text from 'src/assets/text/view-pass-config.text.json';
     templateUrl: './view-pass-config.page.html',
     styleUrls: ['./view-pass-config.page.scss'],
 })
-export class ViewPassConfigPage implements OnInit {
+export class ViewPassConfigPage extends BasePage implements OnInit {
 
-    editForm: FormGroup;
+    viewForm: FormGroup;
     passConfig: PassConfig;
     submitForm: boolean;
     showPassword: boolean;
@@ -42,15 +44,16 @@ export class ViewPassConfigPage implements OnInit {
         private inAppBrowser: InAppBrowser,
         private navController: NavController,
         private passConfigService: PassConfigService,
-        private passwordValidator: PasswordValidatorService,
-        private popoverController: PopoverController,
+        public passwordValidator: PasswordValidatorService,
+        public popoverController: PopoverController,
         private router: Router,
         private storageService: StorageService,
         private titleService: Title,
         private toastService: ToastService
     ) {
+        super(passwordValidator, popoverController);
         this.passConfig = new PassConfig();
-        this.initEditForm();
+        this.initViewForm();
     }
 
     ngOnInit() {
@@ -89,13 +92,12 @@ export class ViewPassConfigPage implements OnInit {
             }
         }
 
-        this.getFormControl('name').setValue(this.passConfig.name);
-        this.getFormControl('username').setValue(this.passConfig.username);
-        this.getFormControl('uri').setValue(this.passConfig.uri);
-        this.getFormControl('notes').setValue(this.passConfig.notes);
-        this.getFormControl('favorite').setValue(this.passConfig.favorite);
-        this.getFormControl('groupName').setValue(groupName);
-        this.getFormControl('updatedOn').setValue(this.passConfig.updatedOn);
+        super.getFormControl(this.viewForm, 'name').setValue(this.passConfig.name);
+        super.getFormControl(this.viewForm, 'username').setValue(this.passConfig.username);
+        super.getFormControl(this.viewForm, 'uri').setValue(this.passConfig.uri);
+        super.getFormControl(this.viewForm, 'notes').setValue(this.passConfig.notes);
+        super.getFormControl(this.viewForm, 'favorite').setValue(this.passConfig.favorite);
+        super.getFormControl(this.viewForm, 'groupName').setValue(groupName);
 
         let password;
         if (this.secret !== undefined) {
@@ -104,11 +106,11 @@ export class ViewPassConfigPage implements OnInit {
             password = Array(this.passConfig.keyConfig.length + 1).join('*');
         }
 
-        this.getFormControl('password').setValue(password);
+        super.getFormControl(this.viewForm, 'password').setValue(password);
 
         if (this.submitForm) {
-            if (this.editForm.invalid || this.passwordRequired) {
-                Object.values(this.editForm.controls).forEach(control => {
+            if (this.viewForm.invalid) {
+                Object.values(this.viewForm.controls).forEach(control => {
                     control.markAsTouched();
                 });
                 return;
@@ -117,29 +119,13 @@ export class ViewPassConfigPage implements OnInit {
     }
 
     ionViewDidLeave() {
-        this.editForm.reset();
-        this.passConfigService.setPassConfig(undefined);
+        super.onIonViewDidLeave(this.viewForm, this.passConfigService);
     }
 
-    initEditForm(): void {
-        this.editForm = new FormGroup({
-            name: new FormControl(this.passConfig.name,
-                Validators.required),
-            username: new FormControl(this.passConfig.username),
-            password: new FormControl(
-                this.passConfig.keyConfig.keyword,
-                this.passwordValidator.emptyPassword
-            ),
-            uri: new FormControl(this.passConfig.uri),
-            notes: new FormControl(this.passConfig.notes),
-            favorite: new FormControl(this.passConfig.favorite),
-            groupName: new FormControl(''),
-            updatedOn: new FormControl(this.passConfig.updatedOn)
-        });
-    }
-
-    getFormControl(formControlName: string): AbstractControl {
-        return this.editForm.get(formControlName);
+    initViewForm(): void {
+        this.viewForm = super.onInitForm(this.passConfig);
+        this.viewForm.addControl('favorite', new FormControl(false));
+        this.viewForm.addControl('groupName', new FormControl(''));
     }
 
     togglePassword(): void {
@@ -152,13 +138,13 @@ export class ViewPassConfigPage implements OnInit {
     }
 
     copyUsername() {
-        this.clipboard.copy(this.getFormControl('username').value);
+        this.clipboard.copy(super.getFormControl(this.viewForm, 'username').value);
         this.toastService.presentToast(this.text.copyNameText);
     }
 
     copyPassword() {
         if (this.secret !== undefined) {
-            this.clipboard.copy(this.getFormControl('password').value);
+            this.clipboard.copy(super.getFormControl(this.viewForm, 'password').value);
             this.toastService.presentToast(this.text.copyPasswordText);
         } else {
             this.regeneratePopover(true);
@@ -166,7 +152,7 @@ export class ViewPassConfigPage implements OnInit {
     }
 
     copyUri() {
-        this.clipboard.copy(this.getFormControl('uri').value);
+        this.clipboard.copy(super.getFormControl(this.viewForm, 'uri').value);
         this.toastService.presentToast(this.text.copyUriText);
     }
 
@@ -190,34 +176,20 @@ export class ViewPassConfigPage implements OnInit {
 
         this.router.navigateByUrl(url);
     }
-    async regeneratePopover(copy: boolean) {
-        if (this.secret === undefined) {
-            const popover = await this.popoverController.create({
-                component: RegeneratePopoverComponent,
-                translucent: true,
-                keyboardClose: false
-            });
-            popover.style.cssText = '--width: 78vw;';
 
-            await popover.present();
+    regenerate(secret: string, copy: boolean) {
+        this.secret = secret;
+        super.getFormControl(this.viewForm, 'password').setValue(this.regeneratePassword());
 
-            const { data } = await popover.onDidDismiss();
-            if (data !== undefined && data.item.secret) {
-                this.secret = data.item.secret;
-
-                this.getFormControl('password').setValue(this.regeneratePassword());
-
-                if (copy) {
-                    this.copyPassword();
-                } else {
-                    this.togglePassword();
-                }
-            }
-
-            this.popoverController.dismiss();
+        if (copy) {
+            this.copyPassword();
         } else {
             this.togglePassword();
         }
+    }
+
+    async regeneratePopover(copy: boolean) {
+        super.onRegeneratePopover(this.secret, copy);
     }
 
     regeneratePassword(): string {
@@ -240,10 +212,10 @@ export class ViewPassConfigPage implements OnInit {
         switch (data !== undefined && data.item.action) {
             case 'edit':
                 this.passConfig = this.storageService.getPassConfig(this.passConfig.id);
-                this.getFormControl('name').setValue(this.passConfig.name);
-                this.getFormControl('username').setValue(this.passConfig.username);
-                this.getFormControl('uri').setValue(this.passConfig.uri);
-                this.getFormControl('notes').setValue(this.passConfig.notes);
+                super.getFormControl(this.viewForm, 'name').setValue(this.passConfig.name);
+                super.getFormControl(this.viewForm, 'username').setValue(this.passConfig.username);
+                super.getFormControl(this.viewForm, 'uri').setValue(this.passConfig.uri);
+                super.getFormControl(this.viewForm, 'notes').setValue(this.passConfig.notes);
 
                 this.passConfigService.setPassConfig(this.passConfig);
                 this.navigateToEditPage();
@@ -258,16 +230,11 @@ export class ViewPassConfigPage implements OnInit {
         this.popoverController.dismiss();
     }
 
-    invalidName(formControlname: string): boolean {
-        return this.getFormControl(formControlname).invalid &&
-            this.getFormControl(formControlname).touched && this.submitForm;
+    get showSecurityInfo() {
+        return this.getFormControl(this.viewForm, 'security').value;
     }
 
-    get nameRequired(): boolean {
-        return this.invalidName('name') && this.getFormControl('name').errors?.required;
-    }
-
-    get passwordRequired(): boolean {
-        return this.invalidName('password') && this.getFormControl('password').errors?.emptyPassword;
+    validDateWarning(): string {
+        return super.onValidDateWarning(this.passConfig);
     }
 }

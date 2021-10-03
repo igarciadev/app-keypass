@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { AlertController, NavController, PopoverController } from '@ionic/angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 
+import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { PassConfigService } from 'src/app/services/pass-config.service';
 import { SortListService } from 'src/app/services/sort-list.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { RegeneratePopoverComponent } from 'src/app/shared/regenerate-popover/regenerate-popover.component';
 import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -24,7 +24,7 @@ import text from 'src/assets/text/edit-pass-config.text.json';
     templateUrl: './edit-pass-config.page.html',
     styleUrls: ['./edit-pass-config.page.scss']
 })
-export class EditPassConfigPage implements OnInit {
+export class EditPassConfigPage extends BasePage implements OnInit {
 
     editForm: FormGroup;
     passConfig: PassConfig;
@@ -45,14 +45,15 @@ export class EditPassConfigPage implements OnInit {
         private clipboard: Clipboard,
         private navController: NavController,
         private passConfigService: PassConfigService,
-        private passwordValidator: PasswordValidatorService,
-        private popoverController: PopoverController,
+        public passwordValidator: PasswordValidatorService,
+        public popoverController: PopoverController,
         private router: Router,
         private sortListService: SortListService,
         private storageService: StorageService,
         private titleService: Title,
         private toastService: ToastService
     ) {
+        super(passwordValidator, popoverController);
         this.passConfig = new PassConfig();
         this.initEditForm();
     }
@@ -92,12 +93,12 @@ export class EditPassConfigPage implements OnInit {
             }
         }
 
-        this.getFormControl('name').setValue(this.passConfig.name);
-        this.getFormControl('username').setValue(this.passConfig.username);
-        this.getFormControl('uri').setValue(this.passConfig.uri);
-        this.getFormControl('notes').setValue(this.passConfig.notes);
-        this.getFormControl('favorite').setValue(this.passConfig.favorite);
-        this.getFormControl('groupId').setValue(this.passConfig.group.id);
+        super.getFormControl(this.editForm, 'name').setValue(this.passConfig.name);
+        super.getFormControl(this.editForm, 'username').setValue(this.passConfig.username);
+        super.getFormControl(this.editForm, 'uri').setValue(this.passConfig.uri);
+        super.getFormControl(this.editForm, 'notes').setValue(this.passConfig.notes);
+        super.getFormControl(this.editForm, 'favorite').setValue(this.passConfig.favorite);
+        super.getFormControl(this.editForm, 'groupId').setValue(this.passConfig.group.id);
 
         let password;
         if (this.secret !== null) {
@@ -106,7 +107,7 @@ export class EditPassConfigPage implements OnInit {
             password = Array(this.passConfig.keyConfig.length + 1).join('*');
         }
 
-        this.getFormControl('password').setValue(password);
+        super.getFormControl(this.editForm, 'password').setValue(password);
 
         if (this.submitForm) {
             if (this.editForm.invalid || this.passwordRequired) {
@@ -126,19 +127,9 @@ export class EditPassConfigPage implements OnInit {
     }
 
     initEditForm(): void {
-        this.editForm = new FormGroup({
-            name: new FormControl(this.passConfig.name,
-                Validators.required),
-            username: new FormControl(this.passConfig.username),
-            password: new FormControl(
-                this.passConfig.keyConfig.keyword,
-                this.passwordValidator.emptyPassword
-            ),
-            uri: new FormControl(this.passConfig.uri),
-            notes: new FormControl(this.passConfig.notes),
-            favorite: new FormControl(this.passConfig.favorite),
-            groupId: new FormControl(this.passConfig.group.id)
-        });
+        this.editForm = super.onInitForm(this.passConfig);
+        this.editForm.addControl('favorite', new FormControl(this.passConfig.favorite));
+        this.editForm.addControl('groupId', new FormControl(this.passConfig.group.id));
     }
 
     saveEditForm(): void {
@@ -156,10 +147,6 @@ export class EditPassConfigPage implements OnInit {
         this.storageService.updatePassConfig(this.passConfig);
 
         this.navigateToListTab();
-    }
-
-    getFormControl(formControlName: string): AbstractControl {
-        return this.editForm.get(formControlName);
     }
 
     generatePassword(): void {
@@ -186,13 +173,13 @@ export class EditPassConfigPage implements OnInit {
     }
 
     copyUsername() {
-        this.clipboard.copy(this.getFormControl('username').value);
+        this.clipboard.copy(super.getFormControl(this.editForm, 'username').value);
         this.toastService.presentToast(this.text.copyNameText);
     }
 
     copyPassword() {
         if (this.secret !== null) {
-            this.clipboard.copy(this.getFormControl('password').value);
+            this.clipboard.copy(super.getFormControl(this.editForm, 'password').value);
             this.toastService.presentToast(this.text.copyPasswordText);
         } else {
             this.regeneratePopover(true);
@@ -200,7 +187,7 @@ export class EditPassConfigPage implements OnInit {
     }
 
     copyUri() {
-        this.clipboard.copy(this.getFormControl('uri').value);
+        this.clipboard.copy(super.getFormControl(this.editForm, 'uri').value);
         this.toastService.presentToast(this.text.copyUriText);
     }
 
@@ -218,40 +205,24 @@ export class EditPassConfigPage implements OnInit {
     }
 
     updatePassConfigGroup(): void {
-        const group = this.storageService.findGroupById(this.getFormControl('groupId').value);
+        const group = this.storageService.findGroupById(super.getFormControl(this.editForm, 'groupId').value);
         if (group !== undefined) {
             this.passConfig.group = group;
         }
     }
 
-    async regeneratePopover(copy: boolean) {
-        if (this.secret === null) {
-            const popover = await this.popoverController.create({
-                component: RegeneratePopoverComponent,
-                translucent: true,
-                keyboardClose: false
-            });
-            popover.style.cssText = '--width: 78vw;';
-
-            await popover.present();
-
-            const { data } = await popover.onDidDismiss();
-            if (data !== undefined && data.item.secret) {
-                this.secret = data.item.secret;
-
-                this.getFormControl('password').setValue(this.regeneratePassword());
-
-                if (copy) {
-                    this.copyPassword();
-                } else {
-                    this.togglePassword();
-                }
-            }
-
-            this.popoverController.dismiss();
+    regenerate(secret: string, copy: boolean) {
+        this.secret = secret;
+        super.getFormControl(this.editForm, 'password').setValue(this.regeneratePassword());
+        if (copy) {
+            this.copyPassword();
         } else {
             this.togglePassword();
         }
+    }
+
+    async regeneratePopover(copy: boolean) {
+        super.onRegeneratePopover(this.secret, copy);
     }
 
     regeneratePassword(): string {
@@ -281,16 +252,15 @@ export class EditPassConfigPage implements OnInit {
         await alert.present();
     }
 
-    invalidName(formControlname: string): boolean {
-        return this.getFormControl(formControlname).invalid &&
-            this.getFormControl(formControlname).touched && this.submitForm;
-    }
-
     get nameRequired(): boolean {
-        return this.invalidName('name') && this.getFormControl('name').errors?.required;
+        return super.onInvalidName(this.editForm, 'name') && this.submitForm;
     }
 
     get passwordRequired(): boolean {
-        return this.invalidName('password') && this.getFormControl('password').errors?.emptyPassword;
+        return super.onPasswordRequired(this.editForm, 'password') && this.submitForm;
+    }
+
+    validDateWarning(): string {
+        return super.onValidDateWarning(this.passConfigService.getPassConfig());
     }
 }
