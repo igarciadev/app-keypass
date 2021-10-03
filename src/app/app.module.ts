@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -38,7 +39,8 @@ import { PasswordTabPageModule } from './pages/password-tab/password-tab.module'
         },
         File,
         FileChooser,
-        FilePath
+        FilePath,
+        LocalNotifications
 
     ],
     bootstrap: [

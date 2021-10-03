@@ -67,6 +67,27 @@ export class StorageService {
         return this.getGroups();
     }
 
+    countInvalidKeyConfigs(): number {
+        return this.passConfigs.filter(passConfig => {
+            if (passConfig.keyConfig.updatedOn) {
+                const dateString = passConfig.keyConfig.updatedOn.replace(/:/g, '/').replace(' ', '/').split("/");
+                const passConfigDate: Date = new Date(
+                    Number(dateString[2]), Number(dateString[1]) - 1, Number(dateString[0]),
+                    Number(dateString[3]), Number(dateString[4]), Number(dateString[5])
+                );
+
+                if (passConfigDate !== undefined) {
+                    const nowDate: Date = new Date();
+                    const daysBetweenDates: number = (passConfigDate.getTime() - nowDate.getTime()) / (1000 * 3600 * 24);
+
+                    if (passConfig.security && daysBetweenDates <= 0) {
+                        return passConfig;
+                    }
+                }
+            }
+        }).length;
+    }
+
     findPassConfigByGroupId(groupId: number): PassConfig[] {
         return this.passConfigs.filter(passConfig => passConfig.group.id === groupId);
     }
@@ -84,6 +105,9 @@ export class StorageService {
     }
 
     getPassConfig(id: number): PassConfig {
+        if (this.passConfigs.length === 0) {
+            this.loadData();
+        }
         let passConfigStored = this.passConfigs.find(passConfig => passConfig.id === id);
 
         if (passConfigStored !== undefined) {

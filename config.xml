@@ -3,7 +3,7 @@
     <name>KeyPass</name>
     <description>An awesome App to manage your passwords that doesn't stored any password</description>
     <author href="https://isaacgarciasanchez.es/">IGarciaDev</author>
-    <content original-src="index.html" src="http://localhost:8101" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

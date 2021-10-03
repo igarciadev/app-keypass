@@ -8,6 +8,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
+import { NotificationService } from 'src/app/services/notification.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
 import { SortListService } from 'src/app/services/sort-list.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -44,6 +45,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         private alertController: AlertController,
         private clipboard: Clipboard,
         private navController: NavController,
+        private notificationService: NotificationService,
         private passConfigService: PassConfigService,
         public passwordValidator: PasswordValidatorService,
         public popoverController: PopoverController,
@@ -151,7 +153,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         }
 
         this.storageService.updatePassConfig(this.passConfig);
-
+        this.notificationService.createLocalNotification(this.passConfig);
         this.navigateToListTab();
     }
 

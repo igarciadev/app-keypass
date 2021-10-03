@@ -66,6 +66,11 @@ export class AppComponent implements OnInit {
         });
 
         this.initializeGroups();
+
+        const invalidKeyConfigs = this.storageService.countInvalidKeyConfigs();
+        if (invalidKeyConfigs > 0) {
+            this.createInvalidKeyConfigsAlert(invalidKeyConfigs);
+        }
     }
 
     initializeGroups(): void {
@@ -93,6 +98,28 @@ export class AppComponent implements OnInit {
                     handler: () => {
                         navigator['app'].exitApp();
                     }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+    async createInvalidKeyConfigsAlert(invalidKeyConfigs: number) {
+        let messageText: string = this.text.changeText;
+        if (invalidKeyConfigs > 1) {
+            messageText = this.text.changesText;
+        }
+        const alert = await this.alertController.create({
+            header: this.text.expiredText,
+            message: messageText,
+            buttons: [
+                {
+                    text: this.text.cancelText,
+                    role: 'cancel'
+                }, {
+                    text: this.text.acceptText,
+                    role: 'ok'
                 }
             ]
         });

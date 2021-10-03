@@ -7,6 +7,7 @@ import { AlertController, NavController, PopoverController } from '@ionic/angula
 
 import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SortListService } from 'src/app/services/sort-list.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
@@ -41,6 +42,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
     constructor(
         private alertController: AlertController,
         private navController: NavController,
+        private notificationService: NotificationService,
         private passConfigService: PassConfigService,
         public passwordValidator: PasswordValidatorService,
         public popoverController: PopoverController,
@@ -150,7 +152,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         this.passConfig.image = this.passConfig.buildImage(this.passConfig.uri);
 
         this.storageService.addPassConfig(this.passConfig);
-
+        this.notificationService.createLocalNotification(this.passConfig);
         this.navigateToListTab();
     }
 
