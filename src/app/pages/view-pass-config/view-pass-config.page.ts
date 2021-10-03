@@ -10,8 +10,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { ActionSheetService } from 'src/app/services/action-sheet.service';
+import { GroupStorageService } from 'src/app/services/group-storage.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { ActionPopoverComponent } from 'src/app/shared/action-popover/action-popover.component';
 import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -41,13 +42,14 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
     constructor(
         private actionSheetService: ActionSheetService,
         private clipboard: Clipboard,
+        private groupStorageService: GroupStorageService,
         private inAppBrowser: InAppBrowser,
         private navController: NavController,
         private passConfigService: PassConfigService,
+        private passConfigStorageService: PassConfigStorageService,
         public passwordValidator: PasswordValidatorService,
         public popoverController: PopoverController,
         private router: Router,
-        private storageService: StorageService,
         private titleService: Title,
         private toastService: ToastService
     ) {
@@ -74,21 +76,21 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
         this.eyeIconName = 'eye-off-outline';
 
         if (this.passConfigService.getPassConfig() !== undefined &&
-            this.storageService.getPassConfig(this.passConfig.id) === null) {
+            this.passConfigStorageService.findById(this.passConfig.id) === null) {
             this.passConfig = this.passConfigService.getPassConfig();
         } else {
-            this.passConfig = this.storageService.getPassConfig(this.passConfig.id);
+            this.passConfig = this.passConfigStorageService.findById(this.passConfig.id);
         }
 
         let groupName: string;
         if (this.passConfig.group.id === undefined) {
-            groupName = this.storageService.getGroups()[0].name;
+            groupName = this.groupStorageService.findAll()[0].name;
         } else {
-            const group = this.storageService.findGroupById(this.passConfig.group.id);
+            const group = this.groupStorageService.findById(this.passConfig.group.id);
             if (group !== undefined) {
-                groupName = this.storageService.findGroupById(this.passConfig.group.id).name;
+                groupName = this.groupStorageService.findById(this.passConfig.group.id).name;
             } else {
-                groupName = this.storageService.getGroups()[0].name;
+                groupName = this.groupStorageService.findAll()[0].name;
             }
         }
 
@@ -215,7 +217,7 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
 
         switch (data !== undefined && data.item.action) {
             case 'edit':
-                this.passConfig = this.storageService.getPassConfig(this.passConfig.id);
+                this.passConfig = this.passConfigStorageService.findById(this.passConfig.id);
                 super.getFormControl(this.viewForm, 'name').setValue(this.passConfig.name);
                 super.getFormControl(this.viewForm, 'username').setValue(this.passConfig.username);
                 super.getFormControl(this.viewForm, 'uri').setValue(this.passConfig.uri);

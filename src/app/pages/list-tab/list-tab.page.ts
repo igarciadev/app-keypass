@@ -10,8 +10,9 @@ import { PassConfig } from 'src/app/models/pass-config.model';
 
 import { ActionSheetService } from 'src/app/services/action-sheet.service';
 import { FileService } from 'src/app/services/file.service';
+import { GroupStorageService } from 'src/app/services/group-storage.service';
+import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { SortListService } from 'src/app/services/sort-list.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { ListPopoverComponent } from 'src/app/shared/list-popover/list-popover.component';
 
 import { environment } from 'src/environments/environment';
@@ -39,11 +40,12 @@ export class ListTabPage implements OnInit {
         private alertController: AlertController,
         public filePath: FilePath,
         private fileService: FileService,
+        private groupStorageService: GroupStorageService,
         private navController: NavController,
+        private passConfigStorageService: PassConfigStorageService,
         private popoverController: PopoverController,
         private router: Router,
         private sortListService: SortListService,
-        private storageService: StorageService,
         private titleService: Title
     ) {
         this.groupKeys = [];
@@ -70,20 +72,20 @@ export class ListTabPage implements OnInit {
 
         this.groupKeys.push('Favoritos');
 
-        const groups = this.storageService.getGroups();
+        const groups = this.groupStorageService.findAll();
         groups.forEach(group => {
             this.groupKeys.push(group.name);
             this.showGroups.push(true);
             this.showGroups.push(true);
-            let passConfigs = this.storageService.findPassConfigByGroupId(group.id);
+            let passConfigs = this.passConfigStorageService.findByGroupId(group.id);
             if (group.name === 'Sin agrupar') {
-                passConfigs = passConfigs.concat(this.storageService.findPassConfigByGroupId(undefined));
+                passConfigs = passConfigs.concat(this.passConfigStorageService.findByGroupId(undefined));
             }
             this.sortListService.sort(passConfigs, this.toggleSort);
             this.groupValues.set(group.name, passConfigs);
         });
 
-        let passConfigs = this.storageService.findFavoritePassConfigs();
+        let passConfigs = this.passConfigStorageService.findByFavorite();
         this.sortListService.sort(passConfigs, this.toggleSort);
         this.groupValues.set('Favoritos', passConfigs);
     }

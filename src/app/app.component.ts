@@ -5,7 +5,8 @@ import { filter } from 'rxjs/operators';
 
 import { AlertController, Platform } from '@ionic/angular';
 
-import { StorageService } from './services/storage.service';
+import { GroupStorageService } from './services/group-storage.service';
+import { PassConfigStorageService } from './services/pass-config-storage.service';
 import { UrlService } from './services/url.service';
 
 import { Group } from './models/group.model';
@@ -24,10 +25,11 @@ export class AppComponent implements OnInit {
 
     constructor(
         private alertController: AlertController,
+        private groupStorageService: GroupStorageService,
         private location: Location,
         private platform: Platform,
         private router: Router,
-        private storageService: StorageService,
+        private passConfigStorageService: PassConfigStorageService,
         private urlService: UrlService,
     ) {
         this.currentUrl = null;
@@ -67,21 +69,42 @@ export class AppComponent implements OnInit {
 
         this.initializeGroups();
 
-        const invalidKeyConfigs = this.storageService.countInvalidKeyConfigs();
+        const invalidKeyConfigs = this.countInvalidKeyConfigs();
         if (invalidKeyConfigs > 0) {
             this.createInvalidKeyConfigsAlert(invalidKeyConfigs);
         }
     }
 
     initializeGroups(): void {
-        let groups = this.storageService.getGroups();
+        let groups = this.groupStorageService.findAll();
         if (groups === null || groups.length === 0) {
             const group = new Group();
             group.name = 'Sin agrupar';
 
-            this.storageService.saveGroups([]);
-            this.storageService.addGroup(group);
+            this.groupStorageService.saveAll([]);
+            this.groupStorageService.save(group);
         }
+    }
+
+    countInvalidKeyConfigs(): number {
+        return this.passConfigStorageService.findAll().filter(passConfig => {
+            if (passConfig.keyConfig.updatedOn) {
+                const dateString = passConfig.keyConfig.updatedOn.replace(/:/g, '/').replace(' ', '/').split("/");
+                const passConfigDate: Date = new Date(
+                    Number(dateString[2]), Number(dateString[1]) - 1, Number(dateString[0]),
+                    Number(dateString[3]), Number(dateString[4]), Number(dateString[5])
+                );
+
+                if (passConfigDate !== undefined) {
+                    const nowDate: Date = new Date();
+                    const daysBetweenDates: number = (passConfigDate.getTime() - nowDate.getTime()) / (1000 * 3600 * 24);
+
+                    if (passConfig.security && daysBetweenDates <= 0) {
+                        return passConfig;
+                    }
+                }
+            }
+        }).length;
     }
 
     async showExitConfirm() {

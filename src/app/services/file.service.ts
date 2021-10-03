@@ -5,7 +5,8 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { File, FileEntry } from '@ionic-native/file/ngx';
 
-import { StorageService } from './storage.service';
+import { GroupStorageService } from './group-storage.service';
+import { PassConfigStorageService } from './pass-config-storage.service';
 
 import { Group } from '../models/group.model';
 import { PassConfig } from '../models/pass-config.model';
@@ -27,7 +28,8 @@ export class FileService {
         private file: File,
         public fileChooser: FileChooser,
         public filePath: FilePath,
-        private storageService: StorageService
+        private groupStorageService: GroupStorageService,
+        private passConfigStorageService: PassConfigStorageService
     ) {
         this.text = text;
         this.returnPath = '';
@@ -54,7 +56,7 @@ export class FileService {
                 this.errorCreatingFile();
             });
 
-        const stringToWrite = JSON.stringify(this.storageService.getData(), null, 0);
+        const stringToWrite = JSON.stringify(this.passConfigStorageService.findAll(), null, 0);
         this.writeFile(fileName, stringToWrite);
     }
 
@@ -71,14 +73,14 @@ export class FileService {
             this.successFile(this.text.successImportText);
             const passConfigs = JSON.parse(value);
             passConfigs.forEach((passConfig: PassConfig) => {
-                const group: Group = this.storageService.findGroupById(passConfig.group.id);
+                const group: Group = this.groupStorageService.findById(passConfig.group.id);
                 if (group === undefined && passConfig.group.id !== undefined) {
-                    this.storageService.addGroup(passConfig.group);
+                    this.groupStorageService.save(passConfig.group);
                 }
-                this.storageService.removePassConfig(passConfig);
+                this.passConfigStorageService.delete(passConfig);
             });
-            this.storageService.saveData(passConfigs);
-            this.storageService.loadData();
+            this.passConfigStorageService.saveAll(passConfigs);
+            this.passConfigStorageService.load();
         }).catch(() => {
             this.errorReadingJson();
         });

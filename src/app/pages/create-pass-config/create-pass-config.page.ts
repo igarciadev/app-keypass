@@ -7,10 +7,11 @@ import { AlertController, NavController, PopoverController } from '@ionic/angula
 
 import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
+import { GroupStorageService } from 'src/app/services/group-storage.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SortListService } from 'src/app/services/sort-list.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
+import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
 
 import { Group } from 'src/app/models/group.model';
@@ -41,14 +42,15 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
 
     constructor(
         private alertController: AlertController,
+        private groupStorageService: GroupStorageService,
         private navController: NavController,
         private notificationService: NotificationService,
         private passConfigService: PassConfigService,
+        private passConfigStorageService: PassConfigStorageService,
         public passwordValidator: PasswordValidatorService,
         public popoverController: PopoverController,
         private router: Router,
         private sortListService: SortListService,
-        private storageService: StorageService,
         private titleService: Title
     ) {
         super(passwordValidator, popoverController);
@@ -65,7 +67,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         this.passwordType = 'password';
         this.eyeIconName = 'eye-off-outline'
         this.passwordClass = 'field-input';
-        this.groups = this.storageService.getGroups();
+        this.groups = this.groupStorageService.findAll();
         this.text = text;
     }
 
@@ -87,13 +89,13 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         }
 
         if (this.passConfig.group !== undefined && this.passConfig.group.id === undefined) {
-            this.passConfig.group = this.storageService.getGroups()[0];
+            this.passConfig.group = this.groupStorageService.findAll()[0];
         } else {
-            const group = this.storageService.findGroupById(this.passConfig.group.id);
+            const group = this.groupStorageService.findById(this.passConfig.group.id);
             if (group !== undefined) {
-                this.passConfig.group = this.storageService.findGroupById(this.passConfig.group.id);
+                this.passConfig.group = this.groupStorageService.findById(this.passConfig.group.id);
             } else {
-                this.passConfig.group = this.storageService.getGroups()[0];
+                this.passConfig.group = this.groupStorageService.findAll()[0];
             }
         }
 
@@ -151,7 +153,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         this.passConfig.update(this.createForm.value);
         this.passConfig.image = this.passConfig.buildImage(this.passConfig.uri);
 
-        this.storageService.addPassConfig(this.passConfig);
+        this.passConfigStorageService.save(this.passConfig);
         this.notificationService.createLocalNotification(this.passConfig);
         this.navigateToListTab();
     }
@@ -201,7 +203,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
     }
 
     updatePassConfigGroup(): void {
-        const group = this.storageService.findGroupById(super.getFormControl(this.createForm, 'groupId').value);
+        const group = this.groupStorageService.findById(super.getFormControl(this.createForm, 'groupId').value);
         if (group !== undefined) {
             this.passConfig.group = group;
         }

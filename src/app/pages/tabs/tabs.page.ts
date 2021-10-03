@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { StorageService } from 'src/app/services/storage.service';
 import { UrlService } from 'src/app/services/url.service';
 import text from 'src/assets/text/tabs.text.json';
 
@@ -16,7 +15,6 @@ export class TabsPage implements OnInit {
 
     constructor(
         private router: Router,
-        private storageService: StorageService,
         private urlService: UrlService
     ) { }
 

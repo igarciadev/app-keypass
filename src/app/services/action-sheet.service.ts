@@ -6,7 +6,7 @@ import { ActionSheetController, AlertController } from '@ionic/angular';
 import { PassConfig } from '../models/pass-config.model';
 
 import { PassConfigService } from './pass-config.service';
-import { StorageService } from './storage.service';
+import { PassConfigStorageService } from './pass-config-storage.service';
 
 import text from 'src/assets/text/action-sheet.text.json';
 
@@ -28,7 +28,7 @@ export class ActionSheetService {
         private alertController: AlertController,
         private passConfigService: PassConfigService,
         private router: Router,
-        private storageService: StorageService
+        private passConfigStorageService: PassConfigStorageService
     ) {
         this.navigateToView = '/tabs/safe-tab/view';
         this.navigateToEdit = '/tabs/safe-tab/edit';
@@ -71,7 +71,7 @@ export class ActionSheetService {
 
         this.passConfig.favorite = !this.passConfig.favorite;
 
-        this.storageService.updatePassConfig(this.passConfig);
+        this.passConfigStorageService.update(this.passConfig);
 
         let resolveFunction: (confirm: string) => void;
         const promise = new Promise<string>(resolve => {
@@ -108,7 +108,7 @@ export class ActionSheetService {
                             this.router.navigateByUrl(`/tabs/safe-tab`);
                         }
 
-                        this.storageService.removePassConfig(this.passConfig);
+                        this.passConfigStorageService.delete(this.passConfig);
                         resolveFunction('deleteItem');
                     }
                 }

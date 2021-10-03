@@ -8,10 +8,11 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 import { BasePage } from '../base-page';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
+import { GroupStorageService } from 'src/app/services/group-storage.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
+import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { SortListService } from 'src/app/services/sort-list.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
 import { ToastService } from 'src/app/services/toast.service';
 
@@ -44,14 +45,15 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         private activatedRoute: ActivatedRoute,
         private alertController: AlertController,
         private clipboard: Clipboard,
+        private groupStorageService: GroupStorageService,
         private navController: NavController,
         private notificationService: NotificationService,
         private passConfigService: PassConfigService,
+        private passConfigStorageService: PassConfigStorageService,
         public passwordValidator: PasswordValidatorService,
         public popoverController: PopoverController,
         private router: Router,
         private sortListService: SortListService,
-        private storageService: StorageService,
         private titleService: Title,
         private toastService: ToastService
     ) {
@@ -65,7 +67,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         this.enableSettingsIcon = false;
         this.disablePassword = true;
         this.eyeIconName = 'eye-off-outline';
-        this.groups = this.storageService.getGroups();
+        this.groups = this.groupStorageService.findAll();
         this.text = text;
     }
 
@@ -85,13 +87,13 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         }
 
         if (this.passConfig.group !== undefined && this.passConfig.group === undefined) {
-            this.passConfig.group = this.storageService.getGroups()[0];
+            this.passConfig.group = this.groupStorageService.findAll()[0];
         } else {
-            const group = this.storageService.findGroupById(this.passConfig.group.id);
+            const group = this.groupStorageService.findById(this.passConfig.group.id);
             if (group !== undefined) {
-                this.passConfig.group = this.storageService.findGroupById(this.passConfig.group.id);
+                this.passConfig.group = this.groupStorageService.findById(this.passConfig.group.id);
             } else {
-                this.passConfig.group = this.storageService.getGroups()[0];
+                this.passConfig.group = this.groupStorageService.findAll()[0];
             }
         }
 
@@ -152,7 +154,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
             this.passConfig.keyConfig.updatedOn = this.passConfig.keyConfig.validSecurityDate();
         }
 
-        this.storageService.updatePassConfig(this.passConfig);
+        this.passConfigStorageService.update(this.passConfig);
         this.notificationService.createLocalNotification(this.passConfig);
         this.navigateToListTab();
     }
@@ -213,7 +215,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     }
 
     updatePassConfigGroup(): void {
-        const group = this.storageService.findGroupById(super.getFormControl(this.editForm, 'groupId').value);
+        const group = this.groupStorageService.findById(super.getFormControl(this.editForm, 'groupId').value);
         if (group !== undefined) {
             this.passConfig.group = group;
         }

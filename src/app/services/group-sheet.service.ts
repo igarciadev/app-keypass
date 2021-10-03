@@ -7,7 +7,7 @@ import { Group } from '../models/group.model';
 import { PassConfig } from '../models/pass-config.model';
 
 import { PassConfigService } from './pass-config.service';
-import { StorageService } from './storage.service';
+import { PassConfigStorageService } from './pass-config-storage.service';
 
 import text from 'src/assets/text/group-sheet.text.json';
 
@@ -27,8 +27,8 @@ export class GroupSheetService {
         private actionSheetController: ActionSheetController,
         private alertController: AlertController,
         private passConfigService: PassConfigService,
-        private router: Router,
-        private storageService: StorageService
+        private passConfigStorageService: PassConfigStorageService,
+        private router: Router
     ) {
         this.text = text;
     }
@@ -119,7 +119,7 @@ export class GroupSheetService {
         });
 
         let alert;
-        const existingGroupsLength = this.storageService.findPassConfigByGroupId(group.id).length;
+        const existingGroupsLength = this.passConfigStorageService.findByGroupId(group.id).length;
         if (existingGroupsLength === 0) {
             alert = await this.alertController.create({
                 header: this.text.warningText,

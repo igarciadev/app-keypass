@@ -4,8 +4,9 @@ import { AlertController, PopoverController } from '@ionic/angular';
 
 import { Group } from 'src/app/models/group.model';
 import { GroupSheetService } from 'src/app/services/group-sheet.service';
+import { GroupStorageService } from 'src/app/services/group-storage.service';
+import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { SortListService } from 'src/app/services/sort-list.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { ListPopoverComponent } from 'src/app/shared/list-popover/list-popover.component';
 import text from 'src/assets/text/group-tab.text.json';
 
@@ -23,17 +24,18 @@ export class GroupTabPage implements OnInit {
     constructor(
         private alertController: AlertController,
         private groupSheetService: GroupSheetService,
+        private groupStorageService: GroupStorageService,
         private popoverController: PopoverController,
-        private sortListService: SortListService,
-        private storageService: StorageService
+        private passConfigStorageService: PassConfigStorageService,
+        private sortListService: SortListService
     ) {
         this.toggleSort = true;
         this.text = text;
     }
 
     ngOnInit() {
-        this.storageService.loadGroups();
-        this.groups = this.storageService.getGroups();
+        this.groupStorageService.load();
+        this.groups = this.groupStorageService.findAll();
         if (this.groups !== null && this.groups.length === 1) {
             this.groups = [];
             this.addGroup();
@@ -74,7 +76,7 @@ export class GroupTabPage implements OnInit {
                         const group = new Group();
                         group.name = data.name;
 
-                        if (group.name !== '' && this.storageService.findGroupByName(group.name) === undefined) {
+                        if (group.name !== '' && this.groupStorageService.findByName(group.name) === undefined) {
                             this.createGroup(group);
                             this.sortToggler(this.toggleSort);
                         }
@@ -87,7 +89,7 @@ export class GroupTabPage implements OnInit {
     }
 
     createGroup(group: Group): void {
-        this.groups = this.storageService.addGroup(group);
+        this.groups = this.groupStorageService.save(group);
     }
 
     async callMainActionSheet(position: number, group: Group): Promise<void> {
@@ -95,16 +97,16 @@ export class GroupTabPage implements OnInit {
             let result = await this.groupSheetService.mainActionSheet(group);
             switch (result.action) {
                 case 'edit':
-                    const passConfigs = this.storageService.findPassConfigByGroupId(group.id);
+                    const passConfigs = this.passConfigStorageService.findByGroupId(group.id);
                     passConfigs.forEach(passConfig => {
                         passConfig.group.name = result.group.name;
-                        this.storageService.updatePassConfig(passConfig);
+                        this.passConfigStorageService.update(passConfig);
                     });
-                    this.groups = this.storageService.updateGroup(result.group);
+                    this.groups = this.groupStorageService.update(result.group);
                     this.sortToggler(this.toggleSort);
                     break;
                 case 'delete':
-                    this.groups = this.storageService.removeGroup(result.group);
+                    this.groups = this.groupStorageService.delete(result.group);
                     break;
                 default:
                     break;
@@ -146,9 +148,9 @@ export class GroupTabPage implements OnInit {
     }
 
     groupPassConfigsLength(group: Group): number {
-        let passConfigs = this.storageService.findPassConfigByGroupId(group.id);
+        let passConfigs = this.passConfigStorageService.findByGroupId(group.id);
         if (group.name === 'Sin agrupar') {
-            passConfigs = passConfigs.concat(this.storageService.findPassConfigByGroupId(undefined));
+            passConfigs = passConfigs.concat(this.passConfigStorageService.findByGroupId(undefined));
         }
         return passConfigs.length;
     }

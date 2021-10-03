@@ -10,8 +10,8 @@ import { CipherStrategy } from 'src/app/core/cipher/impl/cipher.strategy';
 import { StrategySelector } from 'src/app/core/strategy/strategy-selector';
 import { UkeleleStrategy } from 'src/app/core/strategy/impl/ukelele-strategy';
 import { PassConfigService } from 'src/app/services/pass-config.service';
+import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { UrlService } from 'src/app/services/url.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 import { PassConfig } from 'src/app/models/pass-config.model';
@@ -51,7 +51,7 @@ export class PasswordTabPage implements OnInit {
         private clipboard: Clipboard,
         private navController: NavController,
         private passConfigService: PassConfigService,
-        private storageService: StorageService,
+        private passConfigStorageService: PassConfigStorageService,
         private titleService: Title,
         private toastService: ToastService,
         private urlService: UrlService
@@ -68,7 +68,7 @@ export class PasswordTabPage implements OnInit {
             this.passConfig = this.passConfigService.getPassConfig();
         } else if (passConfigId !== null) {
             this.passConfigId = Number(passConfigId);
-            this.passConfig = this.storageService.getPassConfig(this.passConfigId);
+            this.passConfig = this.passConfigStorageService.findById(this.passConfigId);
         } else {
             this.passConfig = new PassConfig();
         }
