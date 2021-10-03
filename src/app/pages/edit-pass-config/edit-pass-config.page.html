@@ -67,6 +67,14 @@
                 <ion-label class="label">{{ text.favoriteText }}</ion-label>
                 <ion-toggle formControlName="favorite"></ion-toggle>
             </ion-item>
+            <ion-item lines="full">
+                <ion-label class="label">
+                    <h2>{{ text.securityText }}</h2>
+                    <p [class]="validDateWarning()">{{ text.validToText }}: {{ passConfig.keyConfig.updatedOn }}</p>
+                </ion-label>
+                <ion-icon *ngIf="validDateWarning() !== ''" class="ion-text-right ion-padding-end" [color]="validDateWarning()" name="alert-circle-outline"></ion-icon>
+                <ion-toggle formControlName="security"></ion-toggle>
+            </ion-item>
             <ion-item lines="none">
                 <ion-label class="label">{{ text.groupText }}</ion-label>
                 <ion-select value="0" ok-text="Aceptar" cancel-text="Cancelar" formControlName="groupId" (ionChange)="updatePassConfigGroup()">

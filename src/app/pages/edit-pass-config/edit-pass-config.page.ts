@@ -98,6 +98,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         super.getFormControl(this.editForm, 'uri').setValue(this.passConfig.uri);
         super.getFormControl(this.editForm, 'notes').setValue(this.passConfig.notes);
         super.getFormControl(this.editForm, 'favorite').setValue(this.passConfig.favorite);
+        super.getFormControl(this.editForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.editForm, 'groupId').setValue(this.passConfig.group.id);
 
         let password;
@@ -129,6 +130,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     initEditForm(): void {
         this.editForm = super.onInitForm(this.passConfig);
         this.editForm.addControl('favorite', new FormControl(this.passConfig.favorite));
+        this.editForm.addControl('security', new FormControl(this.passConfig.security));
         this.editForm.addControl('groupId', new FormControl(this.passConfig.group.id));
     }
 
@@ -143,6 +145,10 @@ export class EditPassConfigPage extends BasePage implements OnInit {
 
         this.passConfig.update(this.editForm.value);
         this.passConfig.image = this.passConfig.buildImage(this.passConfig.uri);
+
+        if (this.passConfig.security && this.passConfig.keyConfig.updatedOn === undefined) {
+            this.passConfig.keyConfig.updatedOn = this.passConfig.keyConfig.validSecurityDate();
+        }
 
         this.storageService.updatePassConfig(this.passConfig);
 

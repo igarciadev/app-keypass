@@ -1,6 +1,6 @@
 import { BaseConfig } from 'src/app/models/base-config.model';
-import { KeyConfig } from 'src/app/models/key-config.model';
 import { Group } from './group.model';
+import { KeyConfig } from 'src/app/models/key-config.model';
 
 export class PassConfig extends BaseConfig {
     public id: number;
@@ -10,6 +10,7 @@ export class PassConfig extends BaseConfig {
     public notes: string;
     public image: string;
     public favorite: boolean;
+    public security: boolean;
     public createdOn: string;
     public updatedOn: string;
     public keyConfig: KeyConfig;
@@ -24,6 +25,7 @@ export class PassConfig extends BaseConfig {
         this.notes = this.notEmpty(init, 'notes') ? init.notes : '';
         this.image = this.notEmpty(init, 'image') ? this.buildImage(init.uri) : '';
         this.favorite = this.notEmpty(init, 'favorite') ? init.favorite : false;
+        this.security = this.notEmpty(init, 'security') ? init.security : false;
         this.createdOn = this.notEmpty(init, 'createdOn') ? init.createdOn : this.timeCore.forModel();
         this.updatedOn = this.notEmpty(init, 'updatedOn') ? init.updatedOn : this.timeCore.forModel();
         this.keyConfig = this.notEmpty(init, 'keyConfig') ? new KeyConfig(init.keyConfig) : new KeyConfig();
@@ -41,6 +43,7 @@ export class PassConfig extends BaseConfig {
         this.uri = passConfig.uri;
         this.notes = passConfig.notes;
         this.favorite = passConfig.favorite;
+        this.security = passConfig.security;
     }
 
     equals(passConfig: PassConfig): boolean {

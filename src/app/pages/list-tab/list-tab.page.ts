@@ -257,4 +257,28 @@ export class ListTabPage implements OnInit {
     showList(groupName: string, position: number): boolean {
         return !this.hasFavorites(groupName) && this.showGroups[position];
     }
+
+    validDateWarning(passConfig: PassConfig): string {
+        let color: string = '';
+        if (passConfig.keyConfig.updatedOn) {
+            const dateString = passConfig.keyConfig.updatedOn.replace(/:/g, '/').replace(' ', '/').split("/");
+            const passConfigDate: Date = new Date(
+                Number(dateString[2]), Number(dateString[1]) - 1, Number(dateString[0]),
+                Number(dateString[3]), Number(dateString[4]), Number(dateString[5])
+            );
+
+            if (passConfigDate !== undefined) {
+                const nowDate: Date = new Date();
+                const daysBetweenDates: number = (passConfigDate.getTime() - nowDate.getTime()) / (1000 * 3600 * 24);
+
+                if (passConfig.security && daysBetweenDates <= 14 && daysBetweenDates > 0) {
+                    color = 'warning';
+                } else if (passConfig.security && daysBetweenDates <= 0) {
+                    color = 'danger';
+                }
+            }
+        }
+
+        return color;
+    }
 }

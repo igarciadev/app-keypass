@@ -8,8 +8,14 @@ export class TimeCore {
     minute: string;
     second: string;
 
-    getNow(): void {
-        this.date = new Date();
+    getNow(date?: Date): void {
+
+        if (date === undefined) {
+            this.date = new Date();
+        } else {
+            this.date = date;
+        }
+
         this.day = (this.date.getDate() < 10 ? '0' : '') + this.date.getDate();
         this.month = (this.date.getMonth() + 1 < 10 ? '0' : '') + (this.date.getMonth() + 1);
         this.year = String(this.date.getFullYear());
@@ -18,8 +24,8 @@ export class TimeCore {
         this.second = (this.date.getSeconds() < 10 ? '0' : '') + this.date.getSeconds();
     }
 
-    forModel(): string {
-        this.getNow();
+    forModel(date?: Date): string {
+        this.getNow(date);
         return `${this.day}/${this.month}/${this.year} ${this.hour}:${this.minute}:${this.second}`;
     }
 

@@ -20,6 +20,7 @@ export class KeyConfig extends BaseConfig {
     public maxLength: number;
     public minNumbers: number;
     public minSymbols: number;
+    public updatedOn: string;
 
     constructor(init?: Partial<KeyConfig>) {
         super();
@@ -38,6 +39,7 @@ export class KeyConfig extends BaseConfig {
         this.minSymbols = this.notEmpty(init, 'minSymbols') ? init.minSymbols : 1;
         this.cipher = this.notEmpty(init, 'cipher') ? new CipherSelector(init.cipher).getCipher() : new CipherSelector().getCipher();
         this.strategy = this.notEmpty(init, 'strategy') ? new StrategySelector(init.strategy).getStrategy() : new StrategySelector().getStrategy();
+        this.updatedOn = this.notEmpty(init, 'updatedOn') ? init.updatedOn : this.validSecurityDate();
     }
 
     update(keyConfig: KeyConfig): void {
@@ -66,5 +68,11 @@ export class KeyConfig extends BaseConfig {
             this.symbol === keyConfig.symbol &&
             this.time === keyConfig.time &&
             this.upper === keyConfig.upper;
+    }
+
+    validSecurityDate(): string {
+        const date: Date = new Date();
+        date.setMonth(date.getMonth() + 3);
+        return this.timeCore.forModel(date);
     }
 }

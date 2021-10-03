@@ -35,6 +35,7 @@
                     <span class="initials">{{ firstLetter(item.name) }}</span>
                 </div>
                 <ion-label>{{ item.name }}</ion-label>
+                <ion-icon *ngIf="validDateWarning(item) !== ''" class="ion-text-right ion-padding-end" [color]="validDateWarning(item)" name="alert-circle-outline"></ion-icon>
                 <ion-icon name="ellipsis-horizontal"></ion-icon>
             </ion-item>
         </ion-list>

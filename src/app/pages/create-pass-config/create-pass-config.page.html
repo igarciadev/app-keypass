@@ -50,6 +50,16 @@
                 <ion-label class="label" position="stacked">{{ text.notesText }}</ion-label>
                 <ion-textarea formControlName="notes" auto-grow="true"></ion-textarea>
             </ion-item>
+            <ion-list-header lines="none">
+                <ion-label color="primary">{{ text.someText }}</ion-label>
+            </ion-list-header>
+            <ion-item lines="full">
+                <ion-label class="label">
+                    <h2>{{ text.securityText }}</h2>
+                    <p class="gray-text">{{ text.validToText }}: {{ passConfig.keyConfig.updatedOn }}</p>
+                </ion-label>
+                <ion-toggle formControlName="security"></ion-toggle>
+            </ion-item>
             <ion-item lines="none">
                 <ion-label class="label">{{ text.groupText }}</ion-label>
                 <ion-select value="0" ok-text="Aceptar" cancel-text="Cancelar" formControlName="groupId" (ionChange)="updatePassConfigGroup()">

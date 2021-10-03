@@ -118,7 +118,8 @@ export class PasswordTabPage implements OnInit {
             symbol: new FormControl(''),
             length: new FormControl({ value: '', disabled: true }),
             minNumbers: new FormControl({ value: '', disabled: true }),
-            minSymbols: new FormControl({ value: '', disabled: true })
+            minSymbols: new FormControl({ value: '', disabled: true }),
+            updatedOn: new FormControl({ value: '', disabled: true })
         });
     }
 
@@ -132,6 +133,7 @@ export class PasswordTabPage implements OnInit {
         this.getFormControl('length').setValue(this.passConfig.keyConfig.length);
         this.getFormControl('minNumbers').setValue(this.passConfig.keyConfig.minNumbers);
         this.getFormControl('minSymbols').setValue(this.passConfig.keyConfig.minSymbols);
+        this.getFormControl('updatedOn').setValue(this.passConfig.updatedOn);
     }
 
     getUrlParameter(parameterName: string): string {
@@ -167,6 +169,7 @@ export class PasswordTabPage implements OnInit {
             passConfig.keyConfig.length = this.getFormNumberValue('length');
             passConfig.keyConfig.minNumbers = this.getFormNumberValue('minNumbers');
             passConfig.keyConfig.minSymbols = this.getFormNumberValue('minSymbols');
+            passConfig.keyConfig.updatedOn = passConfig.keyConfig.validSecurityDate();
 
             const selector = new StrategySelector(passConfig.keyConfig.strategy);
             this.password = selector.init(passConfig.keyConfig, this.getFormStringValue('secret'));

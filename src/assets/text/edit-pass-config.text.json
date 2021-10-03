@@ -19,5 +19,7 @@
     "copyUriText": "URI copiada",
     "someText": "Varios",
     "groupText": "Grupo",
-    "selectText": "Seleccionar"
+    "selectText": "Seleccionar",
+    "securityText": "Renovar en 3 meses",
+    "validToText": "Válida hasta"
 }

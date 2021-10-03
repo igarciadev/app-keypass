@@ -100,6 +100,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         super.getFormControl(this.createForm, 'uri').setValue(this.passConfig.uri);
         super.getFormControl(this.createForm, 'notes').setValue(this.passConfig.notes);
         super.getFormControl(this.createForm, 'favorite').setValue(this.passConfig.favorite);
+        super.getFormControl(this.createForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.createForm, 'groupId').setValue(this.passConfig.group.id);
 
         if (this.passConfig.keyConfig.keyword !== '') {
@@ -132,6 +133,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
     initCreateForm(): void {
         this.createForm = super.onInitForm(this.passConfig);
         this.createForm.addControl('favorite', new FormControl(false));
+        this.createForm.addControl('security', new FormControl(false));
         this.createForm.addControl('groupId', new FormControl(this.passConfig.group.id));
     }
 

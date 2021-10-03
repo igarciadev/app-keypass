@@ -2,5 +2,8 @@
     "confirmText": "Estás a punto de cerrar la aplicación. ¿Deseas salir?",
     "cancelText": "Cancelar",
     "acceptText": "Aceptar",
-    "exitText": "Salir"
+    "exitText": "Salir",
+    "expiredText": "Validez expirada",
+    "changeText": "Por motivos de seguridad, tienes que cambiar una contraseña que ha expirado.",
+    "changesText": "Por motivos de seguridad, tienes que cambiar varias contraseñas que han expirado."
 }

@@ -16,5 +16,7 @@
     "copyPasswordText": "Contraseña copiada",
     "copyUriText": "URI copiada",
     "groupText": "Grupo",
-    "someText": "Varios"
+    "someText": "Varios",
+    "securityText": "Renovar en 3 meses",
+    "validToText": "Válida hasta"
 }

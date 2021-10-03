@@ -97,7 +97,9 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
         super.getFormControl(this.viewForm, 'uri').setValue(this.passConfig.uri);
         super.getFormControl(this.viewForm, 'notes').setValue(this.passConfig.notes);
         super.getFormControl(this.viewForm, 'favorite').setValue(this.passConfig.favorite);
+        super.getFormControl(this.viewForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.viewForm, 'groupName').setValue(groupName);
+        super.getFormControl(this.viewForm, 'updatedOn').setValue(this.passConfig.updatedOn);
 
         let password;
         if (this.secret !== undefined) {
@@ -125,7 +127,9 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
     initViewForm(): void {
         this.viewForm = super.onInitForm(this.passConfig);
         this.viewForm.addControl('favorite', new FormControl(false));
+        this.viewForm.addControl('security', new FormControl(false));
         this.viewForm.addControl('groupName', new FormControl(''));
+        this.viewForm.addControl('updatedOn', new FormControl(this.passConfig.updatedOn));
     }
 
     togglePassword(): void {

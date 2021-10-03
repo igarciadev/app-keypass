@@ -64,6 +64,15 @@
                 <ion-label class="label">{{ text.favoriteText }}</ion-label>
                 <ion-toggle formControlName="favorite" [attr.disabled]="disableComponent"></ion-toggle>
             </ion-item>
+            <ion-item lines="full" text-wrap>
+                <ion-label *ngIf="!showSecurityInfo" class="label">{{ text.securityText }}</ion-label>
+                <ion-label *ngIf="showSecurityInfo" class="label">
+                    <h2>{{ text.securityText }}</h2>
+                    <p [class]="validDateWarning()">{{ text.validToText }}: {{ passConfig.keyConfig.updatedOn }}</p>
+                </ion-label>
+                <ion-icon *ngIf="validDateWarning() !== ''" class="ion-text-right ion-padding-end" [color]="validDateWarning()" name="alert-circle-outline"></ion-icon>
+                <ion-toggle formControlName="security" [attr.disabled]="disableComponent"></ion-toggle>
+            </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.groupText }}</ion-label>
                 <ion-input type="text" formControlName="groupName" [attr.disabled]="disableComponent"></ion-input>
