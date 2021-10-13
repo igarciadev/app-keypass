@@ -74,7 +74,7 @@ export class FileService {
             const passConfigs = JSON.parse(value);
             passConfigs.forEach((passConfig: PassConfig) => {
                 const group: Group = this.groupStorageService.findById(passConfig.group.id);
-                if (group === undefined && passConfig.group.id !== undefined) {
+                if (group === undefined && passConfig.group.id !== undefined && passConfig.group.name !== 'Sin agrupar') {
                     this.groupStorageService.save(passConfig.group);
                 }
                 this.passConfigStorageService.delete(passConfig);
