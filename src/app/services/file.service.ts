@@ -77,6 +77,9 @@ export class FileService {
                 if (group === undefined && passConfig.group.id !== undefined && passConfig.group.name !== 'Sin agrupar') {
                     this.groupStorageService.save(passConfig.group);
                 }
+                if (passConfig.group.id !== undefined && passConfig.group.name === 'Sin agrupar') {
+                    passConfig.group.id = this.groupStorageService.findByName('Sin agrupar').id;
+                }
                 this.passConfigStorageService.delete(passConfig);
             });
             this.passConfigStorageService.saveAll(passConfigs);
