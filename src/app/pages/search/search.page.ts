@@ -13,6 +13,7 @@ import text from 'src/assets/text/search.text.json';
 })
 export class SearchPage implements OnInit {
 
+    searchTerm: string;
     text: any;
 
     constructor(
@@ -31,12 +32,16 @@ export class SearchPage implements OnInit {
         this.titleService.setTitle('Search Page');
     }
 
-    search(searchTerm): void {
+    search(searchTerm: string): void {
+        this.searchTerm = searchTerm;
         this.passConfigSearchService.search(searchTerm);
     }
 
-    mainActionSheet(passConfig: PassConfig): void {
-        this.actionSheetService.mainActionSheet(passConfig);
+    async mainActionSheet(passConfig: PassConfig): Promise<void> {
+        let result = await this.actionSheetService.mainActionSheet(passConfig);
+        if (result === 'deleteItem') {
+            this.search(this.searchTerm);
+        }
     }
 
     firstLetter(name: string): string {
@@ -49,5 +54,9 @@ export class SearchPage implements OnInit {
 
     hasImage(passConfig: PassConfig): boolean {
         return passConfig.image !== undefined && passConfig.image !== null && !passConfig.image.includes('domain_url=null');
+    }
+
+    getValues(): PassConfig[] {
+        return this.passConfigSearchService.list
     }
 }
