@@ -5,7 +5,7 @@
 
 <ion-card-content>
     <ion-item lines="full">
-        <ion-input type="{{type}}" #secret placeholder="{{ text.secretText }}"></ion-input>
+        <ion-input [type]="passwordType" [class]="passwordClass" #secret></ion-input>
         <ion-buttons slot="end">
             <ion-button class="icon-size" (click)="toggleEyeIcon()">
                 <ion-icon [name]="eyeIconName" color="primary"></ion-icon>

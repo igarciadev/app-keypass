@@ -27,3 +27,8 @@
 .keyboard-is-open {
     top: 5em !important;
 }
+
+.field-input {
+    -webkit-text-security: disc;
+    letter-spacing: 3px;
+}

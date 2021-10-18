@@ -12,10 +12,11 @@ import text from 'src/assets/text/regenerate-popover.text.json';
 })
 export class RegeneratePopoverComponent implements OnInit {
 
-    type: string;
+    passwordType: string;
     eyeIconName: string;
     showPassword: boolean;
     showKeyboard: boolean;
+    passwordClass: string;
     text: any;
 
     constructor(
@@ -25,10 +26,11 @@ export class RegeneratePopoverComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.type = 'password';
+        this.passwordType = 'password';
         this.eyeIconName = 'eye-off-outline';
         this.showPassword = false;
         this.showKeyboard = false;
+        this.passwordClass = 'field-input';
         this.text = text;
 
         this.platform.ready().then(() => {
@@ -51,9 +53,9 @@ export class RegeneratePopoverComponent implements OnInit {
 
     toggleEyeIcon() {
         this.showPassword = !this.showPassword;
-        this.type = this.showPassword ? 'text' : 'password';
+        this.passwordType = this.showPassword ? 'text' : 'password';
         this.eyeIconName = this.showPassword ? 'eye-outline' : 'eye-off-outline';
-
+        this.passwordClass = !this.showPassword ? 'field-input' : '';
     }
 
     regeneratePassword(secret: string | number) {
