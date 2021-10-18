@@ -54,5 +54,5 @@
 		9222, 9222,
 
 	],
-	"postCreateCommand": "npm i @ionic-native/core && npm i --save-dev karma-verbose-reporter && npm i native-run && npm i cordova-res"
+	"postCreateCommand": "npm i @ionic-native/core && npm i --save-dev karma-verbose-reporter && npm i -g native-run && npm i cordova-res"
 }
