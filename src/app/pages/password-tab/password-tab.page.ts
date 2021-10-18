@@ -38,7 +38,6 @@ export class PasswordTabPage implements OnInit {
     submitForm: boolean;
     page: string;
     passwordDisabled: boolean;
-    passwordEnableCopyIcon: boolean
     keywordClass: string;
     eyeIconName: string;
     showPassword: boolean;
@@ -83,7 +82,6 @@ export class PasswordTabPage implements OnInit {
         this.keywordType = 'password';
         this.submitForm = false;
         this.passwordDisabled = true;
-        this.passwordEnableCopyIcon = this.page !== 'edit';
         this.showPassword = false;
         this.keywordClass = 'field-input';
         this.eyeIconName = 'eye-off-outline'
