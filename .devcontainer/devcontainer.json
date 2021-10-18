@@ -11,10 +11,25 @@
 			"**/plugins/**": true,
 			"**/www/**": true,
 			"**/resources/**": true
-		}
+		},
+        "editor.rulers": [
+            {
+              "column": 80,
+              "color": "#44444440"
+            },
+            {
+              "column": 100,
+              "color": "#44444460"
+            },
+            {
+              "column": 120,
+              "color": "#44444480"
+            }
+        ],
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs": true
 	},
 	"extensions": [
-		"2gua.rainbow-brackets",
 		"hediet.vscode-drawio",
 		"mhutchie.git-graph",
 		"jinsihou.diff-tool",
