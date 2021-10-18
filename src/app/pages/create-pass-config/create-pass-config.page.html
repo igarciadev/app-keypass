@@ -15,7 +15,7 @@
         <form [formGroup]="createForm">
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.nameText }} *</ion-label>
-                <ion-input type="text" formControlName="name"></ion-input>
+                <ion-input type="text" formControlName="name" maxlength="30"></ion-input>
             </ion-item>
             <div class="ion-label-invalid">
                 <small *ngIf="nameRequired">{{ text.requiredText }}</small>

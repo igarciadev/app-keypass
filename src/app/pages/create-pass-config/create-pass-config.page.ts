@@ -33,7 +33,6 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
     enableSettingsIcon: boolean;
     showPassword: boolean;
     disablePassword: boolean;
-    passwordType: string;
     passwordClass: string;
     eyeIconName: string;
     secret: string;
@@ -64,7 +63,6 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         this.enableSettingsIcon = false;
         this.showPassword = false;
         this.disablePassword = true;
-        this.passwordType = 'password';
         this.eyeIconName = 'eye-off-outline'
         this.passwordClass = 'field-input';
         this.groups = this.groupStorageService.findAll();
@@ -74,7 +72,6 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
     ionViewWillEnter() {
         this.titleService.setTitle('Create Page');
         if (this.passConfigService.getPassConfig() !== undefined) {
-            this.passwordType = 'password';
             this.secret = undefined;
             this.enableEyeIcon = false;
             this.showPassword = false;
@@ -104,17 +101,6 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         super.getFormControl(this.createForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.createForm, 'groupId').setValue(this.passConfig.group.id);
 
-        if (this.passConfig.keyConfig.keyword !== '') {
-            let password;
-            if (this.secret !== undefined) {
-                password = this.regeneratePassword(this.secret);
-            } else {
-                password = Array(this.passConfig.keyConfig.length + 1).join('*');
-            }
-
-            super.getFormControl(this.createForm, 'password').setValue(password);
-        }
-
         if (this.submitForm) {
             if (this.createForm.invalid || this.passwordRequired) {
                 Object.values(this.createForm.controls).forEach(control => {
@@ -129,7 +115,15 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
 
     ionViewDidEnter() {
         if (this.passConfig.keyConfig.keyword !== '') {
+            let password;
+            if (this.secret !== undefined) {
+                password = this.regeneratePassword();
+            } else {
+                password = Array(this.passConfig.keyConfig.length + 1).join('*');
+            }
+
             super.getFormControl(this.createForm, 'username').setValue(this.passConfig.username);
+            super.getFormControl(this.createForm, 'password').setValue(password);
             super.getFormControl(this.createForm, 'uri').setValue(this.passConfig.uri);
             super.getFormControl(this.createForm, 'notes').setValue(this.passConfig.notes);
         }
@@ -173,17 +167,14 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         this.navigateToPasswordPage();
     }
 
-    regeneratePassword(secret: string): string {
-        const selector = new StrategySelector(this.passConfig.keyConfig.strategy);
-        return selector.init(this.passConfig.keyConfig, secret);
-    }
-
     togglePassword(): void {
         if (this.passConfig.keyConfig.keyword !== '') {
             this.showPassword = !this.showPassword;
             this.eyeIconName = this.showPassword ? 'eye-outline' : 'eye-off-outline';
-            this.passwordType = this.showPassword ? 'text' : 'password';
             this.passwordClass = !this.showPassword ? 'field-input' : '';
+
+            let password = this.showPassword ? this.regeneratePassword() : this.maskPassword();
+            super.getFormControl(this.createForm, 'password').setValue(password);
         }
     }
 
@@ -216,13 +207,21 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
 
     regenerate(secret: string, copy: boolean) {
         this.secret = secret;
-        const password = this.regeneratePassword(this.secret);
-        super.getFormControl(this.createForm, 'password').setValue(password);
+        super.getFormControl(this.createForm, 'password').setValue(this.regeneratePassword());
         this.togglePassword();
     }
 
-    async regeneratePopover(copy: boolean) {
+    async regeneratePopover(copy?: boolean) {
         super.onRegeneratePopover(this.secret, copy);
+    }
+
+    regeneratePassword(): string {
+        const selector = new StrategySelector(this.passConfig.keyConfig.strategy);
+        return selector.init(this.passConfig.keyConfig, this.secret);
+    }
+
+    maskPassword(): string {
+        return Array(this.passConfig.keyConfig.length + 1).join('*');
     }
 
     async changePopover() {

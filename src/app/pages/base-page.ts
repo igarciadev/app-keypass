@@ -59,7 +59,7 @@ export abstract class BasePage {
 
     onValidDateWarning(passConfig: PassConfig): string {
         let pColor: string = '';
-        if (passConfig.keyConfig.updatedOn) {
+        if (passConfig?.keyConfig.updatedOn) {
             const dateString = passConfig.keyConfig.updatedOn.replace(/:/g, '/').replace(' ', '/').split("/");
             const passConfigDate: Date = new Date(
                 Number(dateString[2]), Number(dateString[1]) - 1, Number(dateString[0]),

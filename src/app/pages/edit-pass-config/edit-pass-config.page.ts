@@ -34,7 +34,6 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     enableSettingsIcon: boolean;
     showPassword: boolean;
     disablePassword: boolean;
-    passwordType: string;
     passwordClass: string;
     eyeIconName: string;
     secret: string;
@@ -67,6 +66,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         this.enableSettingsIcon = false;
         this.disablePassword = true;
         this.eyeIconName = 'eye-off-outline';
+        this.passwordClass = 'field-input';
         this.groups = this.groupStorageService.findAll();
         this.text = text;
     }
@@ -74,7 +74,6 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     ionViewWillEnter() {
         this.titleService.setTitle('Edit Page');
         this.showPassword = false;
-        this.passwordType = 'password';
         this.passwordClass = 'field-input';
         this.eyeIconName = 'eye-off-outline'
         this.secret = this.activatedRoute.snapshot.paramMap.get('secret');
@@ -102,15 +101,6 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         super.getFormControl(this.editForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.editForm, 'groupId').setValue(this.passConfig.group.id);
 
-        let password;
-        if (this.secret !== null) {
-            password = this.regeneratePassword();
-        } else {
-            password = Array(this.passConfig.keyConfig.length + 1).join('*');
-        }
-
-        super.getFormControl(this.editForm, 'password').setValue(password);
-
         if (this.submitForm) {
             if (this.editForm.invalid || this.passwordRequired) {
                 Object.values(this.editForm.controls).forEach(control => {
@@ -124,7 +114,15 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     }
 
     ionViewDidEnter() {
+        let password;
+        if (this.secret !== null) {
+            password = this.regeneratePassword();
+        } else {
+            password = this.maskPassword();
+        }
+
         super.getFormControl(this.editForm, 'username').setValue(this.passConfig.username);
+        super.getFormControl(this.editForm, 'password').setValue(password);
         super.getFormControl(this.editForm, 'uri').setValue(this.passConfig.uri);
         super.getFormControl(this.editForm, 'notes').setValue(this.passConfig.notes);
     }
@@ -173,8 +171,10 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         if (this.passConfig.keyConfig.keyword !== '') {
             this.showPassword = !this.showPassword;
             this.eyeIconName = this.showPassword ? 'eye-outline' : 'eye-off-outline';
-            this.passwordType = this.showPassword ? 'text' : 'password';
             this.passwordClass = !this.showPassword ? 'field-input' : '';
+
+            let password = this.showPassword ? this.regeneratePassword() : this.maskPassword();
+            super.getFormControl(this.editForm, 'password').setValue(password);
         }
     }
 
@@ -241,6 +241,10 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     regeneratePassword(): string {
         const selector = new StrategySelector(this.passConfig.keyConfig.strategy);
         return selector.init(this.passConfig.keyConfig, this.secret);
+    }
+
+    maskPassword(): string {
+        return Array(this.passConfig.keyConfig.length + 1).join('*');
     }
 
     async changePopover() {

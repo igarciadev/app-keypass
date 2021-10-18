@@ -33,7 +33,6 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
     submitForm: boolean;
     showPassword: boolean;
     disableComponent: boolean;
-    passwordType: string;
     passwordClass: string;
     eyeIconName: string;
     secret: string;
@@ -62,7 +61,6 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
         this.submitForm = false;
         this.showPassword = false;
         this.disableComponent = true;
-        this.passwordType = 'password';
         this.eyeIconName = 'eye-off-outline'
         this.passwordClass = 'field-input';
         this.text = text;
@@ -71,7 +69,6 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
     ionViewWillEnter() {
         this.titleService.setTitle('View Page');
         this.showPassword = false;
-        this.passwordType = 'password';
         this.passwordClass = 'field-input';
         this.eyeIconName = 'eye-off-outline';
 
@@ -100,15 +97,6 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
         super.getFormControl(this.viewForm, 'groupName').setValue(groupName);
         super.getFormControl(this.viewForm, 'updatedOn').setValue(this.passConfig.updatedOn);
 
-        let password;
-        if (this.secret !== undefined) {
-            password = this.regeneratePassword();
-        } else {
-            password = Array(this.passConfig.keyConfig.length + 1).join('*');
-        }
-
-        super.getFormControl(this.viewForm, 'password').setValue(password);
-
         if (this.submitForm) {
             if (this.viewForm.invalid) {
                 Object.values(this.viewForm.controls).forEach(control => {
@@ -120,7 +108,15 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
     }
 
     ionViewDidEnter() {
+        let password;
+        if (this.secret !== undefined) {
+            password = this.regeneratePassword();
+        } else {
+            password = this.maskPassword();
+        }
+
         super.getFormControl(this.viewForm, 'username').setValue(this.passConfig.username);
+        super.getFormControl(this.viewForm, 'password').setValue(password);
         super.getFormControl(this.viewForm, 'uri').setValue(this.passConfig.uri);
         super.getFormControl(this.viewForm, 'notes').setValue(this.passConfig.notes);
     }
@@ -141,8 +137,10 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
         if (this.passConfig.keyConfig.keyword !== '') {
             this.showPassword = !this.showPassword;
             this.eyeIconName = this.showPassword ? 'eye-outline' : 'eye-off-outline';
-            this.passwordType = this.showPassword ? 'text' : 'password';
             this.passwordClass = !this.showPassword ? 'field-input' : '';
+
+            let password = this.showPassword ? this.regeneratePassword() : this.maskPassword();
+            super.getFormControl(this.viewForm, 'password').setValue(password);
         }
     }
 
@@ -204,6 +202,10 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
     regeneratePassword(): string {
         const selector = new StrategySelector(this.passConfig.keyConfig.strategy);
         return selector.init(this.passConfig.keyConfig, this.secret);
+    }
+
+    maskPassword(): string {
+        return Array(this.passConfig.keyConfig.length + 1).join('*');
     }
 
     async actionPopover(event: any) {
