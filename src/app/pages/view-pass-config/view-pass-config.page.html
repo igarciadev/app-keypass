@@ -11,6 +11,7 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
+
 <ion-content [fullscreen]="true">
     <ion-list>
         <form [formGroup]="viewForm">
@@ -20,7 +21,7 @@
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.usernameText }}</ion-label>
-                <ion-input type="text" formControlName="username" [attr.disabled]="disableComponent"></ion-input>
+                <ion-textarea formControlName="username" rows="1" [autoGrow]="!!getFormControl(viewForm, 'username')" [attr.disabled]="disableComponent"></ion-textarea>
                 <ion-buttons class="field-buttons" slot="end">
                     <ion-button (click)="copyUsername()">
                         <ion-icon name="copy-outline" color="primary"></ion-icon>
@@ -29,8 +30,7 @@
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.passwordText }}</ion-label>
-                <ion-input [type]="passwordType" [class]="passwordClass" formControlName="password"
-                    [attr.disabled]="disableComponent"></ion-input>
+                <ion-textarea [class]="passwordClass" formControlName="password" rows="1" [autoGrow]="!!getFormControl(viewForm, 'password')" [attr.disabled]="disableComponent"></ion-textarea>
                 <ion-buttons class="field-buttons" slot="end">
                     <ion-button (click)="regeneratePopover(false)">
                         <ion-icon [name]="eyeIconName" color="primary"></ion-icon>
@@ -42,7 +42,7 @@
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.uriText }}</ion-label>
-                <ion-input type="text" formControlName="uri" [attr.disabled]="disableComponent"></ion-input>
+                <ion-textarea formControlName="uri" rows="1" [autoGrow]="!!getFormControl(viewForm, 'uri')" [attr.disabled]="disableComponent"></ion-textarea>
                 <ion-buttons class="field-buttons" slot="end">
                     <ion-button (click)="openInBrowser()">
                         <ion-icon name="open-outline"color="primary"></ion-icon>

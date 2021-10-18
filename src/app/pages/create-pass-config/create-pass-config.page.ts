@@ -100,9 +100,6 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         }
 
         super.getFormControl(this.createForm, 'name').setValue(this.passConfig.name);
-        super.getFormControl(this.createForm, 'username').setValue(this.passConfig.username);
-        super.getFormControl(this.createForm, 'uri').setValue(this.passConfig.uri);
-        super.getFormControl(this.createForm, 'notes').setValue(this.passConfig.notes);
         super.getFormControl(this.createForm, 'favorite').setValue(this.passConfig.favorite);
         super.getFormControl(this.createForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.createForm, 'groupId').setValue(this.passConfig.group.id);
@@ -128,6 +125,14 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         }
 
         this.sortAscending();
+    }
+
+    ionViewDidEnter() {
+        if (this.passConfig.keyConfig.keyword !== '') {
+            super.getFormControl(this.createForm, 'username').setValue(this.passConfig.username);
+            super.getFormControl(this.createForm, 'uri').setValue(this.passConfig.uri);
+            super.getFormControl(this.createForm, 'notes').setValue(this.passConfig.notes);
+        }
     }
 
     ionViewDidLeave() {

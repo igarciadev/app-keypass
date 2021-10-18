@@ -98,9 +98,6 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         }
 
         super.getFormControl(this.editForm, 'name').setValue(this.passConfig.name);
-        super.getFormControl(this.editForm, 'username').setValue(this.passConfig.username);
-        super.getFormControl(this.editForm, 'uri').setValue(this.passConfig.uri);
-        super.getFormControl(this.editForm, 'notes').setValue(this.passConfig.notes);
         super.getFormControl(this.editForm, 'favorite').setValue(this.passConfig.favorite);
         super.getFormControl(this.editForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.editForm, 'groupId').setValue(this.passConfig.group.id);
@@ -124,6 +121,12 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         }
 
         this.sortAscending();
+    }
+
+    ionViewDidEnter() {
+        super.getFormControl(this.editForm, 'username').setValue(this.passConfig.username);
+        super.getFormControl(this.editForm, 'uri').setValue(this.passConfig.uri);
+        super.getFormControl(this.editForm, 'notes').setValue(this.passConfig.notes);
     }
 
     ionViewDidLeave() {

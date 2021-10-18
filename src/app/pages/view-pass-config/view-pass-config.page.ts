@@ -95,9 +95,6 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
         }
 
         super.getFormControl(this.viewForm, 'name').setValue(this.passConfig.name);
-        super.getFormControl(this.viewForm, 'username').setValue(this.passConfig.username);
-        super.getFormControl(this.viewForm, 'uri').setValue(this.passConfig.uri);
-        super.getFormControl(this.viewForm, 'notes').setValue(this.passConfig.notes);
         super.getFormControl(this.viewForm, 'favorite').setValue(this.passConfig.favorite);
         super.getFormControl(this.viewForm, 'security').setValue(this.passConfig.security);
         super.getFormControl(this.viewForm, 'groupName').setValue(groupName);
@@ -120,6 +117,12 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
                 return;
             }
         }
+    }
+
+    ionViewDidEnter() {
+        super.getFormControl(this.viewForm, 'username').setValue(this.passConfig.username);
+        super.getFormControl(this.viewForm, 'uri').setValue(this.passConfig.uri);
+        super.getFormControl(this.viewForm, 'notes').setValue(this.passConfig.notes);
     }
 
     ionViewDidLeave() {

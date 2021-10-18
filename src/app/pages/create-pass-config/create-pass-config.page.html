@@ -22,15 +22,13 @@
             </div>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.usernameText }}</ion-label>
-                <ion-input type="text" formControlName="username"></ion-input>
+                <ion-textarea formControlName="username" rows="1" [autoGrow]="!!getFormControl(createForm, 'username')" [attr.disabled]="disableComponent"></ion-textarea>
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.passwordText }} *</ion-label>
-                <ion-input [type]="passwordType" [class]="passwordClass" formControlName="password"
-                    [attr.disabled]="disablePassword"></ion-input>
+                <ion-textarea class="gray-text" [class]="passwordClass" formControlName="password" rows="1" [autoGrow]="!!getFormControl(createForm, 'password')" readonly></ion-textarea>
                 <ion-buttons class="field-buttons" slot="end">
-                    <ion-button *ngIf="!enableEyeIcon" color="primary" (click)="generatePassword()">{{ text.generateText
-                        }} </ion-button>
+                    <ion-button *ngIf="!enableEyeIcon" color="primary" (click)="generatePassword()">{{ text.generateText }} </ion-button>
                     <ion-button *ngIf="enableEyeIcon" (click)="regeneratePopover()">
                         <ion-icon [name]="eyeIconName" color="primary"></ion-icon>
                     </ion-button>
@@ -44,7 +42,7 @@
             </div>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.uriText }}</ion-label>
-                <ion-input type="text" formControlName="uri"></ion-input>
+                <ion-textarea formControlName="uri" rows="1" [autoGrow]="!!getFormControl(createForm, 'uri')" [attr.disabled]="disableComponent"></ion-textarea>
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.notesText }}</ion-label>
