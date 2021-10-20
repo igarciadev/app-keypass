@@ -46,6 +46,7 @@ export class TabsPage implements OnInit {
         return this.currentUrl !== null &&
             (this.currentUrl === '/' ||
                 (this.currentUrl.includes('/tabs/safe-tab') &&
+                    this.currentUrl !== '/tabs/safe-tab/create' &&
                     this.currentUrl !== '/tabs/safe-tab/view' &&
                     this.currentUrl !== '/tabs/safe-tab/edit') ||
                 this.currentUrl === '/tabs/password-tab' ||
