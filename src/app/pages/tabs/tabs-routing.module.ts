@@ -26,7 +26,15 @@ const routes: Routes = [
               loadChildren: () => import('../password-tab/password-tab.module').then(m => m.PasswordTabPageModule)
             },
             {
+              path: 'password-tab/create/:page',
+              loadChildren: () => import('../password-tab/password-tab.module').then(m => m.PasswordTabPageModule)
+            },
+            {
               path: 'password-tab/create/:secret',
+              loadChildren: () => import('../password-tab/password-tab.module').then(m => m.PasswordTabPageModule)
+            },
+            {
+              path: 'password-tab/create/:page/:secret',
               loadChildren: () => import('../password-tab/password-tab.module').then(m => m.PasswordTabPageModule)
             },
             {

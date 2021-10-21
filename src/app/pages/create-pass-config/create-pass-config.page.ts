@@ -190,7 +190,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
     }
 
     navigateToPasswordPage(): void {
-        let url = 'tabs/password-tab/create';
+        let url = 'tabs/password-tab/create/create';
         if (this.secret !== undefined) {
             url += `/${this.secret}`;
         }

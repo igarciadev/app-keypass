@@ -460,4 +460,8 @@ export class PasswordTabPage implements OnInit {
     get show(): boolean {
         return this.previousUrl !== null && (this.previousUrl.includes('create') || this.previousUrl.includes('edit'));
     }
+
+    get showCopyButton(): boolean {
+        return this.page !== 'create' && this.page !== 'edit';
+    }
 }

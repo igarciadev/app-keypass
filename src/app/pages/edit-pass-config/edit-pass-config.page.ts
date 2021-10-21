@@ -209,7 +209,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     }
 
     navigateToPasswordPage(): void {
-        let url = 'tabs/password-tab/create';
+        let url = 'tabs/password-tab/create/edit';
         if (this.secret !== null) {
             url += `/${this.secret}`;
         }

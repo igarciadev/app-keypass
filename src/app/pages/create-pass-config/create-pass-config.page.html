@@ -26,7 +26,7 @@
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.passwordText }} *</ion-label>
-                <ion-textarea class="gray-text" [class]="passwordClass" formControlName="password" rows="1" [autoGrow]="!!getFormControl(createForm, 'password')" readonly></ion-textarea>
+                <ion-textarea class="readonly-text" [class]="passwordClass" formControlName="password" rows="1" [autoGrow]="!!getFormControl(createForm, 'password')" readonly></ion-textarea>
                 <ion-buttons class="field-buttons" slot="end">
                     <ion-button *ngIf="!enableEyeIcon" color="primary" (click)="generatePassword()">{{ text.generateText }} </ion-button>
                     <ion-button *ngIf="enableEyeIcon" (click)="regeneratePopover()">
@@ -54,7 +54,7 @@
             <ion-item lines="full">
                 <ion-label class="label">
                     <h2>{{ text.securityText }}</h2>
-                    <p class="gray-text">{{ text.validToText }}: {{ passConfig.keyConfig.updatedOn }}</p>
+                    <p class="readonly-text">{{ text.validToText }}: {{ passConfig.keyConfig.updatedOn }}</p>
                 </ion-label>
                 <ion-toggle formControlName="security"></ion-toggle>
             </ion-item>

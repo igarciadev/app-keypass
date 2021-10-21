@@ -10,6 +10,7 @@ export class TextareaComponent implements OnInit, OnChanges {
     @Input() text: string;
     @Input() labelText: string;
     @Input() disabled: boolean;
+    @Input() showCopyButton: boolean;
 
     @Output() copyIconClick: EventEmitter<any> = new EventEmitter();
 

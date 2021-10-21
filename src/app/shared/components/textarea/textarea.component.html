@@ -1,7 +1,7 @@
 <ion-item lines="full">
     <ion-label class="label" position="stacked">{{ labelText }}</ion-label>
-    <ion-textarea [(ngModel)]="text" rows="1" class="textarea gray-text" [autoGrow]="!!text" [readonly]="disabled"></ion-textarea>
-    <ion-buttons slot="end">
+    <ion-textarea [(ngModel)]="text" rows="1" class="textarea readonly-text"  [autoGrow]="!!text" [readonly]="disabled"></ion-textarea>
+    <ion-buttons *ngIf="showCopyButton" slot="end">
         <ion-button (click)="onCopyIconClick()">
             <ion-icon name="copy-outline" color="primary"></ion-icon>
         </ion-button>
