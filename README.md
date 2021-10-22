@@ -85,7 +85,7 @@ All app preview screenshots were taken by running app on an android device.
 
 Download the app to your Android device [APP KEYPASS APK](resources/release/app-keypass-prod.apk)
 
-[<img src="resources/release/app-keypass-prod.png" alt="Schedule" width="250"/>](esources/release/app-keypass-prod.apk)
+[<img src="resources/release/app-keypass-prod.png" alt="Schedule" width="250"/>](resources/release/app-keypass-prod.apk)
 
 ## Deploying
 
