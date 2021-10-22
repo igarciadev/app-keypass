@@ -4,14 +4,14 @@ import { PopoverController } from "@ionic/angular";
 
 import { RegeneratePopoverComponent } from "../shared/regenerate-popover/regenerate-popover.component";
 import { PassConfigService } from "../services/pass-config.service";
-import { PasswordValidatorService } from "../shared/validator/password-validator.service";
+import { ValidatorService } from "../shared/validator/validator.service";
 
 import { PassConfig } from "../models/pass-config.model";
 
 export abstract class BasePage {
 
     constructor(
-        public passwordValidator: PasswordValidatorService,
+        public validatorService: ValidatorService,
         public popoverController: PopoverController) {
     }
 
@@ -31,11 +31,14 @@ export abstract class BasePage {
     onInitForm(passConfig: PassConfig): FormGroup {
         return new FormGroup({
             name: new FormControl(passConfig.name,
-                Validators.required),
+                [
+                    Validators.required,
+                    this.validatorService.wrongName
+                ]),
             username: new FormControl(passConfig.username),
             password: new FormControl(
                 passConfig.keyConfig.keyword,
-                this.passwordValidator.emptyPassword
+                this.validatorService.emptyPassword
             ),
             uri: new FormControl(passConfig.uri),
             notes: new FormControl(passConfig.notes)
@@ -55,6 +58,10 @@ export abstract class BasePage {
     onPasswordRequired(form: FormGroup, formControlname: string): boolean {
         return this.onInvalidName(form, formControlname) &&
             this.getFormControl(form, formControlname).errors?.emptyPassword;
+    }
+
+    onWrongName(form: FormGroup, formControlname: string): boolean {
+        return this.getFormControl(form, formControlname).errors?.wrongName;
     }
 
     onValidDateWarning(passConfig: PassConfig): string {

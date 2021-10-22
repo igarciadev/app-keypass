@@ -13,7 +13,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
 import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { SortListService } from 'src/app/services/sort-list.service';
-import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
+import { ValidatorService } from 'src/app/shared/validator/validator.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 import { Group } from 'src/app/models/group.model';
@@ -49,14 +49,14 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         private notificationService: NotificationService,
         private passConfigService: PassConfigService,
         private passConfigStorageService: PassConfigStorageService,
-        public passwordValidator: PasswordValidatorService,
+        public validatorService: ValidatorService,
         public popoverController: PopoverController,
         private router: Router,
         private sortListService: SortListService,
         private titleService: Title,
         private toastService: ToastService
     ) {
-        super(passwordValidator, popoverController);
+        super(validatorService, popoverController);
         this.passConfig = new PassConfig();
         this.initEditForm();
     }
@@ -270,7 +270,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
     }
 
     get nameRequired(): boolean {
-        return super.onInvalidName(this.editForm, 'name') && this.submitForm;
+        return super.onInvalidName(this.editForm, 'name') && ! this.wrongName && this.submitForm;
     }
 
     get passwordRequired(): boolean {
@@ -279,5 +279,9 @@ export class EditPassConfigPage extends BasePage implements OnInit {
 
     validDateWarning(): string {
         return super.onValidDateWarning(this.passConfigService.getPassConfig());
+    }
+
+    get wrongName(): boolean {
+        return super.onWrongName(this.editForm, 'name') && this.submitForm;
     }
 }

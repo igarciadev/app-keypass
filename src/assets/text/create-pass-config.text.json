@@ -17,5 +17,6 @@
     "groupText": "Grupo",
     "selectText": "Seleccionar",
     "securityText": "Renovar en 3 meses",
-    "validToText": "Válida hasta"
+    "validToText": "Válida hasta",
+    "wrongText": "Caracteres inválidos"
 }

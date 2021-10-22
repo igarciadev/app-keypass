@@ -20,6 +20,9 @@
             <div class="ion-label-invalid">
                 <small *ngIf="nameRequired">{{ text.requiredText }}</small>
             </div>
+            <div class="ion-label-invalid">
+                <small *ngIf="wrongName">{{ text.wrongText }}</small>
+            </div>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.usernameText }}</ion-label>
                 <ion-textarea formControlName="username" rows="1" [autoGrow]="!!getFormControl(createForm, 'username')" [attr.disabled]="disableComponent"></ion-textarea>

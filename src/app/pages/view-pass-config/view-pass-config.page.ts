@@ -14,7 +14,7 @@ import { GroupStorageService } from 'src/app/services/group-storage.service';
 import { PassConfigService } from 'src/app/services/pass-config.service';
 import { PassConfigStorageService } from 'src/app/services/pass-config-storage.service';
 import { ActionPopoverComponent } from 'src/app/shared/action-popover/action-popover.component';
-import { PasswordValidatorService } from 'src/app/shared/validator/password-validator.service';
+import { ValidatorService } from 'src/app/shared/validator/validator.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 import { PassConfig } from 'src/app/models/pass-config.model';
@@ -46,13 +46,13 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
         private navController: NavController,
         private passConfigService: PassConfigService,
         private passConfigStorageService: PassConfigStorageService,
-        public passwordValidator: PasswordValidatorService,
+        public validatorService: ValidatorService,
         public popoverController: PopoverController,
         private router: Router,
         private titleService: Title,
         private toastService: ToastService
     ) {
-        super(passwordValidator, popoverController);
+        super(validatorService, popoverController);
         this.passConfig = new PassConfig();
         this.initViewForm();
     }
