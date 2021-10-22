@@ -90,6 +90,7 @@ The project is started with the regular ionic commands.
 4. To build the android apk run `ionic cordova build android`, `ionic cordova build android --prod` or `ionic cordova build --release android`.
 5. To start the app on an android device run `ionic cordova run android --consolelogs --livereload`.
 6. To create Karma code coverage report run `npm test --code-coverage`.
+7. To run tests `npm run test`.
 
 
 ## Bugs and Issues
