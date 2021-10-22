@@ -17,7 +17,7 @@
         <form [formGroup]="viewForm">
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.nameText }}</ion-label>
-                <ion-input type="text" formControlName="name" [attr.disabled]="disableComponent"></ion-input>
+                <ion-input class="readonly-text" type="text" formControlName="name" [readonly]="disableComponent"></ion-input>
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.usernameText }}</ion-label>
