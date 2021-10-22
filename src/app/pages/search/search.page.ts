@@ -49,7 +49,7 @@ export class SearchPage implements OnInit {
     }
 
     firstLetterClass(name: string): string {
-        return `circle-${name.substr(0, 1).toLowerCase()}`;
+        return `square square-${name.substr(0, 1).toLowerCase()}`;
     }
 
     hasImage(passConfig: PassConfig): boolean {
