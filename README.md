@@ -69,14 +69,14 @@ To begin using this app, choose one of the following options to get started:
 
 All app preview screenshots were taken by running app on an android device.
 
-[List Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/list-tab) | [Password Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/password-tab)
- :-: | :-:
- <img src="resources/screenshots/screenshot list-tab.jpeg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot password-tab.jpeg" alt="Schedule" width="250"/>
+[List Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/list-tab) | [Password Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/password-tab) | [Group Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/group-tab)
+ :-: | :-: | :-:
+ <img src="resources/screenshots/screenshot list-tab.jpg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot password-tab.jpg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot group-tab.jpg" alt="Schedule" width="250"/>
 
 
 [Search Page](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/search) | [View Page](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/view-pass-config) | [Edit Page](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/edit-pass-config)
  :-: | :-: | :-:
- <img src="resources/screenshots/screenshot search-page.jpeg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot view-page.jpeg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot edit-page.jpeg" alt="Schedule" width="250"/>
+ <img src="resources/screenshots/screenshot search-page.jpg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot view-page.jpg" alt="Schedule" width="250"/> | <img src="resources/screenshots/screenshot edit-page.jpg" alt="Schedule" width="250"/>
 
 - To see more images of the app, check out the [screenshots directory](https://github.com/igarciadev/app-keypass/tree/master/resources/screenshots)!
 
