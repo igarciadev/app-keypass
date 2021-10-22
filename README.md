@@ -87,7 +87,7 @@ The project is started with the regular ionic commands.
 1. Run `npm install` to install all dependencies.
 2. Run `ionic serve` to start the development environment.
 3. To build the project run `ionic build android` or `ionic build ios`. In order for you to build an iOS app, you need to run on MacOS.
-4. To build the android apk run `ionic cordova build android` or `ionic cordova build android --prod`.
+4. To build the android apk run `ionic cordova build android`, `ionic cordova build android --prod` or `ionic cordova build --release android`.
 5. To start the app on an android device run `ionic cordova run android --consolelogs --livereload`.
 6. To create Karma code coverage report run `npm test --code-coverage`.
 
