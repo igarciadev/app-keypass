@@ -20,7 +20,7 @@ export class ValidatorService {
     wrongName(formControl: FormControl): { [s: string]: boolean } {
         const value = formControl.value;
         const regex = /^[A-Za-z0-9 ]+$/;
-        if (value !== undefined && value !== ''! && !regex.test(value)) {
+        if (value !== undefined && value !== '' && !regex.test(value)) {
             return { wrongName: true };
         }
 
