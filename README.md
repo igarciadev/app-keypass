@@ -10,6 +10,7 @@ With this app you can generate secure password settings, the generated password 
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [App Preview](#app-preview)
+- [Download](#download)
 - [Deploying](#deploying)
 - [Bugs and Issues](#bugs-and-issues)
 - [Creator](#creator)
@@ -66,7 +67,7 @@ To begin using this app, choose one of the following options to get started:
 
 ## App Preview
 
-All app preview screenshots were taken by running `ionic serve` on a browser.
+All app preview screenshots were taken by running app on an android device.
 
 [List Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/list-tab) | [Password Tab](https://github.com/igarciadev/app-keypass/tree/master/src/app/pages/password-tab)
  :-: | :-:
@@ -79,6 +80,12 @@ All app preview screenshots were taken by running `ionic serve` on a browser.
 
 - To see more images of the app, check out the [screenshots directory](https://github.com/igarciadev/app-keypass/tree/master/resources/screenshots)!
 
+
+## Download
+
+Download the app to your Android device [APP KEYPASS APK](resources/release/app-keypass-prod.apk)
+
+[<img src="resources/release/app-keypass-prod.png" alt="Schedule" width="250"/>](esources/release/app-keypass-prod.apk)
 
 ## Deploying
 
