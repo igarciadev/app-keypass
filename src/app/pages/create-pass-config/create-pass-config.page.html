@@ -25,7 +25,7 @@
             </div>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.usernameText }}</ion-label>
-                <ion-textarea formControlName="username" rows="1" [autoGrow]="!!getFormControl(createForm, 'username')" [attr.disabled]="disableComponent"></ion-textarea>
+                <ion-textarea formControlName="username" rows="1" [autoGrow]="!!getFormControl(createForm, 'username')"></ion-textarea>
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.passwordText }} *</ion-label>
@@ -45,7 +45,7 @@
             </div>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.uriText }}</ion-label>
-                <ion-textarea formControlName="uri" rows="1" [autoGrow]="!!getFormControl(createForm, 'uri')" [attr.disabled]="disableComponent"></ion-textarea>
+                <ion-textarea formControlName="uri" rows="1" [autoGrow]="!!getFormControl(createForm, 'uri')"></ion-textarea>
             </ion-item>
             <ion-item lines="full">
                 <ion-label class="label" position="stacked">{{ text.notesText }}</ion-label>
