@@ -15,6 +15,22 @@ export class GroupStorageService extends BaseStorageService<Group> {
         super();
     }
 
+    init(): void {
+        let groups = this.findAll();
+        if (groups === null || groups.length === 0) {
+            const group = new Group();
+            group.name = 'Sin agrupar';
+
+            this.saveAll([]);
+            this.save(group);
+        }
+    }
+
+    clear(): void {
+        localStorage.clear();
+        this.init();
+    }
+
     load(): void {
         this.groups = JSON.parse(localStorage.getItem('groups'));
     }
