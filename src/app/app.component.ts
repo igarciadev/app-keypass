@@ -76,14 +76,7 @@ export class AppComponent implements OnInit {
     }
 
     initializeGroups(): void {
-        let groups = this.groupStorageService.findAll();
-        if (groups === null || groups.length === 0) {
-            const group = new Group();
-            group.name = 'Sin agrupar';
-
-            this.groupStorageService.saveAll([]);
-            this.groupStorageService.save(group);
-        }
+        this.groupStorageService.init();
     }
 
     countInvalidKeyConfigs(): number {

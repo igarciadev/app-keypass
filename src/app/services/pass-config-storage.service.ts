@@ -19,6 +19,12 @@ export class PassConfigStorageService extends BaseStorageService<PassConfig> {
         this.timeCore = new TimeCore();
     }
 
+    clear(): void {
+        this.findAll().forEach(passConfig => {
+            this.delete(passConfig);
+        });
+    }
+
     load(): void {
         if (localStorage.getItem('passConfigs')) {
             let data = JSON.parse(localStorage.getItem('passConfigs'));

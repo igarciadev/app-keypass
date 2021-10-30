@@ -70,7 +70,8 @@ export class FileService {
 
         this.promise = this.file.readAsText(path, file);
         await this.promise.then(value => {
-            this.successFile(this.text.successImportText);
+            this.passConfigStorageService.clear();
+            this.groupStorageService.clear();
             const passConfigs = JSON.parse(value);
             passConfigs.forEach((passConfig: PassConfig) => {
                 const group: Group = this.groupStorageService.findById(passConfig.group.id);
@@ -84,6 +85,7 @@ export class FileService {
             });
             this.passConfigStorageService.saveAll(passConfigs);
             this.passConfigStorageService.load();
+            this.successFile(this.text.successImportText);
         }).catch(() => {
             this.errorReadingJson();
         });
