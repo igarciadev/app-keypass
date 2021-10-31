@@ -26,7 +26,8 @@
             }
         ],
         "editor.bracketPairColorization.enabled": true,
-        "editor.guides.bracketPairs": true
+        "editor.guides.bracketPairs": true,
+        "workbench.tree.indent": 16
 	},
 	"extensions": [
 		"hediet.vscode-drawio",
