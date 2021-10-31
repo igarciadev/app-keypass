@@ -4,7 +4,6 @@
 	"service": "app",
 	"workspaceFolder": "/workspace",
 	"settings": {
-		"terminal.integrated.defaultProfile.linux": "/bin/ash",
 		"files.watcherExclude": {
 			"**/node_modules/**": true,
 			"**/platforms/**": true,
