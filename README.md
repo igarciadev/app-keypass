@@ -83,9 +83,9 @@ All app preview screenshots were taken by running app on an android device.
 
 ## Download
 
-Download the app to your Android device [APP KEYPASS APK](https://github.com/igarciadev/app-keypass/raw/master/resources/release/app-keypass-prod.apk)
+Download the app to your Android device [APP KEYPASS APK](https://github.com/igarciadev/app-keypass/raw/master/resources/release/app-keypass-prod_v1.0.1.apk)
 
-[<img src="resources/release/app-keypass-prod.png" alt="Schedule" width="250"/>](https://github.com/igarciadev/app-keypass/raw/master/resources/release/app-keypass-prod.apk)
+[<img src="resources/release/app-keypass-prod.png" alt="Schedule" width="250"/>](https://github.com/igarciadev/app-keypass/raw/master/resources/release/app-keypass-prod_v1.0.1..apk)
 
 ## Deploying
 
