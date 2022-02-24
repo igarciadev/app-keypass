@@ -111,9 +111,7 @@ export class EditPassConfigPage extends BasePage implements OnInit {
         }
 
         this.sortAscending();
-    }
 
-    ionViewDidEnter() {
         let password;
         if (this.secret !== null) {
             password = this.regeneratePassword();

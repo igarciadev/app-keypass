@@ -105,9 +105,7 @@ export class ViewPassConfigPage extends BasePage implements OnInit {
                 return;
             }
         }
-    }
 
-    ionViewDidEnter() {
         let password;
         if (this.secret !== undefined) {
             password = this.regeneratePassword();

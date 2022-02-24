@@ -111,9 +111,7 @@ export class CreatePassConfigPage extends BasePage implements OnInit {
         }
 
         this.sortAscending();
-    }
 
-    ionViewDidEnter() {
         if (this.passConfig.keyConfig.keyword !== '') {
             let password;
             if (this.secret !== undefined) {
